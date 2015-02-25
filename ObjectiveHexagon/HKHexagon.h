@@ -25,8 +25,7 @@
 @property (nonatomic, readonly) CGPoint center;
 @property (nonatomic, readonly) NSArray *vertices;
 
-- (instancetype) initWithCoordinate:(HKHexagonCoordinate3D)coordinate grid:(HKHexagonGrid *)grid;
 + (instancetype) hexagonWithCoordinate:(HKHexagonCoordinate3D)coordinate grid:(HKHexagonGrid *)grid;
-+ (instancetype) hexagonWithCoordinate:(HKHexagonCoordinate3D)coordinate;
+- (instancetype) initWithCoordinate:(HKHexagonCoordinate3D)coordinate grid:(HKHexagonGrid *)grid;
 
 @end

@@ -13,6 +13,9 @@
 
 /// MARK: - Init
 
++ (instancetype) hexagonWithCoordinate:(HKHexagonCoordinate3D)coordinate grid:(HKHexagonGrid *)grid {
+    return [[HKHexagon alloc] initWithCoordinate:coordinate grid:grid];
+}
 - (instancetype) initWithCoordinate:(HKHexagonCoordinate3D)coordinate grid:(HKHexagonGrid *)grid {
     self = [super init];
     if (self) {
@@ -20,12 +23,6 @@
         self.grid = grid;
     }
     return self;
-}
-+ (instancetype) hexagonWithCoordinate:(HKHexagonCoordinate3D)coordinate grid:(HKHexagonGrid *)grid {
-    return [[HKHexagon alloc] initWithCoordinate:coordinate grid:grid];
-}
-+ (instancetype) hexagonWithCoordinate:(HKHexagonCoordinate3D)coordinate {
-    return [[HKHexagon alloc] initWithCoordinate:coordinate grid:nil];
 }
 
 - (NSString *)description  {
