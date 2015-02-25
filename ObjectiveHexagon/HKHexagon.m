@@ -65,18 +65,8 @@
 }
 
 - (CGPoint)center {
-    
-    HKHexagonCoordinate2D hex = hexConvertCubeToAxial(self.coordinate);
-    CGPoint s = CGPointZero;
-    
-    if (self.grid.hexOrientation == HKHexagonGridOrientationPointy) {
-        s = CGPointMake(SQRT_3 * hex.q + SQRT_3_2 * hex.r, 1.5 * hex.r);
-    } else {
-        s = CGPointMake(1.5 * hex.q, SQRT_3_2 * hex.q + SQRT_3 * hex.r);
-    }
-    
-    s = CGPointMultiply(s, self.grid.hexSize);
-    return CGPointAdd(s, self.grid.screenCenter);
+    CGPoint s = [self.grid centerOfShape:self];
+    return CGPointAdd(s, self.grid.offsetPoint);
 }
 
 - (NSArray *)vertices {

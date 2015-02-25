@@ -47,6 +47,7 @@ typedef struct {
 @property (nonatomic, readonly) CGFloat hexVerticalDistance;
 
 @property (nonatomic, assign) CGPoint screenCenter;
+@property (nonatomic, readonly) CGPoint offsetPoint;
 @property (nonatomic, readonly) CGRect frame;
 @property (nonatomic, readonly) CGRect bounds;
 @property (nonatomic, readonly) CGSize contentSize;
@@ -66,6 +67,7 @@ typedef struct {
 - (NSArray *)shapesAtRing:(NSUInteger)ring withCenter:(HKHexagonCoordinate3D)center;
 - (NSArray *)shapesAtRing:(NSUInteger)ring;
 
+- (CGPoint)centerOfShape:(HKHexagon *)shape;
 - (CGRect)frameOfShapes:(NSArray *)shapes;
 
 + (NSArray *)generateHexagonalMap:(NSInteger)size;
