@@ -52,8 +52,12 @@ typedef struct {
 @property (nonatomic, readonly) CGRect bounds;
 @property (nonatomic, readonly) CGSize contentSize;
 
++ (instancetype)gridWithPoints:(NSArray *)points;
 - (instancetype)initWithPoints:(NSArray *)points;
-- (instancetype)initWithPoints:(NSArray *)points orientation:(HKHexagonGridOrientation)orientation map:(HKHexagonGridMapStorage)map;
+- (instancetype)initWithPoints:(NSArray *)points
+                       hexSize:(CGFloat)hexSize
+                   orientation:(HKHexagonGridOrientation)orientation
+                           map:(HKHexagonGridMapStorage)map;
 
 - (HKHexagon *)shapeByHash:(NSString *)hash;
 

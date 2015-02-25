@@ -21,33 +21,48 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
 }
 
 @interface HKHexagonGrid ()
+
 @property (nonatomic, strong) NSDictionary *hexes;
+
+- (void)update;
 - (void)addPoints:(NSArray *)points;
+
 @end
+
 
 @implementation HKHexagonGrid
 
+@synthesize hexSize=_hexSize, hexOrientation=_hexOrientation;
+@synthesize frame = _frame;
+
 /// MARK: - Init Methods
 
++ (instancetype)gridWithPoints:(NSArray *)points {
+    return [[HKHexagonGrid alloc] initWithPoints:points];
+}
 - (instancetype)initWithPoints:(NSArray *)points {
-    self = [super init];
+    self = [self initWithPoints:points
+                        hexSize:0.0
+                    orientation:HKHexagonGridOrientationFlat
+                            map:HKHexagonGridMapStorageUnknown];
     if (self) {
         
-        self.mapStorage = HKHexagonGridMapStorageUnknown;
-        self.hexOrientation = HKHexagonGridOrientationFlat;
-        
-        [self addPoints:points];
     }
     return self;
 }
-- (instancetype)initWithPoints:(NSArray *)points orientation:(HKHexagonGridOrientation)orientation map:(HKHexagonGridMapStorage)map {
+- (instancetype)initWithPoints:(NSArray *)points
+                       hexSize:(CGFloat)hexSize
+                   orientation:(HKHexagonGridOrientation)orientation
+                           map:(HKHexagonGridMapStorage)map {
     self = [super init];
     if (self) {
         
-        self.mapStorage = map;
-        self.hexOrientation = orientation;
+        _mapStorage = map;
+        _hexOrientation = orientation;
+        _hexSize = hexSize;
         
         [self addPoints:points];
+        [self update];
     }
     return self;
 }
@@ -57,6 +72,20 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
 }
 
 /// MARK: -  Properties
+
+- (void)setHexSize:(CGFloat)hexSize {
+    if (self.hexSize != hexSize) {
+        _hexSize = hexSize;
+        [self update];
+    }
+}
+
+- (void)setHexOrientation:(HKHexagonGridOrientation)hexOrientation {
+    if (self.hexOrientation != hexOrientation) {
+        _hexOrientation = hexOrientation;
+        [self update];
+    }
+}
 
 - (NSUInteger)mapSize {
     return self.hexes.count;
@@ -96,10 +125,6 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
 
 - (CGRect)bounds {
     return CGRectOffset(self.frame, self.offsetPoint.x, self.offsetPoint.y);
-}
-
-- (CGRect)frame {
-    return [self frameOfShapes:self.hexes.allValues];
 }
 
 - (CGSize)contentSize {
@@ -177,6 +202,10 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
 
 /// MARK: - Other Methods
 
+- (void)update {
+    _frame = [self frameOfShapes:self.hexes.allValues];
+}
+
 - (void)addPoints:(NSArray *)points {
     NSMutableDictionary *hexes = [NSMutableDictionary dictionaryWithCapacity:points.count];
     for (NSValue *value in points) {
@@ -203,7 +232,7 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
 }
 
 - (CGRect)frameOfShapes:(NSArray *)shapes {
-    
+
     CGFloat minX = MAXFLOAT;
     CGFloat minY = MAXFLOAT;
     CGFloat maxX = -MAXFLOAT;
