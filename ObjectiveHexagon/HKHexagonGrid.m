@@ -68,7 +68,7 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"HexagonGrid: {%lu hexes at %@}", self.hexes.count, HKHexagonGridMapStorageName(self.mapStorage)];
+    return [NSString stringWithFormat:@"HexagonGrid: {%lu hexes at %@}", (unsigned long)self.hexes.count, HKHexagonGridMapStorageName(self.mapStorage)];
 }
 
 /// MARK: -  Properties
