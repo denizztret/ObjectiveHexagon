@@ -7,8 +7,9 @@ Pod::Spec.new do |s|
     s.author		= { "Denis Tretyakov" => "denizz.tret@gmail.com" }
     s.license		= { :type => 'MIT', :file => 'LICENSE' }
     # Source Info
-    s.platform		= :ios, "6.0"
-    s.source        = {:git => "https://github.com/denizztret/ObjectiveHexagon.git", :tag => "#{s.version}" }
+    s.ios.deployment_target = "7.0"
+    s.osx.deployment_target = "10.8"
+    s.source        = {:git => "https://github.com/denizztret/ObjectiveHexagon.git", :tag => "0.1.0" }
     s.source_files  = 'ObjectiveHexagon/*.{h,m}'
     s.public_header_files   = 'ObjectiveHexagon/*.{h}'
     s.requires_arc  = true
