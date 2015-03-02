@@ -46,11 +46,10 @@ typedef struct {
 @property (nonatomic, readonly) CGFloat hexHorizontalDistance;
 @property (nonatomic, readonly) CGFloat hexVerticalDistance;
 
-@property (nonatomic, assign) CGPoint screenCenter;
-@property (nonatomic, readonly) CGPoint offsetPoint;
-@property (nonatomic, readonly) CGRect frame;
 @property (nonatomic, readonly) CGRect bounds;
+@property (nonatomic, readonly) CGRect contentFrame;
 @property (nonatomic, readonly) CGSize contentSize;
+@property (nonatomic, assign) CGPoint contentCenter;
 
 + (instancetype)gridWithPoints:(NSArray *)points;
 - (instancetype)initWithPoints:(NSArray *)points;
@@ -58,6 +57,17 @@ typedef struct {
                        hexSize:(CGFloat)hexSize
                    orientation:(HKHexagonGridOrientation)orientation
                            map:(HKHexagonGridMapStorage)map;
+
+
+- (CGPoint)centerOfShape:(HKHexagon *)shape;
+- (CGRect)boundsOfShapes:(NSArray *)shapes;
+- (CGRect)boundsOfShapes:(NSArray *)shapes contentCenter:(CGPoint)center;
+
+- (void)setNeedsLayout;
+
+@end
+
+@interface HKHexagonGrid (GetShapes)
 
 - (HKHexagon *)shapeByHash:(NSString *)hash;
 
@@ -71,16 +81,16 @@ typedef struct {
 - (NSArray *)shapesAtRing:(NSUInteger)ring withCenter:(HKHexagonCoordinate3D)center;
 - (NSArray *)shapesAtRing:(NSUInteger)ring;
 
-- (CGPoint)centerOfShape:(HKHexagon *)shape;
-- (CGRect)frameOfShapes:(NSArray *)shapes;
+@end
+
+@interface HKHexagonGrid (MapStorage)
 
 + (NSArray *)generateHexagonalMap:(NSInteger)size;
 + (NSArray *)generateTriangularMap:(NSInteger)size;
 + (NSArray *)generateRectangularMap:(HKHexagonGridRectParameters)rect
-                                    convert:(HKHexagonCoordinate3D (^) (HKHexagonCoordinate2D p))handler;
+                            convert:(HKHexagonCoordinate3D (^) (HKHexagonCoordinate2D p))handler;
 
 @end
-
 /*
  ALIASES:
  shape = hexagon

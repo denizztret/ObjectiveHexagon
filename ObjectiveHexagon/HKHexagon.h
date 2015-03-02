@@ -28,4 +28,6 @@
 + (instancetype) hexagonWithCoordinate:(HKHexagonCoordinate3D)coordinate grid:(HKHexagonGrid *)grid;
 - (instancetype) initWithCoordinate:(HKHexagonCoordinate3D)coordinate grid:(HKHexagonGrid *)grid;
 
+- (void)setNeedsLayout;
+
 @end
