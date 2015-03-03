@@ -28,6 +28,7 @@
 }
 
 @synthesize bounds=_bounds;
+@synthesize hashID=_hashID;
 
 /// MARK: - Init
 
@@ -42,6 +43,8 @@
         
         _localVertices = calloc(6, sizeof(*_localVertices));
         
+        _hashID = NSStringFromHexCoordinate3D(_coordinate);
+
         [self setNeedsLayout];
     }
     return self;
@@ -56,10 +59,6 @@
 }
 
 /// MARK: -  Properties
-
-- (NSString *) hashID {
-    return NSStringFromHexCoordinate3D(self.coordinate);
-}
 
 - (BOOL)valid {
     return self.coordinate.x + self.coordinate.y + self.coordinate.z == 0.0;
