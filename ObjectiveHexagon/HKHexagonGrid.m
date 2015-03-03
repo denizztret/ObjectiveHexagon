@@ -156,7 +156,7 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
     for (NSValue *value in points) {
         HKHexagonCoordinate3D p = [value HKHexagonCoordinate3DValue];
         HKHexagon *hex = [HKHexagon hexagonWithCoordinate:p grid:self];
-        hexes[hex.hash] = hex;
+        hexes[hex.hashID] = hex;
     }
     self.hexes = [NSDictionary dictionaryWithDictionary:hexes];
 }
@@ -210,7 +210,7 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
     
     if (_needsLayout) {
         
-        [self.hexes enumerateKeysAndObjectsUsingBlock:^(NSString *hash, HKHexagon *hex, BOOL *stop) {
+        [self.hexes enumerateKeysAndObjectsUsingBlock:^(NSString *hashID, HKHexagon *hex, BOOL *stop) {
             [hex setNeedsLayout];
         }];
         
@@ -232,13 +232,13 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
 
 /// MARK: - Public Methods
 
-- (HKHexagon *)shapeByHash:(NSString *)hash {
-    return self.hexes[hash];
+- (HKHexagon *)shapeByHashID:(NSString *)hashID {
+    return self.hexes[hashID];
 }
 
 - (HKHexagon *)shapeAtScreenPoint:(CGPoint)point offset:(CGPoint)offset {
     HKHexagonCoordinate3D p = [self pointAtScreenPoint:CGPointSubtract(point, offset)];
-    return [self shapeByHash:NSStringFromHexCoordinate3D(p)];
+    return [self shapeByHashID:NSStringFromHexCoordinate3D(p)];
 }
 
 - (HKHexagon *)shapeAtScreenPoint:(CGPoint)point {
@@ -288,7 +288,7 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
     NSArray *points = [self pointsAtRing:ring withCenter:center];
     for (NSValue *value in points) {
         HKHexagonCoordinate3D p = [value HKHexagonCoordinate3DValue];
-        HKHexagon *hex = [self shapeByHash:NSStringFromHexCoordinate3D(p)];
+        HKHexagon *hex = [self shapeByHashID:NSStringFromHexCoordinate3D(p)];
         if (hex) { [result addObject:hex]; }
     }
     return result;

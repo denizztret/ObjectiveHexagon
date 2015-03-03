@@ -48,7 +48,7 @@
 }
 
 - (NSString *)description  {
-    return [NSString stringWithFormat:@"Hexagon: %@", self.hash];
+    return [NSString stringWithFormat:@"Hexagon: %@", self.hashID];
 }
 
 - (void)dealloc {
@@ -57,7 +57,7 @@
 
 /// MARK: -  Properties
 
-- (NSString *) hash {
+- (NSString *) hashID {
     return NSStringFromHexCoordinate3D(self.coordinate);
 }
 

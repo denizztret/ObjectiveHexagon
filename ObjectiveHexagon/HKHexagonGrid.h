@@ -69,7 +69,7 @@ typedef struct {
 
 @interface HKHexagonGrid (GetShapes)
 
-- (HKHexagon *)shapeByHash:(NSString *)hash;
+- (HKHexagon *)shapeByHashID:(NSString *)hashID;
 
 - (HKHexagon *)shapeAtScreenPoint:(CGPoint)point offset:(CGPoint)offset;
 - (HKHexagon *)shapeAtScreenPoint:(CGPoint)point;

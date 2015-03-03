@@ -17,7 +17,7 @@
 
 @property (nonatomic, assign) HKHexagonCoordinate3D coordinate;
 @property (nonatomic, weak) HKHexagonGrid *grid;
-@property (nonatomic, readonly) NSString *hash;
+@property (nonatomic, readonly) NSString *hashID;
 @property (nonatomic, readonly) BOOL valid;
 
 @property (nonatomic, readonly) CGRect frame;
