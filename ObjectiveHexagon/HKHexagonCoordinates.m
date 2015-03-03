@@ -33,7 +33,7 @@ HKHexagonCoordinate2D hexConvertCubeToOddR(HKHexagonCoordinate3D point) {
 }
 
 NSString *NSStringFromHexCoordinate2D(HKHexagonCoordinate2D point) {
-    return [NSString stringWithFormat:@"{%.1f, %.1f}", point.q, point.r];
+    return [NSString stringWithFormat:@"{%.0f, %.0f}", point.q, point.r];
 }
 
 #pragma mark - Hexagon Coordinate 3D
@@ -148,7 +148,7 @@ HKHexagonCoordinate3D hexConvertOddRToCube(HKHexagonCoordinate2D point) {
 }
 
 NSString *NSStringFromHexCoordinate3D(HKHexagonCoordinate3D point) {
-    return [NSString stringWithFormat:@"{%.1f, %.1f, %.1f}", point.x, point.y, point.z];
+    return [NSString stringWithFormat:@"{%.0f, %.0f, %.0f}", point.x, point.y, point.z];
 }
 
 // TODO: create func makeLine
