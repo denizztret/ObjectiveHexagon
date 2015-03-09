@@ -37,6 +37,7 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
 @implementation HKHexagonGrid {
     
     BOOL _needsLayout;
+    CGFloat _inverseHexSize;
 }
 
 @synthesize hexSize=_hexSize, hexOrientation=_hexOrientation;
@@ -81,6 +82,7 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
 - (void)setHexSize:(CGFloat)hexSize {
     if (self.hexSize != hexSize) {
         _hexSize = hexSize;
+        _inverseHexSize = 1.0 / _hexSize;
         
         _needsLayout = YES;
         [self setNeedsLayout];
@@ -247,15 +249,15 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
 
 - (HKHexagonCoordinate3D)pointAtScreenPoint:(CGPoint)point {
     if (self.hexSize == 0.0) { return hex3DMake(0, 0, 0); }
-    CGPoint sc = CGPointMultiply(point, 1.0/self.hexSize);
+    CGPoint sc = CGPointMultiply(point, _inverseHexSize);
     CGFloat q = 0.0;
     CGFloat r = 0.0;
     if (self.hexOrientation == HKHexagonGridOrientationPointy) {
-        q = SQRT_3_3 * sc.x + -1/3 * sc.y;
-        r = 2/3 * sc.y;
+        q = sc.x * SQRT_3_3 - sc.y * DIV_1_3;
+        r = sc.y * DIV_2_3;
     } else {
-        q = 2/3 * sc.x;
-        r = -1/3 * sc.x + SQRT_3_3 * sc.y;
+        q = sc.x * DIV_2_3;
+        r = sc.y * SQRT_3_3 - sc.x * DIV_1_3;
     }
     HKHexagonCoordinate3D p = hex3DMake(q, -q-r, r);
     return hex3DRound(p);
