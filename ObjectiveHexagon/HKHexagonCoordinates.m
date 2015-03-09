@@ -59,31 +59,23 @@ HKHexagonCoordinate3D hex3DRotateRight(HKHexagonCoordinate3D point) {
 }
 
 HKHexagonCoordinate3D hex3DRound(HKHexagonCoordinate3D point) {
+    CGFloat rx = roundf(point.x);
+    CGFloat ry = roundf(point.y);
+    CGFloat rz = roundf(point.z);
     
-    CGFloat v[3] = { point.x, point.y, point.z };
-    CGFloat r[3];
-    CGFloat sum = 0.0;
+    CGFloat x_diff = fabs(rx - point.x);
+    CGFloat y_diff = fabs(ry - point.y);
+    CGFloat z_diff = fabs(rz - point.z);
     
-    for (NSUInteger i=0; i<3; i++) {
-        r[i] = roundf(v[i]);
-        sum += r[i];
-    }
+    if      (x_diff > y_diff && x_diff > z_diff)    { rx = -ry-rz; }
+    else if (y_diff > z_diff)                       { ry = -rx-rz; }
+    else                                            { rz = -rx-ry; }
     
-    if (sum != 0.0) {
-        CGFloat e[3];
-        NSUInteger worst_i = 0;
-        
-        for (NSUInteger i=0; i<3; i++) {
-            e[i] = fabsf(r[i] - v[i]);
-            if (e[i] > e[worst_i]) {
-                worst_i = i;
-            }
-        }
-        
-        r[worst_i] = -sum + r[worst_i];
-    }
+    rx = fabs(rx) == 0 ? 0 : rx;
+    ry = fabs(ry) == 0 ? 0 : ry;
+    rz = fabs(rz) == 0 ? 0 : rz;
     
-    return hex3DMake(r[0], r[1], r[2]);
+    return hex3DMake(rx, ry, rz);
 }
 
 CGFloat hex3DLength(HKHexagonCoordinate3D point) {
