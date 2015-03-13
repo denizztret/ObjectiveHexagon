@@ -103,43 +103,31 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
 }
 
 - (CGFloat)hexWidth {
-    if (_needsLayout) {
-        switch (self.hexOrientation) {
-            case HKHexagonGridOrientationFlat: _hexWidth = self.hexSize * 2.0;
-            case HKHexagonGridOrientationPointy: _hexWidth = self.hexHeight * SQRT_3_2;
-        }
+    switch (_hexOrientation) {
+        case HKHexagonGridOrientationFlat: return _hexSize * 2.0;
+        case HKHexagonGridOrientationPointy: return _hexSize * SQRT_3;
     }
-    return _hexWidth;
 }
 
 - (CGFloat)hexHeight {
-    if (_needsLayout) {
-        switch (self.hexOrientation) {
-            case HKHexagonGridOrientationFlat: _hexHeight = self.hexWidth * SQRT_3_2;
-            case HKHexagonGridOrientationPointy: _hexHeight = self.hexSize * 2.0;
-        }
+    switch (self.hexOrientation) {
+        case HKHexagonGridOrientationFlat: return _hexSize * SQRT_3;
+        case HKHexagonGridOrientationPointy: return _hexSize * 2.0;
     }
-    return _hexHeight;
 }
 
 - (CGFloat)hexHorizontalDistance {
-    if (_needsLayout) {
-        switch (self.hexOrientation) {
-            case HKHexagonGridOrientationFlat: _hexHorizontalDistance = self.hexWidth * 3 / 4;
-            case HKHexagonGridOrientationPointy: _hexHorizontalDistance = self.hexWidth;
-        }
+    switch (self.hexOrientation) {
+        case HKHexagonGridOrientationFlat: return _hexSize * DIV_3_2;
+        case HKHexagonGridOrientationPointy: return _hexSize * SQRT_3;
     }
-    return _hexHorizontalDistance;
 }
 
 - (CGFloat)hexVerticalDistance {
-    if (_needsLayout) {
-        switch (self.hexOrientation) {
-            case HKHexagonGridOrientationFlat: _hexVerticalDistance = self.hexHeight;
-            case HKHexagonGridOrientationPointy: _hexVerticalDistance = self.hexHeight * 3 / 4;
-        }
+    switch (self.hexOrientation) {
+        case HKHexagonGridOrientationFlat: return _hexSize * SQRT_3;
+        case HKHexagonGridOrientationPointy: return _hexSize * DIV_3_2;
     }
-    return _hexVerticalDistance;
 }
 
 - (CGSize)contentSize {
@@ -169,9 +157,9 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
     CGPoint s = CGPointZero;
     
     if (self.hexOrientation == HKHexagonGridOrientationPointy) {
-        s = CGPointMake(SQRT_3 * hex.q + SQRT_3_2 * hex.r, 1.5 * hex.r);
+        s = CGPointMake(SQRT_3 * hex.q + SQRT_3_2 * hex.r, DIV_3_2 * hex.r);
     } else {
-        s = CGPointMake(1.5 * hex.q, SQRT_3_2 * hex.q + SQRT_3 * hex.r);
+        s = CGPointMake(DIV_3_2 * hex.q, SQRT_3_2 * hex.q + SQRT_3 * hex.r);
     }
     
     s = CGPointMultiply(s, self.hexSize);
@@ -193,10 +181,13 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
         if (center.y > maxY) { maxY = center.y; }
     }
     
-    minX -= self.hexWidth / 2.0;
-    minY -= self.hexHeight / 2.0;
-    maxX += self.hexWidth / 2.0;
-    maxY += self.hexHeight / 2.0;
+    CGFloat halfWidth = self.hexWidth / 2.0;
+    CGFloat halfHeight = self.hexHeight / 2.0;
+    
+    minX -= halfWidth;
+    minY -= halfHeight;
+    maxX += halfWidth;
+    maxY += halfHeight;
     
     return CGRectMake(minX, minY, fabsf(maxX-minX), fabsf(maxY-minY));
 }

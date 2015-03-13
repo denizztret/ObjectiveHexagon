@@ -15,6 +15,7 @@
 #define SQRT_3_3    0.57735026918963    //(sqrtf(3.0)/3.0)
 #define DIV_1_3     0.33333333333333    //(1.0/3.0)
 #define DIV_2_3     0.66666666666667    //(2.0/3.0)
+#define DIV_3_2     1.5                 //(3.0/2.0)
 
 typedef struct {
     CGFloat q;
