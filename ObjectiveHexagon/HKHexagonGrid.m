@@ -131,11 +131,41 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
 }
 
 - (CGSize)contentSize {
-    return _bounds.size;
+    return _contentBounds.size;
 }
 
-- (CGRect)contentFrame {
-    return CGRectOffset(_bounds, _contentCenter.x, _contentCenter.y);
+- (CGPoint)contentCenter {
+    CGPoint op = CGPointMake(-_contentBounds.origin.x, -_contentBounds.origin.y);
+    return CGPointAdd(_position, op);
+}
+
+- (CGRect)frame {
+    CGFloat w = _contentBounds.size.width;
+    CGFloat h = _contentBounds.size.height;
+    CGFloat x = _center.x - w/2.0;
+    CGFloat y = _center.y - h/2.0;
+
+    return CGRectMake(x, y, w, h);
+}
+
+- (void)setCenter:(CGPoint)center {
+    if (!CGPointEqualToPoint(_center, center)) {
+        _center = center;
+        
+        CGFloat hw = _contentBounds.size.width / 2.0;
+        CGFloat hh = _contentBounds.size.height / 2.0;
+        _position = CGPointMake(_center.x - hw, _center.y - hh);
+    }
+}
+
+- (void)setPosition:(CGPoint)position {
+    if (!CGPointEqualToPoint(_position, position)) {
+        _position = position;
+        
+        CGFloat hw = _contentBounds.size.width / 2.0;
+        CGFloat hh = _contentBounds.size.height / 2.0;
+        _center = CGPointMake(_position.x + hw, _position.y + hh);
+    }
 }
 
 /// MARK: - Other Methods
@@ -151,21 +181,6 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
     self.hexes = [NSDictionary dictionaryWithDictionary:hexes];
 }
 
-- (CGPoint)centerOfShape:(HKHexagon *)shape {
-    
-    HKHexagonCoordinate2D hex = hexConvertCubeToAxial(shape.coordinate);
-    CGPoint s = CGPointZero;
-    
-    if (self.hexOrientation == HKHexagonGridOrientationPointy) {
-        s = CGPointMake(SQRT_3 * hex.q + SQRT_3_2 * hex.r, DIV_3_2 * hex.r);
-    } else {
-        s = CGPointMake(DIV_3_2 * hex.q, SQRT_3_2 * hex.q + SQRT_3 * hex.r);
-    }
-    
-    s = CGPointMultiply(s, self.hexSize);
-    return s;
-}
-
 - (CGRect)boundsOfShapes:(NSArray *)shapes {
 
     CGFloat minX = MAXFLOAT;
@@ -174,7 +189,7 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
     CGFloat maxY = -MAXFLOAT;
     
     for (HKHexagon *hex in shapes) {
-        CGPoint center = hex.center;
+        CGPoint center = [hex localCenter];
         if (center.x < minX) { minX = center.x; }
         if (center.y < minY) { minY = center.y; }
         if (center.x > maxX) { maxX = center.x; }
@@ -192,13 +207,6 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
     return CGRectMake(minX, minY, fabsf(maxX-minX), fabsf(maxY-minY));
 }
 
-- (CGRect)boundsOfShapes:(NSArray *)shapes contentCenter:(CGPoint)center {
-    CGRect rect = [self boundsOfShapes:shapes];
-    CGPoint offset = CGPointSubtract(center, _contentCenter);
-    return CGRectOffset(rect, offset.x, offset.y);
-}
-
-
 - (void)setNeedsLayout {
     
     if (_needsLayout) {
@@ -207,13 +215,9 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
             [hex setNeedsLayout];
         }];
         
-        [self hexWidth];
-        [self hexHeight];
-        [self hexHorizontalDistance];
-        [self hexVerticalDistance];
+        _contentBounds = [self boundsOfShapes:self.hexes.allValues];
         
-        _contentCenter = CGPointMake(-_bounds.origin.x, -_bounds.origin.y);
-        _bounds = [self boundsOfShapes:self.hexes.allValues contentCenter:_contentCenter];
+        [self setPosition:_contentBounds.origin];
         
         _needsLayout = NO;
     }

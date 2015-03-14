@@ -46,10 +46,13 @@ typedef struct {
 @property (nonatomic, readonly) CGFloat hexHorizontalDistance;
 @property (nonatomic, readonly) CGFloat hexVerticalDistance;
 
-@property (nonatomic, readonly) CGRect bounds;
-@property (nonatomic, readonly) CGRect contentFrame;
+@property (nonatomic, readonly) CGRect contentBounds;
 @property (nonatomic, readonly) CGSize contentSize;
-@property (nonatomic, assign) CGPoint contentCenter;
+@property (nonatomic, readonly) CGPoint contentCenter;
+
+@property (nonatomic, readonly) CGRect frame;
+@property (nonatomic, assign) CGPoint center;
+@property (nonatomic, assign) CGPoint position;
 
 + (instancetype)gridWithPoints:(NSArray *)points;
 - (instancetype)initWithPoints:(NSArray *)points;
@@ -59,9 +62,7 @@ typedef struct {
                            map:(HKHexagonGridMapStorage)map;
 
 
-- (CGPoint)centerOfShape:(HKHexagon *)shape;
 - (CGRect)boundsOfShapes:(NSArray *)shapes;
-- (CGRect)boundsOfShapes:(NSArray *)shapes contentCenter:(CGPoint)center;
 
 - (void)setNeedsLayout;
 
