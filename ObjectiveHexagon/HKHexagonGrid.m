@@ -82,7 +82,6 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
 - (void)setHexSize:(CGFloat)hexSize {
     if (self.hexSize != hexSize) {
         _hexSize = hexSize;
-        _inverseHexSize = 1.0 / _hexSize;
         
         _needsLayout = YES;
         [self setNeedsLayout];
@@ -215,6 +214,7 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
             [hex setNeedsLayout];
         }];
         
+        _inverseHexSize = 1.0 / _hexSize;
         _contentBounds = [self boundsOfShapes:self.hexes.allValues];
         
         [self setPosition:_contentBounds.origin];
@@ -239,7 +239,7 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
 }
 
 - (HKHexagon *)shapeAtScreenPoint:(CGPoint)point {
-    return [self shapeAtScreenPoint:point offset:CGPointZero];
+    return [self shapeAtScreenPoint:point offset:self.contentCenter];
 }
 
 - (HKHexagonCoordinate3D)pointAtScreenPoint:(CGPoint)point {
