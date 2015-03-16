@@ -80,15 +80,11 @@ HKHexagonCoordinate3D hex3DRound(HKHexagonCoordinate3D point) {
 
 CGFloat hex3DLength(HKHexagonCoordinate3D point) {
     
-    CGFloat v[3] = { point.x, point.y, point.z };
-    CGFloat len = 0.0f;
+    CGFloat px = fabs(point.x);
+    CGFloat py = fabs(point.y);
+    CGFloat pz = fabs(point.z);
     
-    for (NSUInteger i=0; i<3; i++) {
-        CGFloat el = fabsf(v[i]);
-        if (el > len) { len = el; }
-    }
-    
-    return len;
+    return (px>py ? (px>pz ? px : pz) : (py>pz ? py : pz));
 }
 CGFloat hex3DDistance(HKHexagonCoordinate3D point1, HKHexagonCoordinate3D point2) {
     return (fabsf(point1.x - point2.x) + fabsf(point1.y - point2.y) + fabsf(point1.z - point2.z)) / 2.0;
