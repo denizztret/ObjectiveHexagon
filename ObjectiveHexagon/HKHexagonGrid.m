@@ -40,8 +40,6 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
     CGFloat _inverseHexSize;
 }
 
-@synthesize hexSize=_hexSize, hexOrientation=_hexOrientation;
-
 /// MARK: - Init Methods
 
 + (instancetype)gridWithPoints:(NSArray *)points {
