@@ -1,4 +1,5 @@
 [![Platform](http://img.shields.io/badge/platform-iOS-blue.svg?style=flat)](https://github.com/denizztret/ObjectiveHexagon)
+![Version](https://img.shields.io/badge/pod-v0.2.0-blue.svg?style=flat)
 [![License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/denizztret/ObjectiveHexagon/blob/master/LICENSE)
 
 <p align="center"><img src="https://github.com/denizztret/ObjectiveHexagon/blob/master/Screenshots/icon-blue-hexagon.png" height="200"/>
@@ -8,6 +9,8 @@
 
 Create and manage hexagonal shapes and grid. 
 Based on the materials from http://www.redblobgames.com/grids/hexagons.
+
+[<img src="https://github.com/denizztret/ObjectiveHexagon/blob/master/Screenshots/screens.png"/>](https://github.com/denizztret/ObjectiveHexagon/blob/master/Screenshots/screens.png)
 
 ##Requirements
 
