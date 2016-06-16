@@ -34,7 +34,7 @@ class CollectionViewCellCircle: UICollectionViewCell {
         setup()
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
@@ -51,7 +51,7 @@ class CollectionViewCellCircle: UICollectionViewCell {
         self.contentView.layer.addSublayer(self.shapeLayer)
         
         self.label = UILabel()
-        self.label.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+        self.label.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         self.label.backgroundColor = UIColor.clearColor()
         self.label.textAlignment = .Center
         self.label.font = UIFont(name: "Arial", size: 14)
@@ -143,7 +143,7 @@ class CollectionViewCellHexagon: UICollectionViewCell {
         setup()
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
@@ -166,7 +166,7 @@ class CollectionViewCellHexagon: UICollectionViewCell {
         self.contentView.addSubview(borderView)
         
         self.label = UILabel()
-        self.label.autoresizingMask = .FlexibleWidth | .FlexibleHeight
+        self.label.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
         self.label.backgroundColor = UIColor.clearColor()
         self.label.textAlignment = .Center
         self.label.font = UIFont(name: "Arial", size: 14)

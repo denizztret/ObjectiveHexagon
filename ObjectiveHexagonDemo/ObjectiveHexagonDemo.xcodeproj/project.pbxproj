@@ -365,6 +365,8 @@
 		10C354EB1AB9C14F00F4B841 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0730;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0620;
 				ORGANIZATIONNAME = pythongem;
 				TargetAttributes = {
@@ -750,6 +752,7 @@
 				10C355141AB9C14F00F4B841 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		10C355151AB9C14F00F4B841 /* Build configuration list for PBXNativeTarget "ObjectiveHexagonDemoTests" */ = {
 			isa = XCConfigurationList;
@@ -758,6 +761,7 @@
 				10C355171AB9C14F00F4B841 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		10C355361AB9C16700F4B841 /* Build configuration list for PBXNativeTarget "ObjectiveHexagonKit" */ = {
 			isa = XCConfigurationList;
@@ -766,6 +770,7 @@
 				10C355381AB9C16700F4B841 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		10C3553A1AB9C16700F4B841 /* Build configuration list for PBXNativeTarget "ObjectiveHexagonKitTests" */ = {
 			isa = XCConfigurationList;
@@ -774,6 +779,7 @@
 				10C3553C1AB9C16700F4B841 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

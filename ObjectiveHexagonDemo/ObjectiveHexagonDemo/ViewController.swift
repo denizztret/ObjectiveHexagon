@@ -9,8 +9,8 @@
 import UIKit
 import ObjectiveHexagonKit
 
-let HEX_SIZE:   CGFloat = 58.0
-let HEX_RADIUS: CGFloat = 45.0
+let HEX_SIZE:   CGFloat = 38.0
+let HEX_RADIUS: CGFloat = 10.0
 let DATA_COUNT: Int     = 100
 
 let DEBUG_DRAW = false
@@ -45,7 +45,7 @@ class ViewController: UIViewController {
             return hexConvertEvenRToCube(p)
         })
         
-        self.itemsGrid = HKHexagonGrid(points: points, hexSize: HEX_SIZE, orientation: .Pointy, map: .Rectangle)
+        self.itemsGrid = HKHexagonGrid(points: points, hexSize: HEX_SIZE, orientation: .Flat, map: .Rectangle)
         
         // Items ordered by distance from central hex (cell)
         self.items = self.itemsGrid.hexesBySpirals()
@@ -60,7 +60,7 @@ class ViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), atScrollPosition: .CenteredVertically | .CenteredHorizontally, animated: false)
+        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), atScrollPosition: [.CenteredVertically, .CenteredHorizontally], animated: false)
     }
     
     override func prefersStatusBarHidden() -> Bool {
@@ -82,7 +82,7 @@ extension ViewController: UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         if CELL_IS_CIRCLE {
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CollectionViewCell", forIndexPath: indexPath) as CollectionViewCellCircle
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CollectionViewCell", forIndexPath: indexPath) as! CollectionViewCellCircle
             
             let hexObj = items[indexPath.item]
             cell.hexagon = hexObj
@@ -91,11 +91,11 @@ extension ViewController: UICollectionViewDataSource {
             return cell
         } else {
             
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CollectionViewCell", forIndexPath: indexPath) as CollectionViewCellHexagon
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CollectionViewCell", forIndexPath: indexPath) as! CollectionViewCellHexagon
             
             let hexObj = items[indexPath.item]
             cell.hexagon = hexObj
-            cell.labelText = CELL_DRAW_TEXT ? hexObj.hashID : ""
+            cell.labelText = CELL_DRAW_TEXT ? NSString2DFromHexCoordinate3D(hexObj.coordinate) : ""
             
             cell.borderWidth = 3.0
             cell.borderGapOuter = 5.0

@@ -12,7 +12,7 @@ extension UIView {
     
     public func DebugDrawPoint(p:CGPoint, name:String, lineWidth:CGFloat, strokeColor:UIColor, fillColor:UIColor = UIColor.clearColor(), diameter:CGFloat = 10.0) {
         if self.layer.sublayers != nil {
-            for layer in self.layer.sublayers {
+            for layer in self.layer.sublayers! {
                 if var oldLayer = layer as? CAShapeLayer {
                     if oldLayer.name != nil && oldLayer.name == name {
                         oldLayer.removeFromSuperlayer()
@@ -37,7 +37,7 @@ extension UIView {
     
     public func DebugDrawRect(rect:CGRect, name:String, lineWidth:CGFloat, strokeColor:UIColor, fillColor:UIColor = UIColor.clearColor()) {
         if self.layer.sublayers != nil {
-            for layer in self.layer.sublayers {
+            for layer in self.layer.sublayers! {
                 if var oldLayer = layer as? CAShapeLayer {
                     if oldLayer.name != nil && oldLayer.name == name {
                         oldLayer.removeFromSuperlayer()
@@ -60,7 +60,7 @@ extension UIView {
     
     public func DebugDrawPoly(points:[CGPoint], name:String, lineWidth:CGFloat, strokeColor:UIColor, fillColor:UIColor = UIColor.clearColor()) {
         if self.layer.sublayers != nil {
-            for layer in self.layer.sublayers {
+            for layer in self.layer.sublayers! {
                 if var oldLayer = layer as? CAShapeLayer {
                     if oldLayer.name != nil && oldLayer.name == name {
                         oldLayer.removeFromSuperlayer()
@@ -94,13 +94,13 @@ extension HKHexagonGrid {
             return Int(max(fabs(hex.coordinate.x), fabs(hex.coordinate.y), fabs(hex.coordinate.z)))
         }
         
-        let hexes = Array(self.hexes.values) as [HKHexagon]
+        let hexes = Array(self.hexes.values) as! [HKHexagon]
         let s = hexes.reduce(0) { max($0, maxDistance($1)) }
         
         var result = [HKHexagon]()
         
         for k in 0..<s {
-            let shapes = self.shapesAtRing(UInt(k)) as [HKHexagon]
+            let shapes = self.shapesAtRing(UInt(k)) as! [HKHexagon]
             result += shapes
         }
         
@@ -146,7 +146,7 @@ extension HKHexagonGrid {
 extension HKHexagon {
     
     public func unwrappedVertices() -> [CGPoint] {
-        let result = (self.vertices as [NSValue]).map  {
+        let result = (self.vertices as! [NSValue]).map  {
             (value: NSValue) -> CGPoint in
             value.CGPointValue()
         }

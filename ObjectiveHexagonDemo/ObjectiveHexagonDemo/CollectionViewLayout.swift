@@ -11,8 +11,8 @@ import ObjectiveHexagonKit
 
 class CollectionViewLayout: UICollectionViewLayout {
     
-    var grid: HKHexagonGrid { get { return (self.collectionView!.dataSource! as ViewController).itemsGrid } }
-    var items: [HKHexagon] { get { return (self.collectionView!.dataSource! as ViewController).items } }
+    var grid: HKHexagonGrid { get { return (self.collectionView!.dataSource! as! ViewController).itemsGrid } }
+    var items: [HKHexagon] { get { return (self.collectionView!.dataSource! as! ViewController).items } }
     
     var attributesByHash = [String : UICollectionViewLayoutAttributes]()
     var needUpdate = true
@@ -32,7 +32,7 @@ class CollectionViewLayout: UICollectionViewLayout {
             
             attributesByHash.removeAll(keepCapacity: false)
             
-            for (index, hex) in enumerate(items) {
+            for (index, hex) in (items).enumerate() {
                 let indexPath = NSIndexPath(forItem: index, inSection: 0)
                 let attributes = self.layoutAttributesForItemAtIndexPath(indexPath)
                 attributesByHash[hex.hashID] = attributes
@@ -44,7 +44,7 @@ class CollectionViewLayout: UICollectionViewLayout {
         return grid.contentSize
     }
     
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
+    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         
         var visibleElements = [UICollectionViewLayoutAttributes]()
         
