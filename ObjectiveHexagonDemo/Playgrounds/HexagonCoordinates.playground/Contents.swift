@@ -54,15 +54,15 @@ h3 = hexConvertCubeToOddR(c2)
 
 // MARK: - NSValue Category
 
-let vc = NSValue(HKHexagonCoordinate3D: c3)
-vc.HKHexagonCoordinate3DValue()
+let vc = NSValue(hkHexagonCoordinate3D: c3)
+vc?.hkHexagonCoordinate3DValue()
 
-let vh = NSValue(HKHexagonCoordinate2D: h3)
-vh.HKHexagonCoordinate2DValue()
+let vh = NSValue(hkHexagonCoordinate2D: h3)
+vh?.hkHexagonCoordinate2DValue()
 
 // MARK: - Hexagon Obj
 
 let p1 = hex3DMake(-1, 1, 0)
 let hex1 = HKHexagon(coordinate: p1, grid: nil)
-hex1.hash
-hex1.valid
+hex1?.hash
+hex1?.valid
