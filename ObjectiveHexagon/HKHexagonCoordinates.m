@@ -88,7 +88,7 @@ CGFloat hex3DLength(HKHexagonCoordinate3D point) {
 }
 
 CGFloat hex3DDistance(HKHexagonCoordinate3D point1, HKHexagonCoordinate3D point2) {
-    return (fabsf(point1.x - point2.x) + fabsf(point1.y - point2.y) + fabsf(point1.z - point2.z)) / 2.0;
+    return (fabs(point1.x - point2.x) + fabs(point1.y - point2.y) + fabs(point1.z - point2.z)) / 2.0;
 }
 
 BOOL hex3DEquals(HKHexagonCoordinate3D lhs, HKHexagonCoordinate3D rhs) {

@@ -29,9 +29,9 @@ class ViewController: UIViewController {
         
         // Collection View
         if CELL_IS_CIRCLE {
-            self.collectionView.registerClass(CollectionViewCellCircle.self, forCellWithReuseIdentifier: "CollectionViewCell")
+            self.collectionView.register(CollectionViewCellCircle.self, forCellWithReuseIdentifier: "CollectionViewCell")
         } else {
-            self.collectionView.registerClass(CollectionViewCellHexagon.self, forCellWithReuseIdentifier: "CollectionViewCell")
+            self.collectionView.register(CollectionViewCellHexagon.self, forCellWithReuseIdentifier: "CollectionViewCell")
         }
         
         self.collectionView.decelerationRate = UIScrollViewDecelerationRateFast
@@ -40,12 +40,12 @@ class ViewController: UIViewController {
         self.collectionView.delegate = self
         
         // Grid with Rectanglar Map
-        let params = HKHexagonGrid.rectParamsForDataCount(DATA_COUNT, ratio: CGSizeMake(5, 4))
+        let params = HKHexagonGrid.rectParamsForDataCount(DATA_COUNT, ratio: CGSize(width: 5, height: 4))
         let points = HKHexagonGrid.generateRectangularMap(params, convert: { (p) -> HKHexagonCoordinate3D in
             return hexConvertEvenRToCube(p)
         })
         
-        self.itemsGrid = HKHexagonGrid(points: points, hexSize: HEX_SIZE, orientation: .Flat, map: .Rectangle)
+        self.itemsGrid = HKHexagonGrid(points: points, hexSize: HEX_SIZE, orientation: .flat, map: .rectangle)
         
         // Items ordered by distance from central hex (cell)
         self.items = self.itemsGrid.hexesBySpirals()
@@ -60,10 +60,10 @@ class ViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), atScrollPosition: [.CenteredVertically, .CenteredHorizontally], animated: false)
+        self.collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: [.centeredVertically, .centeredHorizontally], animated: false)
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
 }
@@ -71,18 +71,18 @@ class ViewController: UIViewController {
 
 extension ViewController: UICollectionViewDataSource {
     
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.items.count
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if CELL_IS_CIRCLE {
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CollectionViewCell", forIndexPath: indexPath) as! CollectionViewCellCircle
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCellCircle
             
             let hexObj = items[indexPath.item]
             cell.hexagon = hexObj
@@ -91,7 +91,7 @@ extension ViewController: UICollectionViewDataSource {
             return cell
         } else {
             
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CollectionViewCell", forIndexPath: indexPath) as! CollectionViewCellHexagon
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCellHexagon
             
             let hexObj = items[indexPath.item]
             cell.hexagon = hexObj
@@ -99,7 +99,7 @@ extension ViewController: UICollectionViewDataSource {
             
             cell.borderWidth = 3.0
             cell.borderGapOuter = 5.0
-            cell.borderColor = UIColor.brownColor()
+            cell.borderColor = UIColor.brown
             
             return cell
         }

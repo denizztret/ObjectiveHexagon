@@ -17,40 +17,40 @@ class CollectionViewLayout: UICollectionViewLayout {
     var attributesByHash = [String : UICollectionViewLayoutAttributes]()
     var needUpdate = true
     
-    override func prepareLayout() {
-        super.prepareLayout()
+    override func prepare() {
+        super.prepare()
         
         if needUpdate {
             needUpdate = false
             
-            self.grid.position = CGPointZero
+            self.grid.position = CGPoint.zero
             
             //MARK: Debug Draw Grid Frame
             if DEBUG_DRAW {
-                self.collectionView!.DebugDrawRect(self.grid.frame, name: "frame", lineWidth: 1, strokeColor: UIColor.blueColor())
+                self.collectionView!.DebugDrawRect(self.grid.frame, name: "frame", lineWidth: 1, strokeColor: UIColor.blue)
             }
             
-            attributesByHash.removeAll(keepCapacity: false)
+            attributesByHash.removeAll(keepingCapacity: false)
             
-            for (index, hex) in (items).enumerate() {
-                let indexPath = NSIndexPath(forItem: index, inSection: 0)
-                let attributes = self.layoutAttributesForItemAtIndexPath(indexPath)
+            for (index, hex) in (items).enumerated() {
+                let indexPath = IndexPath(item: index, section: 0)
+                let attributes = self.layoutAttributesForItem(at: indexPath)
                 attributesByHash[hex.hashID] = attributes
             }
         }
     }
     
-    override func collectionViewContentSize() -> CGSize {
+    override var collectionViewContentSize : CGSize {
         return grid.contentSize
     }
     
-    override func layoutAttributesForElementsInRect(rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
+    override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         
         var visibleElements = [UICollectionViewLayoutAttributes]()
         
         for (hashID, attributes) in attributesByHash {
-            if CGRectIntersectsRect(attributes.frame, rect) {
-                if let hex = grid.shapeByHashID(hashID) {
+            if attributes.frame.intersects(rect) {
+                if let _ = grid.shape(byHashID: hashID) {
                     
                 }
                 visibleElements.append(attributes)
@@ -60,21 +60,21 @@ class CollectionViewLayout: UICollectionViewLayout {
         return visibleElements
     }
     
-    override func layoutAttributesForItemAtIndexPath(indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
-        let attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
+    override func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
+        let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
         let hex = items[indexPath.item]
         attributes.frame = hex.frame
         attributes.center = hex.center
         
         //MARK: Debug Draw Grid Cells
         if DEBUG_DRAW {
-            self.collectionView!.DebugDrawPoly(hex.unwrappedVertices(), name: "Poly-\(hex.hashID)", lineWidth: 1, strokeColor: UIColor.brownColor())
+            self.collectionView!.DebugDrawPoly(hex.unwrappedVertices(), name: "Poly-\(hex.hashID)", lineWidth: 1, strokeColor: UIColor.brown)
         }
         
         return attributes
     }
     
-    override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
+    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         return true
     }
     
