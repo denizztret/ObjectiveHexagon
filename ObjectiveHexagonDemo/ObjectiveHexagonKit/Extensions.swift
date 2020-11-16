@@ -148,7 +148,7 @@ extension HKHexagon {
     public func unwrappedVertices() -> [CGPoint] {
         let result = (self.vertices as! [NSValue]).map  {
             (value: NSValue) -> CGPoint in
-            value.cgPointValue
+            value.cgPointValue()
         }
         return result
     }
