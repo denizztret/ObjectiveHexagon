@@ -1,3 +1,7 @@
+# Mac/vim
+.DS_Store
+*.swp
+
 # Xcode
 #
 build/
