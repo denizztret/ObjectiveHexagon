@@ -68,7 +68,10 @@ class CollectionViewLayout: UICollectionViewLayout {
         
         //MARK: Debug Draw Grid Cells
         if DEBUG_DRAW {
-            self.collectionView!.DebugDrawPoly(hex.unwrappedVertices(), name: "Poly-\(hex.hashID)", lineWidth: 1, strokeColor: UIColor.brown)
+            self.collectionView!.DebugDrawPoly(hex.unwrappedVertices(),
+                                               name: "Poly-\(String(describing: hex.hashID))",
+                                               lineWidth: 1,
+                                               strokeColor: UIColor.brown)
         }
         
         return attributes
