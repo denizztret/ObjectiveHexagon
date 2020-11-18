@@ -75,7 +75,7 @@ position = grid.position
 
 let hexes = Array(grid.hexes.values) as! [HKHexagon]
 for hex in hexes {
-	view2.DebugDrawPoly(hex.unwrappedVertices(), name: "vertices\(hex.hashID)", lineWidth: 1, strokeColor: UIColor.green)
+    view2.DebugDrawPoly(hex.unwrappedVertices(), name: "vertices\(String(describing: hex.hashID))", lineWidth: 1, strokeColor: UIColor.green)
 }
 
 

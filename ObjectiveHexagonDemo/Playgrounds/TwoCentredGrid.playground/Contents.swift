@@ -59,7 +59,7 @@ grid2.center = centerPoint2
 
 let hexes2 = Array(grid2.hexes.values) as! [HKHexagon]
 for hex in hexes2 {
-	view2.DebugDrawPoly(hex.unwrappedVertices(), name: "vertices2\(hex.hashID)", lineWidth: 1, strokeColor: UIColor.lightGray)
+    view2.DebugDrawPoly(hex.unwrappedVertices(), name: "vertices2\(String(describing: hex.hashID))", lineWidth: 1, strokeColor: UIColor.lightGray)
 }
 //view2.DebugDrawPoint(grid2.contentCenter, name: "contentCenter2", lineWidth: 1, strokeColor: UIColor.blackColor(), diameter: 15)
 view2.DebugDrawRect(grid2.frame, name: "frame2", lineWidth: 1, strokeColor: UIColor.blue)
@@ -69,7 +69,7 @@ view2.DebugDrawPoint(grid2.center, name: "cview2center", lineWidth: 1, strokeCol
 grid1.center = CGPoint(x: grid2.contentCenter.x + offset.x, y: grid2.contentCenter.y + offset.y)
 let hexes = Array(grid1!.hexes.values) as! [HKHexagon]
 for hex in hexes {
-	view2.DebugDrawPoly(hex.unwrappedVertices(), name: "vertices\(hex.hashID)", lineWidth: 1, strokeColor: UIColor.green)
+    view2.DebugDrawPoly(hex.unwrappedVertices(), name: "vertices\(String(describing: hex.hashID))", lineWidth: 1, strokeColor: UIColor.green)
 }
 //view2.DebugDrawPoint(grid1.contentCenter, name: "contentCenter1", lineWidth: 1, strokeColor: UIColor.blackColor(), diameter: 15)
 view2.DebugDrawRect(grid1.frame, name: "frame", lineWidth: 1, strokeColor: UIColor.blue)

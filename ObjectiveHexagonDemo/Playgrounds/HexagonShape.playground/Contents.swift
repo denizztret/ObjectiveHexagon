@@ -43,7 +43,7 @@ grid.center = centerPoint2
 
 let hexes = Array(grid.hexes.values) as! [HKHexagon]
 for hex in hexes {
-	view2.DebugDrawPoly(hex.unwrappedVertices(), name: "vertices2\(hex.hashID)", lineWidth: 1, strokeColor: UIColor.green)
+    view2.DebugDrawPoly(hex.unwrappedVertices(), name: "vertices2\(String(describing: hex.hashID))", lineWidth: 1, strokeColor: UIColor.green)
 
 //    // Draw Hexes Centers
 //    view2.DebugDrawPoint(hex.center, name: "center\(hex.hashID)", lineWidth: 1, strokeColor: UIColor.blueColor())
@@ -69,5 +69,5 @@ view2.DebugDrawRect(rect2, name: "FrameRound2", lineWidth: 1, strokeColor: UICol
 
 let hash = "{-3, 2, 1}"
 let hex2 = grid.shape(byHashID: hash)
-view2.DebugDrawPoint(hex2!.center, name: "center\(hex2!.hashID)", lineWidth: 1, strokeColor: UIColor.blue)
+view2.DebugDrawPoint(hex2!.center, name: "center\(String(describing: hex2!.hashID))", lineWidth: 1, strokeColor: UIColor.blue)
 
