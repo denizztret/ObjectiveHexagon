@@ -91,7 +91,7 @@ extension HKHexagonGrid {
     public func hexesBySpirals() -> [HKHexagon] {
         
         func maxDistance(_ hex: HKHexagon) -> Int {
-            return Int(max(fabs(hex.coordinate.x), fabs(hex.coordinate.y), fabs(hex.coordinate.z)))
+            return Int(max(abs(hex.coordinate.x), abs(hex.coordinate.y), abs(hex.coordinate.z)))
         }
         
         let hexes = Array(self.hexes.values) as! [HKHexagon]
@@ -155,9 +155,9 @@ extension HKHexagon {
 }
 
 public func getColor(forCoordinate coord: HKHexagonCoordinate3D) -> UIColor {
-    let r = fabs(200-coord.x*100)/255.0;
-    let g = fabs(200-coord.y*100)/255.0;
-    let b = fabs(200-coord.z*100)/255.0;
+    let r = abs(200-coord.x*100)/255.0;
+    let g = abs(200-coord.y*100)/255.0;
+    let b = abs(200-coord.z*100)/255.0;
     let color = UIColor(red: r, green: g, blue: b, alpha: 1.0)
     return color
 }
