@@ -34,7 +34,7 @@ class ViewController: UIViewController {
             self.collectionView.register(CollectionViewCellHexagon.self, forCellWithReuseIdentifier: "CollectionViewCell")
         }
         
-        self.collectionView.decelerationRate = UIScrollViewDecelerationRateFast
+        self.collectionView.decelerationRate = UIScrollView.DecelerationRate.fast
         
         self.collectionView.dataSource = self
         self.collectionView.delegate = self

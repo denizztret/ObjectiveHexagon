@@ -362,7 +362,7 @@
 				TargetAttributes = {
 					10C354F21AB9C14F00F4B841 = {
 						CreatedOnToolsVersion = 6.2;
-						LastSwiftMigration = 0930;
+						LastSwiftMigration = 1220;
 					};
 					10C3551C1AB9C16700F4B841 = {
 						CreatedOnToolsVersion = 6.2;
@@ -630,7 +630,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pythongem.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -644,7 +644,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.pythongem.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
