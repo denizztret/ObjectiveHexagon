@@ -10,10 +10,10 @@ import UIKit
 
 extension UIView {
     
-    public func DebugDrawPoint(p:CGPoint, name:String, lineWidth:CGFloat, strokeColor:UIColor, fillColor:UIColor = UIColor.clearColor(), diameter:CGFloat = 10.0) {
+    public func DebugDrawPoint(_ p:CGPoint, name:String, lineWidth:CGFloat, strokeColor:UIColor, fillColor:UIColor = UIColor.clear, diameter:CGFloat = 10.0) {
         if self.layer.sublayers != nil {
-            for layer in self.layer.sublayers {
-                if var oldLayer = layer as? CAShapeLayer {
+            for layer in self.layer.sublayers! {
+                if let oldLayer = layer as? CAShapeLayer {
                     if oldLayer.name != nil && oldLayer.name == name {
                         oldLayer.removeFromSuperlayer()
                     }
@@ -21,24 +21,24 @@ extension UIView {
             }
         }
         
-        var ovalPath = UIBezierPath(ovalInRect: CGRectMake(0, 0, diameter, diameter))
+        let ovalPath = UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: diameter, height: diameter))
         
-        var pointLayer = CAShapeLayer()
+        let pointLayer = CAShapeLayer()
         pointLayer.name = name
-        pointLayer.path = ovalPath.CGPath
-        pointLayer.bounds = CGRectMake(0, 0, diameter, diameter)
+        pointLayer.path = ovalPath.cgPath
+        pointLayer.bounds = CGRect(x: 0, y: 0, width: diameter, height: diameter)
         pointLayer.position = p
-        pointLayer.fillColor = fillColor.CGColor
-        pointLayer.strokeColor = strokeColor.CGColor
+        pointLayer.fillColor = fillColor.cgColor
+        pointLayer.strokeColor = strokeColor.cgColor
         pointLayer.lineWidth = lineWidth
         
         self.layer.addSublayer(pointLayer)
     }
     
-    public func DebugDrawRect(rect:CGRect, name:String, lineWidth:CGFloat, strokeColor:UIColor, fillColor:UIColor = UIColor.clearColor()) {
+    public func DebugDrawRect(_ rect:CGRect, name:String, lineWidth:CGFloat, strokeColor:UIColor, fillColor:UIColor = UIColor.clear) {
         if self.layer.sublayers != nil {
-            for layer in self.layer.sublayers {
-                if var oldLayer = layer as? CAShapeLayer {
+            for layer in self.layer.sublayers! {
+                if let oldLayer = layer as? CAShapeLayer {
                     if oldLayer.name != nil && oldLayer.name == name {
                         oldLayer.removeFromSuperlayer()
                     }
@@ -46,22 +46,22 @@ extension UIView {
             }
         }
         
-        var rectPath = UIBezierPath(rect: rect)
+        let rectPath = UIBezierPath(rect: rect)
         
-        var rectLayer = CAShapeLayer()
+        let rectLayer = CAShapeLayer()
         rectLayer.name = name
-        rectLayer.path = rectPath.CGPath
-        rectLayer.fillColor = fillColor.CGColor
-        rectLayer.strokeColor = strokeColor.CGColor
+        rectLayer.path = rectPath.cgPath
+        rectLayer.fillColor = fillColor.cgColor
+        rectLayer.strokeColor = strokeColor.cgColor
         rectLayer.lineWidth = lineWidth
         
         self.layer.addSublayer(rectLayer)
     }
     
-    public func DebugDrawPoly(points:[CGPoint], name:String, lineWidth:CGFloat, strokeColor:UIColor, fillColor:UIColor = UIColor.clearColor()) {
+    public func DebugDrawPoly(_ points:[CGPoint], name:String, lineWidth:CGFloat, strokeColor:UIColor, fillColor:UIColor = UIColor.clear) {
         if self.layer.sublayers != nil {
-            for layer in self.layer.sublayers {
-                if var oldLayer = layer as? CAShapeLayer {
+            for layer in self.layer.sublayers! {
+                if let oldLayer = layer as? CAShapeLayer {
                     if oldLayer.name != nil && oldLayer.name == name {
                         oldLayer.removeFromSuperlayer()
                     }
@@ -69,18 +69,18 @@ extension UIView {
             }
         }
         
-        var polyPath = UIBezierPath()
+        let polyPath = UIBezierPath()
         for i in 0..<points.count {
-            if i == 0 { polyPath.moveToPoint(points[i]) }
-            else { polyPath.addLineToPoint(points[i]) }
+            if i == 0 { polyPath.move(to: points[i]) }
+            else { polyPath.addLine(to: points[i]) }
         }
-        polyPath.closePath()
+        polyPath.close()
         
-        var polyLayer = CAShapeLayer()
+        let polyLayer = CAShapeLayer()
         polyLayer.name = name
-        polyLayer.path = polyPath.CGPath
-        polyLayer.fillColor = fillColor.CGColor
-        polyLayer.strokeColor = strokeColor.CGColor
+        polyLayer.path = polyPath.cgPath
+        polyLayer.fillColor = fillColor.cgColor
+        polyLayer.strokeColor = strokeColor.cgColor
         polyLayer.lineWidth = lineWidth
         self.layer.addSublayer(polyLayer)
     }
@@ -90,24 +90,24 @@ extension HKHexagonGrid {
     
     public func hexesBySpirals() -> [HKHexagon] {
         
-        func maxDistance(hex: HKHexagon) -> Int {
-            return Int(max(fabs(hex.coordinate.x), fabs(hex.coordinate.y), fabs(hex.coordinate.z)))
+        func maxDistance(_ hex: HKHexagon) -> Int {
+            return Int(max(abs(hex.coordinate.x), abs(hex.coordinate.y), abs(hex.coordinate.z)))
         }
         
-        let hexes = Array(self.hexes.values) as [HKHexagon]
+        let hexes = Array(self.hexes.values) as! [HKHexagon]
         let s = hexes.reduce(0) { max($0, maxDistance($1)) }
         
         var result = [HKHexagon]()
         
         for k in 0..<s {
-            let shapes = self.shapesAtRing(UInt(k)) as [HKHexagon]
+            let shapes = self.shapes(atRing: UInt(k)) as! [HKHexagon]
             result += shapes
         }
         
         return result
     }
     
-    public class func rectParamsForDataCount(cnt: Int, ratio: CGSize) -> HKHexagonGridRectParameters {
+    public class func rectParamsForDataCount(_ cnt: Int, ratio: CGSize) -> HKHexagonGridRectParameters {
         
         var param = HKHexagonGridRectParameters(minQ: 0, maxQ: 0, minR: 0, maxR: 0)
         
@@ -124,8 +124,8 @@ extension HKHexagonGrid {
         
         var delta = w1 * h1 - count
         while delta < 0 {
-            if ratioW > ratioH { w1++ }
-            else { h1++ }
+            if ratioW > ratioH { w1 += 1 }
+            else { h1 += 1 }
             delta = w1 * h1 - count
         }
         
@@ -137,27 +137,27 @@ extension HKHexagonGrid {
         return param
     }
     
-    public func boundsOfShapes(shapes: [HKHexagon], centerPoint: CGPoint) -> CGRect {
-        let rect = self.boundsOfShapes(shapes)
-        return CGRectOffset(rect, centerPoint.x, centerPoint.y)
+    public func boundsOfShapes(_ shapes: [HKHexagon], centerPoint: CGPoint) -> CGRect {
+        let rect = self.bounds(ofShapes: shapes)
+        return rect.offsetBy(dx: centerPoint.x, dy: centerPoint.y)
     }
 }
 
 extension HKHexagon {
     
     public func unwrappedVertices() -> [CGPoint] {
-        let result = (self.vertices as [NSValue]).map  {
+        let result = (self.vertices as! [NSValue]).map  {
             (value: NSValue) -> CGPoint in
-            value.CGPointValue()
+            value.cgPointValue()
         }
         return result
     }
 }
 
 public func getColor(forCoordinate coord: HKHexagonCoordinate3D) -> UIColor {
-    let r = fabs(200-coord.x*100)/255.0;
-    let g = fabs(200-coord.y*100)/255.0;
-    let b = fabs(200-coord.z*100)/255.0;
+    let r = abs(200-coord.x*100)/255.0;
+    let g = abs(200-coord.y*100)/255.0;
+    let b = abs(200-coord.z*100)/255.0;
     let color = UIColor(red: r, green: g, blue: b, alpha: 1.0)
     return color
 }
