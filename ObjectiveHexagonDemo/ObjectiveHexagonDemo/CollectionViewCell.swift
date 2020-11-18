@@ -123,8 +123,8 @@ class CollectionViewCellHexagon: UICollectionViewCell {
     
     fileprivate var contentBounds: CGRect {
         if let hex = self.hexagon {
-            let w = hex.grid.hexWidth
-            let h = hex.grid.hexHeight
+//            let w = hex.grid.hexWidth
+//            let h = hex.grid.hexHeight
             
             return CGRect(x: 0, y: 0, width: hex.frame.width, height: hex.frame.height)
         }
