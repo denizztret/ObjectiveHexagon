@@ -153,6 +153,14 @@ struct HexShapeTests {
     #expect(HexShape.rectangle(columns: 4, rows: 0, in: .oddR).count == 0)
   }
 
+  /// An empty rectangle may be arbitrarily long on its other side; listing its
+  /// cells must not walk the rows.
+  @Test("An empty rectangle lists no cells without walking its rows")
+  func emptyRectangleListsNoCellsAtOnce() {
+    #expect(HexShape.rectangle(columns: 0, rows: Int.max, in: .oddR).cells().isEmpty)
+    #expect(HexShape.rectangle(columns: Int.max, rows: 0, in: .evenQ).cells().isEmpty)
+  }
+
   // MARK: Indexing
 
   @Test("A cell and its index convert to each other", arguments: shapes)

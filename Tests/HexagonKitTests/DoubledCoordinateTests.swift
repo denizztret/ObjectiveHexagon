@@ -99,6 +99,20 @@ struct DoubledCoordinateTests {
     #expect(DoubledCoordinate(column: 0, row: 0) != nil)
   }
 
+  /// The parity of the sum is read from the low bits of the two components: the
+  /// sum itself may not fit `Int`, and the check must not trap on a pair it is
+  /// about to refuse.
+  @Test("The parity check survives a sum that does not fit Int")
+  func parityCheckSurvivesAnOverflowingSum() {
+    #expect(DoubledCoordinate(column: Int.max, row: 2) == nil)
+    #expect(DoubledCoordinate(column: Int.max, row: 1) != nil)
+    #expect(DoubledCoordinate(column: Int.min, row: -1) == nil)
+    #expect(throws: DecodingError.self) {
+      try JSONDecoder().decode(
+        DoubledCoordinate.self, from: Data(#"{"column":\#(Int.max),"row":2}"#.utf8))
+    }
+  }
+
   @Test("Conversion from a hex always produces an even sum")
   func conversionAlwaysProducesAnEvenSum() {
     var mismatches: [String] = []

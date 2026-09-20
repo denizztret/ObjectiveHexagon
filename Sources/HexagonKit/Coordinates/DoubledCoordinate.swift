@@ -12,7 +12,7 @@ public struct DoubledCoordinate: Hashable, Sendable, Codable {
 
   /// Creates a doubled coordinate, or `nil` when `column + row` is odd.
   public init?(column: Int, row: Int) {
-    guard (column + row) & 1 == 0 else { return nil }
+    guard Self.hasEvenSum(column, row) else { return nil }
     self.init(unchecked: column, row)
   }
 
@@ -33,13 +33,20 @@ public struct DoubledCoordinate: Hashable, Sendable, Codable {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     let column = try container.decode(Int.self, forKey: .column)
     let row = try container.decode(Int.self, forKey: .row)
-    guard (column + row) & 1 == 0 else {
+    guard Self.hasEvenSum(column, row) else {
       throw DecodingError.dataCorrupted(
         DecodingError.Context(
           codingPath: container.codingPath,
           debugDescription: "column + row must be even in a doubled coordinate"))
     }
     self.init(unchecked: column, row)
+  }
+
+  /// Returns whether `column + row` is even. The parity is read from the low
+  /// bits of the two components, so the sum itself is never computed and a pair
+  /// whose sum does not fit `Int` is judged rather than trapped on.
+  private static func hasEvenSum(_ column: Int, _ row: Int) -> Bool {
+    (column ^ row) & 1 == 0
   }
 
   /// Creates a doubled coordinate without checking the even-sum invariant.

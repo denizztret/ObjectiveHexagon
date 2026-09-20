@@ -142,6 +142,9 @@ public struct HexShape: Hashable, Sendable, Codable {
 
   /// Returns all cells of the shape, in index order.
   public func cells() -> [Hex] {
+    // An empty rectangle may still have an enormous number of rows or columns,
+    // and walking them would take forever to produce nothing.
+    guard count > 0 else { return [] }
     var cells: [Hex] = []
     cells.reserveCapacity(count)
     switch storage {
