@@ -9,8 +9,8 @@
 import UIKit
 import ObjectiveHexagonKit
 
-let HEX_SIZE:   CGFloat = 38.0
-let HEX_RADIUS: CGFloat = 10.0
+let HEX_SIZE:   CGFloat = 58.0
+let HEX_RADIUS: CGFloat = 45.0
 let DATA_COUNT: Int     = 100
 
 let DEBUG_DRAW = false
@@ -45,7 +45,7 @@ class ViewController: UIViewController {
             return hexConvertEvenRToCube(p)
         })
         
-        self.itemsGrid = HKHexagonGrid(points: points, hexSize: HEX_SIZE, orientation: .flat, map: .rectangle)
+        self.itemsGrid = HKHexagonGrid(points: points, hexSize: HEX_SIZE, orientation: .pointy, map: .rectangle)
         
         // Items ordered by distance from central hex (cell)
         self.items = self.itemsGrid.hexesBySpirals()
@@ -95,7 +95,7 @@ extension ViewController: UICollectionViewDataSource {
             
             let hexObj = items[indexPath.item]
             cell.hexagon = hexObj
-            cell.labelText = CELL_DRAW_TEXT ? NSString2DFromHexCoordinate3D(hexObj.coordinate) : ""
+            cell.labelText = CELL_DRAW_TEXT ? hexObj.hashID : ""
             
             cell.borderWidth = 3.0
             cell.borderGapOuter = 5.0

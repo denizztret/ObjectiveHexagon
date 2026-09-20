@@ -145,10 +145,6 @@ NSString *NSStringFromHexCoordinate3D(HKHexagonCoordinate3D point) {
     return [NSString stringWithFormat:@"{%.0f, %.0f, %.0f}", point.x, point.y, point.z];
 }
 
-NSString *NSString2DFromHexCoordinate3D(HKHexagonCoordinate3D point) {
-    return [NSString stringWithFormat:@"{%.0f, %.0f}", point.x, point.z];
-}
-
 // TODO: create func makeLine
 
 #pragma mark - NSValue Category
