@@ -26,6 +26,8 @@
 		10C355501AB9C25400F4B841 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C3554E1AB9C25400F4B841 /* CollectionViewCell.swift */; };
 		10C355511AB9C25400F4B841 /* CollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C3554F1AB9C25400F4B841 /* CollectionViewLayout.swift */; };
 		CC72696C20B360D900540FEB /* ObjectiveHexagonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10C3551D1AB9C16700F4B841 /* ObjectiveHexagonKit.framework */; };
+		DE0000011AB9C14F00F4B841 /* ObjectiveHexagonDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C3550E1AB9C14F00F4B841 /* ObjectiveHexagonDemoTests.swift */; };
+		DE0000021AB9C14F00F4B841 /* ObjectiveHexagonKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C355301AB9C16700F4B841 /* ObjectiveHexagonKitTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -370,13 +372,11 @@
 					};
 					CC72695820B360B300540FEB = {
 						CreatedOnToolsVersion = 9.3.1;
-						DevelopmentTeam = 2P97EM4L4N;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 10C354F21AB9C14F00F4B841;
 					};
 					CC72696620B360D900540FEB = {
 						CreatedOnToolsVersion = 9.3.1;
-						DevelopmentTeam = 2P97EM4L4N;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -463,6 +463,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE0000011AB9C14F00F4B841 /* ObjectiveHexagonDemoTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,6 +471,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE0000021AB9C14F00F4B841 /* ObjectiveHexagonKitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -712,15 +714,15 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 2P97EM4L4N;
+				DEVELOPMENT_TEAM = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ObjectiveHexagonDemoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.electricwoods.ObjectiveHexagonDemoTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pythongem.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ObjectiveHexagonDemo.app/ObjectiveHexagonDemo";
 			};
@@ -739,14 +741,14 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 2P97EM4L4N;
+				DEVELOPMENT_TEAM = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ObjectiveHexagonDemoTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.electricwoods.ObjectiveHexagonDemoTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pythongem.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ObjectiveHexagonDemo.app/ObjectiveHexagonDemo";
 			};
@@ -764,15 +766,15 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 2P97EM4L4N;
+				DEVELOPMENT_TEAM = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ObjectiveHexagonKitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.electricwoods.ObjectiveHexagonKitTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pythongem.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -789,14 +791,14 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 2P97EM4L4N;
+				DEVELOPMENT_TEAM = "";
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = ObjectiveHexagonKitTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.electricwoods.ObjectiveHexagonKitTests;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pythongem.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
