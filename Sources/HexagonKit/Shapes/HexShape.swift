@@ -199,9 +199,9 @@ public struct HexShape: Hashable, Sendable, Codable {
       return Self.triangularNumber(row) + (column - (size - row))
     case .rectangle(let origin, let columns, let rows, let system):
       let offset = OffsetCoordinate(hex, in: system)
-      let (column, columnOverflow) = offset.column.subtractingReportingOverflow(origin.column)
-      let (row, rowOverflow) = offset.row.subtractingReportingOverflow(origin.row)
-      guard !columnOverflow, !rowOverflow else { return nil }
+      guard let column = Self.checkedDifference(offset.column, origin.column),
+        let row = Self.checkedDifference(offset.row, origin.row)
+      else { return nil }
       guard 0 <= column, column < columns, 0 <= row, row < rows else { return nil }
       return row * columns + column
     }
@@ -277,8 +277,7 @@ extension HexShape {
     case .triangleUp(let origin, let size):
       guard size >= 0 else { return "the size of a triangle cannot be negative" }
       guard checkedTriangleCellCount(size: size) != nil else { return unrepresentableCount }
-      let (doubleSize, overflow) = size.multipliedReportingOverflow(by: 2)
-      guard !overflow else { return unrepresentableCoordinates }
+      guard let doubleSize = checkedProduct(size, 2) else { return unrepresentableCoordinates }
       // The origin is not a cell of this triangle, but both of its axial
       // coordinates are reached by cells, while `s` runs over `-2 * size...-size`.
       guard isRepresentable(origin.q), isRepresentable(origin.r),
@@ -291,8 +290,7 @@ extension HexShape {
     case .rectangle(let origin, let columns, let rows, let system):
       guard columns >= 0 else { return "a rectangle cannot have a negative number of columns" }
       guard rows >= 0 else { return "a rectangle cannot have a negative number of rows" }
-      let (count, overflow) = columns.multipliedReportingOverflow(by: rows)
-      guard !overflow else { return unrepresentableCount }
+      guard let count = checkedProduct(columns, rows) else { return unrepresentableCount }
       // An empty rectangle has no cells, so there is nothing left to place.
       guard count > 0 else { return nil }
       guard rectangleStaysInRange(origin: origin, columns: columns, rows: rows, system: system)

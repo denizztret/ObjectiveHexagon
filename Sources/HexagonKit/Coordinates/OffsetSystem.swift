@@ -43,4 +43,13 @@ extension OffsetSystem {
   var offset: Int {
     shiftsEvenLines ? 1 : -1
   }
+
+  /// Returns by how much the line with the given index is shifted: half of the
+  /// index, corrected for the lines this system shifts.
+  ///
+  /// The sum under the division is always even, so the truncating division of
+  /// Swift gives the same result as the flooring division of the reference.
+  func shift(ofLine line: Int) -> Int {
+    (line + offset * (line & 1)) / 2
+  }
 }

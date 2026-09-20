@@ -16,12 +16,9 @@ public struct Layout: Hashable, Sendable, Codable {
   /// - Precondition: both components of `size` are finite and greater than zero,
   ///   and both components of `origin` are finite.
   public init(orientation: Orientation, size: Point, origin: Point = .zero) {
-    precondition(
-      size.x.isFinite && size.y.isFinite && size.x > 0 && size.y > 0,
-      "The cell size of a layout must be finite and greater than zero along both axes.")
-    precondition(
-      origin.x.isFinite && origin.y.isFinite,
-      "The origin of a layout must be finite along both axes.")
+    if let reason = Self.rejectionReason(size: size, origin: origin) {
+      preconditionFailure(reason)
+    }
     self.orientation = orientation
     self.size = size
     self.origin = origin
@@ -35,18 +32,9 @@ public struct Layout: Hashable, Sendable, Codable {
     let orientation = try container.decode(Orientation.self, forKey: .orientation)
     let size = try container.decode(Point.self, forKey: .size)
     let origin = try container.decode(Point.self, forKey: .origin)
-    guard size.x.isFinite, size.y.isFinite, size.x > 0, size.y > 0 else {
+    if let reason = Self.rejectionReason(size: size, origin: origin) {
       throw DecodingError.dataCorrupted(
-        DecodingError.Context(
-          codingPath: container.codingPath,
-          debugDescription:
-            "the cell size must be finite and greater than zero along both axes"))
-    }
-    guard origin.x.isFinite, origin.y.isFinite else {
-      throw DecodingError.dataCorrupted(
-        DecodingError.Context(
-          codingPath: container.codingPath,
-          debugDescription: "the origin must be finite along both axes"))
+        DecodingError.Context(codingPath: container.codingPath, debugDescription: reason))
     }
     self.orientation = orientation
     self.size = size
@@ -58,11 +46,12 @@ public struct Layout: Hashable, Sendable, Codable {
     // Written in the order of the reference: the linear combination first, then
     // the cell size, then the origin. An algebraically equal form differs in the
     // last bits and drifts from the reference fixtures.
+    let forward = orientation.forward
     let q = Double(hex.q)
     let r = Double(hex.r)
     return Point(
-      x: (orientation.f0 * q + orientation.f1 * r) * size.x + origin.x,
-      y: (orientation.f2 * q + orientation.f3 * r) * size.y + origin.y)
+      x: (forward.m0 * q + forward.m1 * r) * size.x + origin.x,
+      y: (forward.m2 * q + forward.m3 * r) * size.y + origin.y)
   }
 
   /// Returns one corner of a hex, numbered as in the guide's text.
@@ -82,11 +71,12 @@ public struct Layout: Hashable, Sendable, Codable {
 
   /// Returns the fractional hex that contains a pixel position.
   public func hex(at point: Point) -> FractionalHex {
+    let backward = orientation.backward
     let x = (point.x - origin.x) / size.x
     let y = (point.y - origin.y) / size.y
     return FractionalHex(
-      q: orientation.b0 * x + orientation.b1 * y,
-      r: orientation.b2 * x + orientation.b3 * y)
+      q: backward.m0 * x + backward.m1 * y,
+      r: backward.m2 * x + backward.m3 * y)
   }
 
   /// The width of one cell, in pixels.
@@ -123,6 +113,21 @@ public struct Layout: Hashable, Sendable, Codable {
 }
 
 extension Layout {
+
+  /// Returns why the given size and origin do not describe a layout, or `nil`
+  /// when they do.
+  ///
+  /// The initializer and the decoder share this check, so the layouts the
+  /// initializer traps on are exactly the ones the decoder rejects.
+  private static func rejectionReason(size: Point, origin: Point) -> String? {
+    guard size.x.isFinite, size.y.isFinite, size.x > 0, size.y > 0 else {
+      return "the cell size must be finite and greater than zero along both axes"
+    }
+    guard origin.x.isFinite, origin.y.isFinite else {
+      return "the origin must be finite along both axes"
+    }
+    return nil
+  }
 
   /// Half of the square root of three, the only irrational number in the corner table.
   private static let halfSquareRootOfThree = Orientation.squareRootOfThree / 2

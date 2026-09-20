@@ -17,12 +17,10 @@ public struct OffsetCoordinate: Hashable, Sendable, Codable {
 
   /// Creates the offset coordinate of a hex in the given system.
   public init(_ hex: Hex, in system: OffsetSystem) {
-    // The sum under the division is always even, so the truncating division of
-    // Swift gives the same result as the flooring division of the reference.
     if system.isRowSystem {
-      self.init(column: hex.q + (hex.r + system.offset * (hex.r & 1)) / 2, row: hex.r)
+      self.init(column: hex.q + system.shift(ofLine: hex.r), row: hex.r)
     } else {
-      self.init(column: hex.q, row: hex.r + (hex.q + system.offset * (hex.q & 1)) / 2)
+      self.init(column: hex.q, row: hex.r + system.shift(ofLine: hex.q))
     }
   }
 
@@ -64,15 +62,10 @@ extension Hex {
 
   /// Creates the hex of an offset coordinate read in the given system.
   public init(_ coordinate: OffsetCoordinate, in system: OffsetSystem) {
-    // As above, the sum under the division is always even.
     if system.isRowSystem {
-      self.init(
-        q: coordinate.column - (coordinate.row + system.offset * (coordinate.row & 1)) / 2,
-        r: coordinate.row)
+      self.init(q: coordinate.column - system.shift(ofLine: coordinate.row), r: coordinate.row)
     } else {
-      self.init(
-        q: coordinate.column,
-        r: coordinate.row - (coordinate.column + system.offset * (coordinate.column & 1)) / 2)
+      self.init(q: coordinate.column, r: coordinate.row - system.shift(ofLine: coordinate.column))
     }
   }
 }

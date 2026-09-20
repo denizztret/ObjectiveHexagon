@@ -1,5 +1,23 @@
 extension HexShape {
 
+  /// Returns `a + b`, or `nil` when the sum does not fit `Int`.
+  static func checkedSum(_ a: Int, _ b: Int) -> Int? {
+    let (sum, overflow) = a.addingReportingOverflow(b)
+    return overflow ? nil : sum
+  }
+
+  /// Returns `a - b`, or `nil` when the difference does not fit `Int`.
+  static func checkedDifference(_ a: Int, _ b: Int) -> Int? {
+    let (difference, overflow) = a.subtractingReportingOverflow(b)
+    return overflow ? nil : difference
+  }
+
+  /// Returns `a * b`, or `nil` when the product does not fit `Int`.
+  static func checkedProduct(_ a: Int, _ b: Int) -> Int? {
+    let (product, overflow) = a.multipliedReportingOverflow(by: b)
+    return overflow ? nil : product
+  }
+
   /// Returns whether a single cube coordinate is inside the supported range.
   static func isRepresentable(_ coordinate: Int) -> Bool {
     -Hex.coordinateBound < coordinate && coordinate < Hex.coordinateBound
@@ -16,8 +34,8 @@ extension HexShape {
   /// Returns whether `coordinate + delta` is inside the range, counting a sum
   /// that overflows `Int` as being outside it.
   static func isRepresentable(_ coordinate: Int, offsetBy delta: Int) -> Bool {
-    let (sum, overflow) = coordinate.addingReportingOverflow(delta)
-    return !overflow && isRepresentable(sum)
+    guard let sum = checkedSum(coordinate, delta) else { return false }
+    return isRepresentable(sum)
   }
 
   /// Returns whether every cell of a rectangle of at least one cell stays inside
@@ -36,9 +54,9 @@ extension HexShape {
     let crossLimit = lineLimit + Hex.coordinateBound / 2
     let columnLimit = system.isRowSystem ? crossLimit : lineLimit
     let rowLimit = system.isRowSystem ? lineLimit : crossLimit
-    let (lastColumn, columnOverflow) = origin.column.addingReportingOverflow(columns - 1)
-    let (lastRow, rowOverflow) = origin.row.addingReportingOverflow(rows - 1)
-    guard !columnOverflow, !rowOverflow else { return false }
+    guard let lastColumn = checkedSum(origin.column, columns - 1),
+      let lastRow = checkedSum(origin.row, rows - 1)
+    else { return false }
     guard -columnLimit <= origin.column, lastColumn <= columnLimit,
       -rowLimit <= origin.row, lastRow <= rowLimit
     else { return false }
@@ -53,32 +71,23 @@ extension HexShape {
 
   /// Returns `1 + 3 * radius * (radius + 1)`, or `nil` when it does not fit `Int`.
   static func checkedHexagonCellCount(radius: Int) -> Int? {
-    let (triple, tripleOverflow) = radius.multipliedReportingOverflow(by: 3)
-    guard !tripleOverflow else { return nil }
-    let (next, nextOverflow) = radius.addingReportingOverflow(1)
-    guard !nextOverflow else { return nil }
-    let (product, productOverflow) = triple.multipliedReportingOverflow(by: next)
-    guard !productOverflow else { return nil }
-    let (count, countOverflow) = product.addingReportingOverflow(1)
-    return countOverflow ? nil : count
+    guard let triple = checkedProduct(radius, 3), let next = checkedSum(radius, 1),
+      let product = checkedProduct(triple, next)
+    else { return nil }
+    return checkedSum(product, 1)
   }
 
   /// Returns `triangularNumber(size + 1)`, or `nil` when it does not fit `Int`.
   static func checkedTriangleCellCount(size: Int) -> Int? {
-    let (rows, overflow) = size.addingReportingOverflow(1)
-    guard !overflow else { return nil }
+    guard let rows = checkedSum(size, 1) else { return nil }
     return checkedTriangularNumber(rows)
   }
 
   /// Returns `n * (n + 1) / 2` for `n >= 0`, or `nil` when it does not fit `Int`.
   static func checkedTriangularNumber(_ n: Int) -> Int? {
-    let (next, overflow) = n.addingReportingOverflow(1)
-    guard !overflow else { return nil }
-    let (product, productOverflow) =
-      n % 2 == 0
-      ? (n / 2).multipliedReportingOverflow(by: next)
-      : n.multipliedReportingOverflow(by: next / 2)
-    return productOverflow ? nil : product
+    guard let next = checkedSum(n, 1) else { return nil }
+    // The even factor is halved before the multiplication, as in `triangularNumber`.
+    return n % 2 == 0 ? checkedProduct(n / 2, next) : checkedProduct(n, next / 2)
   }
 
   /// Returns `n * (n + 1) / 2`, with the even factor halved before the
