@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main, "stage-*"]
+    tags: ["*"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  linux:
+    name: Linux, Swift ${{ matrix.swift }}
+    runs-on: ubuntu-latest
+    container: swift:${{ matrix.swift }}
+    strategy:
+      fail-fast: false
+      matrix:
+        swift: ["6.0", "6.1", "6.2"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show the Swift version
+        run: swift --version
+      - name: Build
+        run: swift build --build-tests
+      - name: Test
+        run: swift test
+
+  macos-minimum:
+    name: macOS, Xcode 16.0 (Swift 6.0)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show the Xcode versions of the runner
+        run: ls -d /Applications/Xcode*.app
+      - name: Select Xcode 16.0
+        run: sudo xcode-select --switch /Applications/Xcode_16.0.app
+      - name: Show the Swift version
+        run: swift --version
+      - name: Test
+        run: swift test
+
+  macos-current:
+    name: macOS, the default Xcode of macos-26
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+      - name: Show the Xcode versions of the runner
+        run: ls -d /Applications/Xcode*.app
+      - name: Show the Swift version
+        run: swift --version
+      - name: Test
+        run: swift test
