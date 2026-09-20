@@ -81,7 +81,7 @@ for hex in hexes {
 
 let lt = CGPoint(x: frame.minX, y: frame.minY)
 let rt = CGPoint(x: frame.maxX, y: frame.minY)
-let lb = CGPoint(x: frame.minX, y: frame.maxX)
+let lb = CGPoint(x: frame.minX, y: frame.maxY)
 let rb = CGPoint(x: frame.maxX, y: frame.maxY)
 view2.DebugDrawPoly([lt, rb], name: "diag1", lineWidth: 1, strokeColor: UIColor.blue)
 view2.DebugDrawPoly([rt, lb], name: "diag2", lineWidth: 1, strokeColor: UIColor.blue)
