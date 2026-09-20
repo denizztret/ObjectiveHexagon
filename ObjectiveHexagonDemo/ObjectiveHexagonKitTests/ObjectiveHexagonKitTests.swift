@@ -6,31 +6,29 @@
 //  Copyright (c) 2015 pythongem. All rights reserved.
 //
 
-import UIKit
 import XCTest
+import ObjectiveHexagonKit
 
 class ObjectiveHexagonKitTests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+
+    /// The grid looks cells up by the string form of the coordinate,
+    /// so a negative zero ("-0") would make the central cell unreachable.
+    func testAxialToCubeOfOriginHasNoNegativeZero() {
+        let cube = hexConvertAxialToCube(HKHexagonCoordinate2D(q: 0, r: 0))
+        XCTAssertEqual(NSStringFromHexCoordinate3D(cube), "{0, 0, 0}")
     }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+
+    func testCentralCellIsFoundThroughAxialConversion() {
+        let points = HKHexagonGrid.generateHexagonalMap(1)
+        let grid: HKHexagonGrid = HKHexagonGrid(points: points, hexSize: 10, orientation: .pointy, map: .hexagon)
+        let center = hexConvertAxialToCube(HKHexagonCoordinate2D(q: 0, r: 0))
+        XCTAssertNotNil(grid.shape(byHashID: NSStringFromHexCoordinate3D(center)))
     }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
+
+    /// 2.49999995 is below one half and must round down. In single precision
+    /// the value becomes exactly 2.5 and lands in the neighbouring cell.
+    func testRoundKeepsDoublePrecision() {
+        let rounded = hex3DRound(HKHexagonCoordinate3D(x: 2.49999995, y: -2.49999995, z: 0))
+        XCTAssertEqual(NSStringFromHexCoordinate3D(rounded), "{2, -2, 0}")
     }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure() {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
 }

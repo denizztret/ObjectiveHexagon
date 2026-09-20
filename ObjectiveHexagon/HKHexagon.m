@@ -117,8 +117,8 @@
         for (NSUInteger i=0; i<6; i++) {
             CGFloat orVal = self.grid.hexOrientation == HKHexagonGridOrientationPointy ? 1 : 0;
             CGFloat angle = 2 * M_PI / 12 * (2 * i - orVal);
-            CGFloat x = self.grid.hexSize * cosf(angle);
-            CGFloat y = self.grid.hexSize * sinf(angle);
+            CGFloat x = self.grid.hexSize * cos(angle);
+            CGFloat y = self.grid.hexSize * sin(angle);
             _localVertices[i] = CGPointMake(x, y);
         }
         _needsLayoutVertices = NO;

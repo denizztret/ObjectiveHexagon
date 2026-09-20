@@ -59,9 +59,9 @@ HKHexagonCoordinate3D hex3DRotateRight(HKHexagonCoordinate3D point) {
 }
 
 HKHexagonCoordinate3D hex3DRound(HKHexagonCoordinate3D point) {
-    CGFloat rx = roundf(point.x);
-    CGFloat ry = roundf(point.y);
-    CGFloat rz = roundf(point.z);
+    CGFloat rx = round(point.x);
+    CGFloat ry = round(point.y);
+    CGFloat rz = round(point.z);
     
     CGFloat x_diff = fabs(rx - point.x);
     CGFloat y_diff = fabs(ry - point.y);
@@ -114,7 +114,8 @@ HKHexagonCoordinate3D hex3DNeighbor(HKHexagonCoordinate3D p, NSUInteger directio
 }
 
 HKHexagonCoordinate3D hexConvertAxialToCube(HKHexagonCoordinate2D point) {
-    return hex3DMake(point.q, -point.r-point.q, point.r);
+    CGFloat y = -point.r-point.q;
+    return hex3DMake(point.q, y == 0 ? 0 : y, point.r);
 }
 
 HKHexagonCoordinate3D hexConvertEvenQToCube(HKHexagonCoordinate2D point) {
