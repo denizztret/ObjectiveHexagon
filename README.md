@@ -1,5 +1,5 @@
 [![Platform](http://img.shields.io/badge/platform-iOS-blue.svg?style=flat)](https://github.com/denizztret/ObjectiveHexagon)
-![Version](https://img.shields.io/badge/pod-v0.2.0-blue.svg?style=flat)
+![Version](https://img.shields.io/badge/pod-v0.3.0-blue.svg?style=flat)
 [![License](http://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/denizztret/ObjectiveHexagon/blob/master/LICENSE)
 
 <p align="center"><img src="https://github.com/denizztret/ObjectiveHexagon/blob/master/Screenshots/icon-blue-hexagon.png" height="200"/>
@@ -9,6 +9,8 @@
 
 Create and manage hexagonal shapes and grid. 
 Based on the materials from http://www.redblobgames.com/grids/hexagons.
+
+> **Note:** 0.3.0 is the final Objective-C release of this library. The next version is a pure Swift rewrite distributed via Swift Package Manager.
 
 [<img src="https://github.com/denizztret/ObjectiveHexagon/blob/master/Screenshots/screens.png"/>](https://github.com/denizztret/ObjectiveHexagon/blob/master/Screenshots/screens.png)
 
@@ -24,7 +26,7 @@ Based on the materials from http://www.redblobgames.com/grids/hexagons.
 Simply add the following line to your Podfile:
 
 ```ruby
-pod 'ObjectiveHexagon', :git=>'https://github.com/denizztret/ObjectiveHexagon.git', :tag=>'0.2.0'
+pod 'ObjectiveHexagon', :git=>'https://github.com/denizztret/ObjectiveHexagon.git', :tag=>'0.3.0'
 ```
 ## Usage
 
