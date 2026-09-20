@@ -201,7 +201,7 @@ NSString *HKHexagonGridMapStorageName(HKHexagonGridMapStorage map) {
     maxX += halfWidth;
     maxY += halfHeight;
     
-    return CGRectMake(minX, minY, fabsf(maxX-minX), fabsf(maxY-minY));
+    return CGRectMake(minX, minY, fabs(maxX-minX), fabs(maxY-minY));
 }
 
 - (void)setNeedsLayout {

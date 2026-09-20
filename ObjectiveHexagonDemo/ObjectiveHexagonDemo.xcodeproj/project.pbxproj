@@ -12,10 +12,7 @@
 		10C354FE1AB9C14F00F4B841 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10C354FC1AB9C14F00F4B841 /* Main.storyboard */; };
 		10C355001AB9C14F00F4B841 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 10C354FF1AB9C14F00F4B841 /* Images.xcassets */; };
 		10C355031AB9C14F00F4B841 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 10C355011AB9C14F00F4B841 /* LaunchScreen.xib */; };
-		10C3550F1AB9C14F00F4B841 /* ObjectiveHexagonDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C3550E1AB9C14F00F4B841 /* ObjectiveHexagonDemoTests.swift */; };
 		10C355221AB9C16700F4B841 /* ObjectiveHexagonKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 10C355211AB9C16700F4B841 /* ObjectiveHexagonKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		10C355281AB9C16700F4B841 /* ObjectiveHexagonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10C3551D1AB9C16700F4B841 /* ObjectiveHexagonKit.framework */; };
-		10C355311AB9C16700F4B841 /* ObjectiveHexagonKitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C355301AB9C16700F4B841 /* ObjectiveHexagonKitTests.swift */; };
 		10C355341AB9C16700F4B841 /* ObjectiveHexagonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10C3551D1AB9C16700F4B841 /* ObjectiveHexagonKit.framework */; };
 		10C355351AB9C16700F4B841 /* ObjectiveHexagonKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 10C3551D1AB9C16700F4B841 /* ObjectiveHexagonKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		10C355451AB9C18700F4B841 /* HKHexagon.h in Headers */ = {isa = PBXBuildFile; fileRef = 10C3553E1AB9C18700F4B841 /* HKHexagon.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -28,31 +25,25 @@
 		10C3554D1AB9C1D700F4B841 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C3554C1AB9C1D700F4B841 /* Extensions.swift */; };
 		10C355501AB9C25400F4B841 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C3554E1AB9C25400F4B841 /* CollectionViewCell.swift */; };
 		10C355511AB9C25400F4B841 /* CollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C3554F1AB9C25400F4B841 /* CollectionViewLayout.swift */; };
+		CC72696C20B360D900540FEB /* ObjectiveHexagonKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10C3551D1AB9C16700F4B841 /* ObjectiveHexagonKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		10C355091AB9C14F00F4B841 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 10C354EB1AB9C14F00F4B841 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 10C354F21AB9C14F00F4B841;
-			remoteInfo = ObjectiveHexagonDemo;
-		};
-		10C355291AB9C16700F4B841 /* PBXContainerItemProxy */ = {
+		10C355321AB9C16700F4B841 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 10C354EB1AB9C14F00F4B841 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 10C3551C1AB9C16700F4B841;
 			remoteInfo = ObjectiveHexagonKit;
 		};
-		10C3552B1AB9C16700F4B841 /* PBXContainerItemProxy */ = {
+		CC72695E20B360B300540FEB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 10C354EB1AB9C14F00F4B841 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 10C354F21AB9C14F00F4B841;
 			remoteInfo = ObjectiveHexagonDemo;
 		};
-		10C355321AB9C16700F4B841 /* PBXContainerItemProxy */ = {
+		CC72696D20B360D900540FEB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 10C354EB1AB9C14F00F4B841 /* Project object */;
 			proxyType = 1;
@@ -83,13 +74,11 @@
 		10C354FD1AB9C14F00F4B841 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		10C354FF1AB9C14F00F4B841 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		10C355021AB9C14F00F4B841 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		10C355081AB9C14F00F4B841 /* ObjectiveHexagonDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ObjectiveHexagonDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		10C3550D1AB9C14F00F4B841 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		10C3550E1AB9C14F00F4B841 /* ObjectiveHexagonDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectiveHexagonDemoTests.swift; sourceTree = "<group>"; };
 		10C3551D1AB9C16700F4B841 /* ObjectiveHexagonKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ObjectiveHexagonKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		10C355201AB9C16700F4B841 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		10C355211AB9C16700F4B841 /* ObjectiveHexagonKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjectiveHexagonKit.h; sourceTree = "<group>"; };
-		10C355271AB9C16700F4B841 /* ObjectiveHexagonKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ObjectiveHexagonKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		10C3552F1AB9C16700F4B841 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		10C355301AB9C16700F4B841 /* ObjectiveHexagonKitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectiveHexagonKitTests.swift; sourceTree = "<group>"; };
 		10C3553E1AB9C18700F4B841 /* HKHexagon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HKHexagon.h; sourceTree = "<group>"; };
@@ -102,10 +91,12 @@
 		10C3554C1AB9C1D700F4B841 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		10C3554E1AB9C25400F4B841 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		10C3554F1AB9C25400F4B841 /* CollectionViewLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewLayout.swift; sourceTree = "<group>"; };
-		10C355531AB9C2A300F4B841 /* HexagonCoordinates.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = HexagonCoordinates.playground; sourceTree = "<group>"; };
-		10C355541AB9C2A300F4B841 /* HexagonGrid.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = HexagonGrid.playground; sourceTree = "<group>"; };
-		10C355551AB9C2A300F4B841 /* HexagonShape.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = HexagonShape.playground; sourceTree = "<group>"; };
-		10C355561AB9C2A300F4B841 /* TwoCentredGrid.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TwoCentredGrid.playground; sourceTree = "<group>"; };
+		10C355531AB9C2A300F4B841 /* HexagonCoordinates.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = HexagonCoordinates.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		10C355541AB9C2A300F4B841 /* HexagonGrid.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = HexagonGrid.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		10C355551AB9C2A300F4B841 /* HexagonShape.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = HexagonShape.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		10C355561AB9C2A300F4B841 /* TwoCentredGrid.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TwoCentredGrid.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		CC72695920B360B300540FEB /* ObjectiveHexagonDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ObjectiveHexagonDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC72696720B360D900540FEB /* ObjectiveHexagonKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ObjectiveHexagonKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,13 +108,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		10C355051AB9C14F00F4B841 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		10C355191AB9C16700F4B841 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -131,11 +115,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		10C355241AB9C16700F4B841 /* Frameworks */ = {
+		CC72695620B360B300540FEB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				10C355281AB9C16700F4B841 /* ObjectiveHexagonKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC72696420B360D900540FEB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CC72696C20B360D900540FEB /* ObjectiveHexagonKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -158,9 +149,9 @@
 			isa = PBXGroup;
 			children = (
 				10C354F31AB9C14F00F4B841 /* ObjectiveHexagonDemo.app */,
-				10C355081AB9C14F00F4B841 /* ObjectiveHexagonDemoTests.xctest */,
 				10C3551D1AB9C16700F4B841 /* ObjectiveHexagonKit.framework */,
-				10C355271AB9C16700F4B841 /* ObjectiveHexagonKitTests.xctest */,
+				CC72695920B360B300540FEB /* ObjectiveHexagonDemoTests.xctest */,
+				CC72696720B360D900540FEB /* ObjectiveHexagonKitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -304,24 +295,6 @@
 			productReference = 10C354F31AB9C14F00F4B841 /* ObjectiveHexagonDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		10C355071AB9C14F00F4B841 /* ObjectiveHexagonDemoTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 10C355151AB9C14F00F4B841 /* Build configuration list for PBXNativeTarget "ObjectiveHexagonDemoTests" */;
-			buildPhases = (
-				10C355041AB9C14F00F4B841 /* Sources */,
-				10C355051AB9C14F00F4B841 /* Frameworks */,
-				10C355061AB9C14F00F4B841 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				10C3550A1AB9C14F00F4B841 /* PBXTargetDependency */,
-			);
-			name = ObjectiveHexagonDemoTests;
-			productName = ObjectiveHexagonDemoTests;
-			productReference = 10C355081AB9C14F00F4B841 /* ObjectiveHexagonDemoTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		10C3551C1AB9C16700F4B841 /* ObjectiveHexagonKit */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 10C355361AB9C16700F4B841 /* Build configuration list for PBXNativeTarget "ObjectiveHexagonKit" */;
@@ -340,23 +313,40 @@
 			productReference = 10C3551D1AB9C16700F4B841 /* ObjectiveHexagonKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		10C355261AB9C16700F4B841 /* ObjectiveHexagonKitTests */ = {
+		CC72695820B360B300540FEB /* ObjectiveHexagonDemoTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 10C3553A1AB9C16700F4B841 /* Build configuration list for PBXNativeTarget "ObjectiveHexagonKitTests" */;
+			buildConfigurationList = CC72696020B360B300540FEB /* Build configuration list for PBXNativeTarget "ObjectiveHexagonDemoTests" */;
 			buildPhases = (
-				10C355231AB9C16700F4B841 /* Sources */,
-				10C355241AB9C16700F4B841 /* Frameworks */,
-				10C355251AB9C16700F4B841 /* Resources */,
+				CC72695520B360B300540FEB /* Sources */,
+				CC72695620B360B300540FEB /* Frameworks */,
+				CC72695720B360B300540FEB /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				10C3552A1AB9C16700F4B841 /* PBXTargetDependency */,
-				10C3552C1AB9C16700F4B841 /* PBXTargetDependency */,
+				CC72695F20B360B300540FEB /* PBXTargetDependency */,
+			);
+			name = ObjectiveHexagonDemoTests;
+			productName = ObjectiveHexagonDemoTests;
+			productReference = CC72695920B360B300540FEB /* ObjectiveHexagonDemoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		CC72696620B360D900540FEB /* ObjectiveHexagonKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CC72696F20B360D900540FEB /* Build configuration list for PBXNativeTarget "ObjectiveHexagonKitTests" */;
+			buildPhases = (
+				CC72696320B360D900540FEB /* Sources */,
+				CC72696420B360D900540FEB /* Frameworks */,
+				CC72696520B360D900540FEB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CC72696E20B360D900540FEB /* PBXTargetDependency */,
 			);
 			name = ObjectiveHexagonKitTests;
 			productName = ObjectiveHexagonKitTests;
-			productReference = 10C355271AB9C16700F4B841 /* ObjectiveHexagonKitTests.xctest */;
+			productReference = CC72696720B360D900540FEB /* ObjectiveHexagonKitTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -365,28 +355,35 @@
 		10C354EB1AB9C14F00F4B841 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0620;
+				LastSwiftMigration = 0730;
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 1220;
 				ORGANIZATIONNAME = pythongem;
 				TargetAttributes = {
 					10C354F21AB9C14F00F4B841 = {
 						CreatedOnToolsVersion = 6.2;
-					};
-					10C355071AB9C14F00F4B841 = {
-						CreatedOnToolsVersion = 6.2;
-						TestTargetID = 10C354F21AB9C14F00F4B841;
+						LastSwiftMigration = 1220;
 					};
 					10C3551C1AB9C16700F4B841 = {
 						CreatedOnToolsVersion = 6.2;
+						LastSwiftMigration = 1220;
 					};
-					10C355261AB9C16700F4B841 = {
-						CreatedOnToolsVersion = 6.2;
+					CC72695820B360B300540FEB = {
+						CreatedOnToolsVersion = 9.3.1;
+						DevelopmentTeam = 2P97EM4L4N;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 10C354F21AB9C14F00F4B841;
+					};
+					CC72696620B360D900540FEB = {
+						CreatedOnToolsVersion = 9.3.1;
+						DevelopmentTeam = 2P97EM4L4N;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
 			buildConfigurationList = 10C354EE1AB9C14F00F4B841 /* Build configuration list for PBXProject "ObjectiveHexagonDemo" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
@@ -398,9 +395,9 @@
 			projectRoot = "";
 			targets = (
 				10C354F21AB9C14F00F4B841 /* ObjectiveHexagonDemo */,
-				10C355071AB9C14F00F4B841 /* ObjectiveHexagonDemoTests */,
 				10C3551C1AB9C16700F4B841 /* ObjectiveHexagonKit */,
-				10C355261AB9C16700F4B841 /* ObjectiveHexagonKitTests */,
+				CC72695820B360B300540FEB /* ObjectiveHexagonDemoTests */,
+				CC72696620B360D900540FEB /* ObjectiveHexagonKitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -416,13 +413,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		10C355061AB9C14F00F4B841 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		10C3551B1AB9C16700F4B841 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -430,7 +420,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		10C355251AB9C16700F4B841 /* Resources */ = {
+		CC72695720B360B300540FEB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC72696520B360D900540FEB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -451,14 +448,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		10C355041AB9C14F00F4B841 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				10C3550F1AB9C14F00F4B841 /* ObjectiveHexagonDemoTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		10C355181AB9C16700F4B841 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -470,36 +459,37 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		10C355231AB9C16700F4B841 /* Sources */ = {
+		CC72695520B360B300540FEB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				10C355311AB9C16700F4B841 /* ObjectiveHexagonKitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CC72696320B360D900540FEB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		10C3550A1AB9C14F00F4B841 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 10C354F21AB9C14F00F4B841 /* ObjectiveHexagonDemo */;
-			targetProxy = 10C355091AB9C14F00F4B841 /* PBXContainerItemProxy */;
-		};
-		10C3552A1AB9C16700F4B841 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 10C3551C1AB9C16700F4B841 /* ObjectiveHexagonKit */;
-			targetProxy = 10C355291AB9C16700F4B841 /* PBXContainerItemProxy */;
-		};
-		10C3552C1AB9C16700F4B841 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 10C354F21AB9C14F00F4B841 /* ObjectiveHexagonDemo */;
-			targetProxy = 10C3552B1AB9C16700F4B841 /* PBXContainerItemProxy */;
-		};
 		10C355331AB9C16700F4B841 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 10C3551C1AB9C16700F4B841 /* ObjectiveHexagonKit */;
 			targetProxy = 10C355321AB9C16700F4B841 /* PBXContainerItemProxy */;
+		};
+		CC72695F20B360B300540FEB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 10C354F21AB9C14F00F4B841 /* ObjectiveHexagonDemo */;
+			targetProxy = CC72695E20B360B300540FEB /* PBXContainerItemProxy */;
+		};
+		CC72696E20B360D900540FEB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 10C3551C1AB9C16700F4B841 /* ObjectiveHexagonKit */;
+			targetProxy = CC72696D20B360D900540FEB /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -527,24 +517,38 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -557,7 +561,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -570,17 +574,29 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -588,15 +604,17 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -606,9 +624,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ObjectiveHexagonDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pythongem.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -616,43 +638,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = ObjectiveHexagonDemo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pythongem.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
-		10C355161AB9C14F00F4B841 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = ObjectiveHexagonDemoTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ObjectiveHexagonDemo.app/ObjectiveHexagonDemo";
-			};
-			name = Debug;
-		};
-		10C355171AB9C14F00F4B841 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = ObjectiveHexagonDemoTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ObjectiveHexagonDemo.app/ObjectiveHexagonDemo";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -660,6 +652,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -672,9 +665,12 @@
 				INFOPLIST_FILE = ObjectiveHexagonKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pythongem.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -684,6 +680,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -692,42 +689,115 @@
 				INFOPLIST_FILE = ObjectiveHexagonKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.pythongem.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
+				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
 		};
-		10C3553B1AB9C16700F4B841 /* Debug */ = {
+		CC72696120B360B300540FEB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = ObjectiveHexagonKitTests/Info.plist;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 2P97EM4L4N;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ObjectiveHexagonDemoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.electricwoods.ObjectiveHexagonDemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ObjectiveHexagonDemo.app/ObjectiveHexagonDemo";
 			};
 			name = Debug;
 		};
-		10C3553C1AB9C16700F4B841 /* Release */ = {
+		CC72696220B360B300540FEB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
-				INFOPLIST_FILE = ObjectiveHexagonKitTests/Info.plist;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 2P97EM4L4N;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ObjectiveHexagonDemoTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.electricwoods.ObjectiveHexagonDemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ObjectiveHexagonDemo.app/ObjectiveHexagonDemo";
+			};
+			name = Release;
+		};
+		CC72697020B360D900540FEB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 2P97EM4L4N;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ObjectiveHexagonKitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.electricwoods.ObjectiveHexagonKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CC72697120B360D900540FEB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = 2P97EM4L4N;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = ObjectiveHexagonKitTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.electricwoods.ObjectiveHexagonKitTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -750,14 +820,7 @@
 				10C355141AB9C14F00F4B841 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
-		};
-		10C355151AB9C14F00F4B841 /* Build configuration list for PBXNativeTarget "ObjectiveHexagonDemoTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				10C355161AB9C14F00F4B841 /* Debug */,
-				10C355171AB9C14F00F4B841 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		10C355361AB9C16700F4B841 /* Build configuration list for PBXNativeTarget "ObjectiveHexagonKit" */ = {
 			isa = XCConfigurationList;
@@ -766,14 +829,25 @@
 				10C355381AB9C16700F4B841 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
-		10C3553A1AB9C16700F4B841 /* Build configuration list for PBXNativeTarget "ObjectiveHexagonKitTests" */ = {
+		CC72696020B360B300540FEB /* Build configuration list for PBXNativeTarget "ObjectiveHexagonDemoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				10C3553B1AB9C16700F4B841 /* Debug */,
-				10C3553C1AB9C16700F4B841 /* Release */,
+				CC72696120B360B300540FEB /* Debug */,
+				CC72696220B360B300540FEB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CC72696F20B360D900540FEB /* Build configuration list for PBXNativeTarget "ObjectiveHexagonKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CC72697020B360D900540FEB /* Debug */,
+				CC72697120B360D900540FEB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

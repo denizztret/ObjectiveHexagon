@@ -80,6 +80,8 @@ CG_EXTERN HKHexagonCoordinate3D hexConvertOddRToCube(HKHexagonCoordinate2D point
 
 CG_EXTERN NSString *NSStringFromHexCoordinate3D(HKHexagonCoordinate3D point);
 
+CG_EXTERN NSString *NSString2DFromHexCoordinate3D(HKHexagonCoordinate3D point);
+
 
 #pragma mark - CGPoint Extensions
 

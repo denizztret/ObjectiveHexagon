@@ -11,9 +11,9 @@ import ObjectiveHexagonKit
 
 class CollectionViewCellCircle: UICollectionViewCell {
 
-    private var shapeLayer = CAShapeLayer()
+    fileprivate var shapeLayer = CAShapeLayer()
     
-    private var label: UILabel!
+    fileprivate var label: UILabel!
     var labelText = ""
     
     var hexagon: HKHexagon? {
@@ -22,11 +22,11 @@ class CollectionViewCellCircle: UICollectionViewCell {
         }
     }
     
-    private var shapeBounds: CGRect {
+    fileprivate var shapeBounds: CGRect {
         let D_full: CGFloat = HEX_RADIUS * 2.0
         let D_half: CGFloat = HEX_RADIUS
         let size: CGSize = self.bounds.size
-        return CGRectMake(size.width/2-D_half, size.height/2-D_half, D_full, D_full)
+        return CGRect(x: size.width/2-D_half, y: size.height/2-D_half, width: D_full, height: D_full)
     }
     
     override init(frame: CGRect) {
@@ -34,15 +34,15 @@ class CollectionViewCellCircle: UICollectionViewCell {
         setup()
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
     
     func setup() {
-        self.contentView.backgroundColor = UIColor.clearColor()
-        self.contentView.layer.shadowColor = UIColor.blackColor().CGColor;
-        self.contentView.layer.shadowOffset = CGSizeMake(2, 1);
+        self.contentView.backgroundColor = UIColor.clear
+        self.contentView.layer.shadowColor = UIColor.black.cgColor;
+        self.contentView.layer.shadowOffset = CGSize(width: 2, height: 1);
         self.contentView.layer.shadowOpacity = 0.5;
         self.contentView.layer.shadowRadius = 3;
         self.contentView.layer.allowsEdgeAntialiasing = true;
@@ -51,11 +51,11 @@ class CollectionViewCellCircle: UICollectionViewCell {
         self.contentView.layer.addSublayer(self.shapeLayer)
         
         self.label = UILabel()
-        self.label.autoresizingMask = .FlexibleWidth | .FlexibleHeight
-        self.label.backgroundColor = UIColor.clearColor()
-        self.label.textAlignment = .Center
+        self.label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.label.backgroundColor = UIColor.clear
+        self.label.textAlignment = .center
         self.label.font = UIFont(name: "Arial", size: 14)
-        self.label.textColor = UIColor.grayColor()
+        self.label.textColor = UIColor.gray
         
         self.contentView.addSubview(self.label)
     }
@@ -63,14 +63,14 @@ class CollectionViewCellCircle: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        let path = UIBezierPath(ovalInRect: shapeBounds)
-        self.contentView.layer.shadowPath = path.CGPath
-        self.shapeLayer.path = path.CGPath;
+        let path = UIBezierPath(ovalIn: shapeBounds)
+        self.contentView.layer.shadowPath = path.cgPath
+        self.shapeLayer.path = path.cgPath;
         self.shapeLayer.frame = self.bounds;
         
         if let hex = self.hexagon {
             let color = getColor(forCoordinate: hex.coordinate)
-            self.shapeLayer.fillColor = color.CGColor
+            self.shapeLayer.fillColor = color.cgColor
             
             self.label.frame = self.bounds
             self.label.text = labelText
@@ -88,15 +88,15 @@ class CollectionViewCellCircle: UICollectionViewCell {
 
 class CollectionViewCellHexagon: UICollectionViewCell {
     
-    private var borderView = UIView()
-    private var borderLayer = CAShapeLayer()
+    fileprivate var borderView = UIView()
+    fileprivate var borderLayer = CAShapeLayer()
     
-    private var label: UILabel!
+    fileprivate var label: UILabel!
     var labelText = ""
     
-    var borderColor: UIColor = UIColor.brownColor() {
+    var borderColor: UIColor = UIColor.brown {
         didSet {
-            borderLayer.strokeColor = self.borderColor.CGColor
+            borderLayer.strokeColor = self.borderColor.cgColor
         }
     }
     var borderWidth: CGFloat = 3.0 {
@@ -121,21 +121,21 @@ class CollectionViewCellHexagon: UICollectionViewCell {
         }
     }
     
-    private var contentBounds: CGRect {
+    fileprivate var contentBounds: CGRect {
         if let hex = self.hexagon {
-            let w = hex.grid.hexWidth
-            let h = hex.grid.hexHeight
+//            let w = hex.grid.hexWidth
+//            let h = hex.grid.hexHeight
             
-            return CGRectMake(0, 0, hex.frame.width, hex.frame.height)
+            return CGRect(x: 0, y: 0, width: hex.frame.width, height: hex.frame.height)
         }
-        return CGRectZero
+        return CGRect.zero
     }
     
-    private var contentCenter: CGPoint {
+    fileprivate var contentCenter: CGPoint {
         if let hex = self.hexagon {
             return CGPoint(x: hex.frame.width/2, y: hex.frame.height/2)
         }
-        return CGPointZero
+        return CGPoint.zero
     }
     
     override init(frame: CGRect) {
@@ -143,7 +143,7 @@ class CollectionViewCellHexagon: UICollectionViewCell {
         setup()
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setup()
     }
@@ -152,25 +152,25 @@ class CollectionViewCellHexagon: UICollectionViewCell {
 
         self.layer.masksToBounds = false
         self.clipsToBounds = true
-        self.backgroundColor = UIColor.clearColor()
-        self.contentView.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.clear
+        self.contentView.backgroundColor = UIColor.clear
         
         borderView.clipsToBounds = true
-        borderView.backgroundColor = UIColor.clearColor()
+        borderView.backgroundColor = UIColor.clear
         
-        borderLayer.fillColor = UIColor.clearColor().CGColor
-        borderLayer.strokeColor = borderColor.CGColor
+        borderLayer.fillColor = UIColor.clear.cgColor
+        borderLayer.strokeColor = borderColor.cgColor
         
         borderView.layer.addSublayer(borderLayer)
         
         self.contentView.addSubview(borderView)
         
         self.label = UILabel()
-        self.label.autoresizingMask = .FlexibleWidth | .FlexibleHeight
-        self.label.backgroundColor = UIColor.clearColor()
-        self.label.textAlignment = .Center
+        self.label.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.label.backgroundColor = UIColor.clear
+        self.label.textAlignment = .center
         self.label.font = UIFont(name: "Arial", size: 14)
-        self.label.textColor = UIColor.grayColor()
+        self.label.textColor = UIColor.gray
         
         self.contentView.addSubview(self.label)
     }
@@ -182,19 +182,19 @@ class CollectionViewCellHexagon: UICollectionViewCell {
             
             let borderSize = hex.grid.hexSize - borderGapOuter + borderWidth / 2
             let borderVertices = localVertices(borderSize)
-            var borderPath = UIBezierPath()
+            let borderPath = UIBezierPath()
             for i in 0..<borderVertices.count {
-                if i == 0 { borderPath.moveToPoint(borderVertices[i]) }
-                else { borderPath.addLineToPoint(borderVertices[i]) }
+                if i == 0 { borderPath.move(to: borderVertices[i]) }
+                else { borderPath.addLine(to: borderVertices[i]) }
             }
-            borderPath.closePath()
+            borderPath.close()
             
-            borderLayer.path = borderPath.CGPath
+            borderLayer.path = borderPath.cgPath
             borderLayer.lineWidth = borderWidth / 2
             borderView.frame = contentBounds
             
             let color = getColor(forCoordinate: hex.coordinate)
-            borderLayer.fillColor = color.CGColor
+            borderLayer.fillColor = color.cgColor
             
             self.label.frame = self.bounds
             self.label.text = labelText
@@ -209,12 +209,12 @@ class CollectionViewCellHexagon: UICollectionViewCell {
         label.text = nil;
     }
     
-    func localVertices(size: CGFloat) -> [CGPoint] {
+    func localVertices(_ size: CGFloat) -> [CGPoint] {
         var points = [CGPoint]()
         if let hex = self.hexagon {
             for i in 0..<6 {
-                let orVal = hex.grid.hexOrientation == HKHexagonGridOrientation.Pointy ? 1 : 0
-                let angle = CGFloat(M_PI * Double(2 * i - orVal) / 6)
+                let orVal: CGFloat = hex.grid.hexOrientation == HKHexagonGridOrientation.pointy ? 1 : 0
+                let angle = CGFloat.pi * (2 * CGFloat(i) - orVal) / 6
                 let x = size * cos(angle)
                 let y = size * sin(angle)
                 var sc = CGPoint(x: x, y: y)

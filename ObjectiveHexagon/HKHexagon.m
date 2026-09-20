@@ -85,7 +85,7 @@
             if (p.y > maxY) { maxY = p.y; }
         }
 
-        _bounds = CGRectMake(minX, minY, fabsf(maxX-minX), fabsf(maxY-minY));
+        _bounds = CGRectMake(minX, minY, fabs(maxX-minX), fabs(maxY-minY));
         _needsLayoutBounds = NO;
     }
     return _bounds;

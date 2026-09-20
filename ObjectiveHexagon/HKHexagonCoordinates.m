@@ -86,8 +86,9 @@ CGFloat hex3DLength(HKHexagonCoordinate3D point) {
     
     return (px>py ? (px>pz ? px : pz) : (py>pz ? py : pz));
 }
+
 CGFloat hex3DDistance(HKHexagonCoordinate3D point1, HKHexagonCoordinate3D point2) {
-    return (fabsf(point1.x - point2.x) + fabsf(point1.y - point2.y) + fabsf(point1.z - point2.z)) / 2.0;
+    return (fabs(point1.x - point2.x) + fabs(point1.y - point2.y) + fabs(point1.z - point2.z)) / 2.0;
 }
 
 BOOL hex3DEquals(HKHexagonCoordinate3D lhs, HKHexagonCoordinate3D rhs) {
@@ -107,6 +108,7 @@ const HKHexagonCoordinate3D hex3DDirections[] = {
 HKHexagonCoordinate3D hex3DDirection(NSUInteger direction) {
     return hex3DDirections[direction];
 }
+
 HKHexagonCoordinate3D hex3DNeighbor(HKHexagonCoordinate3D p, NSUInteger direction) {
     return hex3DAdd(p, hex3DDirection(direction));
 }
@@ -114,21 +116,25 @@ HKHexagonCoordinate3D hex3DNeighbor(HKHexagonCoordinate3D p, NSUInteger directio
 HKHexagonCoordinate3D hexConvertAxialToCube(HKHexagonCoordinate2D point) {
     return hex3DMake(point.q, -point.r-point.q, point.r);
 }
+
 HKHexagonCoordinate3D hexConvertEvenQToCube(HKHexagonCoordinate2D point) {
     int q = (int)point.q; int r = (int)point.r;
     int x = q; int z = r - ((q + (q & 1)) >> 1);
     return hex3DMake(x, -x-z, z);
 }
+
 HKHexagonCoordinate3D hexConvertEvenRToCube(HKHexagonCoordinate2D point) {
     int q = (int)point.q; int r = (int)point.r;
     int z = r; int x = q - ((r + (r & 1)) >> 1);
     return hex3DMake(x, -x-z, z);
 }
+
 HKHexagonCoordinate3D hexConvertOddQToCube(HKHexagonCoordinate2D point) {
     int q = (int)point.q; int r = (int)point.r;
     int x = q; int z = r - ((q - (q & 1)) >> 1);
     return hex3DMake(x, -x-z, z);
 }
+
 HKHexagonCoordinate3D hexConvertOddRToCube(HKHexagonCoordinate2D point) {
     int q = (int)point.q; int r = (int)point.r;
     int z = r; int x = q - ((r - (r & 1)) >> 1);
@@ -137,6 +143,10 @@ HKHexagonCoordinate3D hexConvertOddRToCube(HKHexagonCoordinate2D point) {
 
 NSString *NSStringFromHexCoordinate3D(HKHexagonCoordinate3D point) {
     return [NSString stringWithFormat:@"{%.0f, %.0f, %.0f}", point.x, point.y, point.z];
+}
+
+NSString *NSString2DFromHexCoordinate3D(HKHexagonCoordinate3D point) {
+    return [NSString stringWithFormat:@"{%.0f, %.0f}", point.x, point.z];
 }
 
 // TODO: create func makeLine
