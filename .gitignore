@@ -6,6 +6,9 @@
 .build/
 .swiftpm/
 
+# Python (the fixture generator imports the pinned reference)
+__pycache__/
+
 # Internal working files (not part of the public repository)
 backlog/
 CLAUDE.md

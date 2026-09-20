@@ -18,7 +18,11 @@ let package = Package(
   targets: [
     .target(name: "HexagonKit"),
     .target(name: "HexagonKitUI", dependencies: ["HexagonKit"]),
-    .testTarget(name: "HexagonKitTests", dependencies: ["HexagonKit"]),
+    .testTarget(
+      name: "HexagonKitTests",
+      dependencies: ["HexagonKit"],
+      resources: [.copy("Fixtures")]
+    ),
     .testTarget(name: "HexagonKitUITests", dependencies: ["HexagonKitUI"]),
   ]
 )
