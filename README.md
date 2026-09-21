@@ -13,7 +13,9 @@ the same algorithms, and the reference tests of the guide ported one to one.
 neighbors, distance, rotation, rings, rounding, the hex-to-pixel layout and
 three map shapes. Algorithms such as lines, ranges, field of view and
 pathfinding, the `HexagonKitUI` module and the documentation articles are still
-to come. This is a pre-release: the API may still change before 1.0.
+to come. This is a pre-release: the API may still change before 1.0, and there
+is no tagged version yet. The first one will be tagged once the repository has
+been renamed to HexagonKit, so that the package name in your manifest stays put.
 
 ## Requirements
 
@@ -23,11 +25,12 @@ to come. This is a pre-release: the API may still change before 1.0.
 
 ## Installation
 
-Add the package to `Package.swift`:
+Until the first version is tagged, depend on the development branch. Add the
+package to `Package.swift`:
 
 ```swift
 dependencies: [
-  .package(url: "https://github.com/denizztret/ObjectiveHexagon.git", from: "1.0.0-alpha.1")
+  .package(url: "https://github.com/denizztret/ObjectiveHexagon.git", branch: "master")
 ]
 ```
 
@@ -37,14 +40,8 @@ and the library to your target:
 .target(name: "MyApp", dependencies: [.product(name: "HexagonKit", package: "ObjectiveHexagon")])
 ```
 
-To follow the development branch instead of a release, depend on it by name:
-
-```swift
-.package(url: "https://github.com/denizztret/ObjectiveHexagon.git", branch: "master")
-```
-
 In Xcode: File > Add Package Dependencies, paste the repository URL, and pick
-the version rule.
+the `master` branch.
 
 ## A first look
 

@@ -7,9 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.0.0-alpha.1]
-
-The first release of the Swift rewrite. The library is now a Swift Package
+The Swift rewrite, not tagged yet. The library is now a Swift Package
 Manager package named HexagonKit; the Objective-C library it grew from is
 finished and stays available under the 0.3.0 tag.
 
@@ -51,5 +49,4 @@ finished and stays available under the 0.3.0 tag.
 - The Objective-C sources, the demo application and the CocoaPods podspec. They
   remain available under the 0.3.0 tag.
 
-[Unreleased]: https://github.com/denizztret/ObjectiveHexagon/compare/1.0.0-alpha.1...HEAD
-[1.0.0-alpha.1]: https://github.com/denizztret/ObjectiveHexagon/releases/tag/1.0.0-alpha.1
+[Unreleased]: https://github.com/denizztret/ObjectiveHexagon/compare/0.3.0...HEAD
