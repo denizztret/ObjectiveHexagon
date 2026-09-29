@@ -14,6 +14,7 @@ public struct HexShape: Hashable, Sendable, Codable {
     case triangleDown(origin: Hex, size: Int)
     case triangleUp(origin: Hex, size: Int)
     case rectangle(origin: OffsetCoordinate, columns: Int, rows: Int, system: OffsetSystem)
+    case parallelogram(origin: Hex, columns: Int, rows: Int)
   }
 
   /// The kind and the parameters of this shape.
@@ -67,6 +68,21 @@ public struct HexShape: Hashable, Sendable, Codable {
     HexShape(.rectangle(origin: origin, columns: columns, rows: rows, system: system))
   }
 
+  /// Returns the parallelogram of `rows` rows of `columns` hexes each: the hexes
+  /// `origin + Hex(q: column, r: row)` for `0 <= column < columns` and
+  /// `0 <= row < rows`.
+  ///
+  /// This is the guide's parallelogram, also called a rhombus, on the axes `q`
+  /// and `r`; its sides run along the directions ``HexDirection/plusQMinusS`` and
+  /// ``HexDirection/plusRMinusS``. A cell is stored at the index
+  /// `row * columns + column`, as in the guide's `array[r][q]`.
+  ///
+  /// - Precondition: `columns >= 0`, `rows >= 0`, and the cell count and all cell
+  ///   coordinates are representable.
+  public static func parallelogram(origin: Hex = .zero, columns: Int, rows: Int) -> HexShape {
+    HexShape(.parallelogram(origin: origin, columns: columns, rows: rows))
+  }
+
   /// Decodes a shape, failing when a parameter is out of range.
   public init(from decoder: any Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -90,6 +106,11 @@ public struct HexShape: Hashable, Sendable, Codable {
       let rows = try container.decode(Int.self, forKey: .rows)
       let system = try container.decode(OffsetSystem.self, forKey: .system)
       storage = .rectangle(origin: origin, columns: columns, rows: rows, system: system)
+    case .parallelogram:
+      let origin = try container.decode(Hex.self, forKey: .origin)
+      let columns = try container.decode(Int.self, forKey: .columns)
+      let rows = try container.decode(Int.self, forKey: .rows)
+      storage = .parallelogram(origin: origin, columns: columns, rows: rows)
     }
     // The very check the factories run, thrown instead of trapping: encoded data
     // comes from outside, so a decoder rejects it rather than stopping the process.
@@ -122,6 +143,11 @@ public struct HexShape: Hashable, Sendable, Codable {
       try container.encode(columns, forKey: .columns)
       try container.encode(rows, forKey: .rows)
       try container.encode(system, forKey: .system)
+    case .parallelogram(let origin, let columns, let rows):
+      try container.encode(Kind.parallelogram, forKey: .kind)
+      try container.encode(origin, forKey: .origin)
+      try container.encode(columns, forKey: .columns)
+      try container.encode(rows, forKey: .rows)
     }
   }
 
@@ -131,7 +157,8 @@ public struct HexShape: Hashable, Sendable, Codable {
     switch storage {
     case .hexagon(_, let radius): 1 + 3 * radius * (radius + 1)
     case .triangleDown(_, let size), .triangleUp(_, let size): Self.triangularNumber(size + 1)
-    case .rectangle(_, let columns, let rows, _): columns * rows
+    case .rectangle(_, let columns, let rows, _), .parallelogram(_, let columns, let rows):
+      columns * rows
     }
   }
 
@@ -178,6 +205,12 @@ public struct HexShape: Hashable, Sendable, Codable {
           cells.append(Hex(offset, in: system))
         }
       }
+    case .parallelogram(let origin, let columns, let rows):
+      for row in 0..<rows {
+        for column in 0..<columns {
+          cells.append(Hex(q: column, r: row) + origin)
+        }
+      }
     }
     return cells
   }
@@ -211,6 +244,14 @@ public struct HexShape: Hashable, Sendable, Codable {
       else { return nil }
       guard 0 <= column, column < columns, 0 <= row, row < rows else { return nil }
       return row * columns + column
+    case .parallelogram(let origin, let columns, let rows):
+      // An empty parallelogram may start anywhere, even where `hex - origin`
+      // overflows, so it answers before subtracting.
+      guard columns > 0, rows > 0 else { return nil }
+      let column = hex.q - origin.q
+      let row = hex.r - origin.r
+      guard 0 <= column, column < columns, 0 <= row, row < rows else { return nil }
+      return row * columns + column
     }
   }
 
@@ -238,6 +279,8 @@ public struct HexShape: Hashable, Sendable, Codable {
       let offset = OffsetCoordinate(
         column: origin.column + index % columns, row: origin.row + index / columns)
       return Hex(offset, in: system)
+    case .parallelogram(let origin, let columns, _):
+      return Hex(q: index % columns, r: index / columns) + origin
     }
   }
 }
@@ -297,6 +340,22 @@ extension HexShape {
       guard rectangleStaysInRange(origin: origin, columns: columns, rows: rows, system: system)
       else { return unrepresentableCoordinates }
       return nil
+    case .parallelogram(let origin, let columns, let rows):
+      guard columns >= 0 else { return "a parallelogram cannot have a negative number of columns" }
+      guard rows >= 0 else { return "a parallelogram cannot have a negative number of rows" }
+      guard let count = checkedProduct(columns, rows) else { return unrepresentableCount }
+      // An empty parallelogram has no cells, so there is nothing left to place.
+      guard count > 0 else { return nil }
+      // Its cells run over `0..<columns` along `q` and `0..<rows` along `r`, and
+      // `s` falls along both sides. The count fits, so `columns + rows` is at most
+      // `columns * rows + 1`, and the sum of the two sides cannot overflow.
+      let span = (columns - 1) + (rows - 1)
+      guard isRepresentable(origin),
+        isRepresentable(origin.q, offsetBy: columns - 1),
+        isRepresentable(origin.r, offsetBy: rows - 1),
+        isRepresentable(origin.s, offsetBy: -span)
+      else { return unrepresentableCoordinates }
+      return nil
     }
   }
 
@@ -320,5 +379,6 @@ extension HexShape {
     case triangleDown
     case triangleUp
     case rectangle
+    case parallelogram
   }
 }

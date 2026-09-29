@@ -131,6 +131,21 @@ struct HexShapeLargeTests {
       lastCellOfRow: { Hex(OffsetCoordinate(column: side - 1, row: $0), in: .oddR) })
   }
 
+  @Test("A parallelogram of 46340 by 46340")
+  func largeParallelogram() {
+    let side = 46_340
+    let origin = Hex(q: -20_000, r: 7)
+    checkRows(
+      .parallelogram(origin: origin, columns: side, rows: side),
+      named: "parallelogram \(side)x\(side)",
+      count: side * side,
+      rows: HexShapeLargeTests.probeRows(from: 0, to: side - 1),
+      firstRow: 0,
+      prefix: { $0 * side },
+      firstCellOfRow: { origin + Hex(q: 0, r: $0) },
+      lastCellOfRow: { origin + Hex(q: side - 1, r: $0) })
+  }
+
   // MARK: Shapes near the edge of the supported coordinate range
 
   #if _pointerBitWidth(_64)
@@ -187,6 +202,22 @@ struct HexShapeLargeTests {
         firstCellOfRow: { Hex(q: max(-radius, -$0 - radius), r: $0) },
         lastCellOfRow: { Hex(q: min(radius, -$0 + radius), r: $0) })
     }
+
+    /// A parallelogram whose `s` falls by `2^30 - 2` from its first cell to its
+    /// last: the largest square one that starts at the origin.
+    @Test("A parallelogram near the edge of the coordinate range")
+    func parallelogramNearTheEdgeOfTheRange() {
+      let side = 1 << 29
+      checkRows(
+        .parallelogram(columns: side, rows: side),
+        named: "parallelogram \(side)x\(side)",
+        count: side * side,
+        rows: HexShapeLargeTests.probeRows(from: 0, to: side - 1),
+        firstRow: 0,
+        prefix: { $0 * side },
+        firstCellOfRow: { Hex(q: 0, r: $0) },
+        lastCellOfRow: { Hex(q: side - 1, r: $0) })
+    }
   #endif
 
   /// Every cell of the shapes above stays inside the guaranteed coordinate
@@ -200,5 +231,7 @@ struct HexShapeLargeTests {
     #expect(1_000_000_000 < Hex.coordinateBound)
     #expect(2 * 500_000_000 < Hex.coordinateBound)
     #expect(500_000_000 < Hex.coordinateBound)
+    #expect(20_000 + 46_340 < Hex.coordinateBound)
+    #expect(2 * ((1 << 29) - 1) < Hex.coordinateBound)
   }
 }

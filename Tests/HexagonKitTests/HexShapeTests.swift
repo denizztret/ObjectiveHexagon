@@ -13,8 +13,8 @@ struct NamedShape: Sendable, CustomStringConvertible {
 @Suite("HexShape")
 struct HexShapeTests {
 
-  /// Every shape of stage 2, including negative origins and all four offset
-  /// systems of the rectangle.
+  /// Every kind of shape, including negative origins, all four offset systems
+  /// of the rectangle and empty shapes.
   static let shapes: [NamedShape] = [
     NamedShape(name: "hexagon 0", shape: .hexagon(radius: 0)),
     NamedShape(name: "hexagon 3", shape: .hexagon(radius: 3)),
@@ -41,6 +41,11 @@ struct HexShapeTests {
       shape: .rectangle(
         origin: OffsetCoordinate(column: -4, row: -3), columns: 5, rows: 4, in: .evenQ)),
     NamedShape(name: "rectangle empty", shape: .rectangle(columns: 0, rows: 4, in: .oddR)),
+    NamedShape(name: "parallelogram 3x2", shape: .parallelogram(columns: 3, rows: 2)),
+    NamedShape(
+      name: "parallelogram 4x3 shifted",
+      shape: .parallelogram(origin: Hex(q: -6, r: 2), columns: 4, rows: 3)),
+    NamedShape(name: "parallelogram empty", shape: .parallelogram(columns: 5, rows: 0)),
   ]
 
   // MARK: Cell order
