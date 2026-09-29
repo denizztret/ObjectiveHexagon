@@ -126,12 +126,14 @@ struct FractionalHexTests {
 
   // MARK: Three stored components
 
-  /// The counterexample found in the review of doc-010: with a derived `s` the
-  /// interpolation of the line of stage 3 moves one cell away from the
-  /// reference. The nudge and the step are those of `hex_linedraw` in `lib.py`:
-  /// both ends are shifted by `(+1e-6, +1e-6, -2e-6)` and the parameter is
-  /// `(1 / N) * i`, not `i / N`: the two differ in the last bit and only the
-  /// first reproduces the reference.
+  /// The counterexample found in the review of doc-010: with a derived `s`,
+  /// interpolating as `hex_linedraw` of `lib.py` does moves one cell away from
+  /// the reference. The nudge and the step are those of `lib.py`: both ends are
+  /// shifted by `(+1e-6, +1e-6, -2e-6)` and the parameter is `(1 / N) * i`, not
+  /// `i / N`: the two differ in the last bit and only the first reproduces the
+  /// reference. This checks `lerp(to:t:)` and `rounded()` against `lib.py`, not
+  /// `Hex.line(to:)`: the line nudges by the offset of the guide's text and
+  /// draws `(173928, -203026)` at this sample, see `LineTests`.
   @Test("The interpolation counterexample of the review")
   func interpolationCounterexample() {
     let a = Hex(q: 173_927, r: 796_971)
