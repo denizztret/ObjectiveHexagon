@@ -36,47 +36,47 @@ runs that copy and writes the large reference fixtures into
 | Coordinate conversion | API | `OffsetCoordinate.init(_:in:)`, `DoubledCoordinate.init(_:in:)`, `Hex.init(_:in:)` | 2 | `OffsetCoordinateTests.roundTripsMatchTheReference`, `DoubledCoordinateTests.roundTripsMatchTheReference` |
 | Neighbors: cube and axial | API | `Hex.neighbor(_:)`, `Hex.neighbors`, `HexDirection` | 2 | `HexTests.neighborMatchesTheReference`, `HexTests.neighborsFollowDirectionOrder`, `HexDirectionTests.vectorMatchesTheTable` |
 | Neighbors: offset and doubled | API | `OffsetCoordinate.neighbor(_:in:)`, `DoubledCoordinate.neighbor(_:in:)` | 2 | `OffsetCoordinateTests.neighborsMatchTheGuideTables`, `DoubledCoordinateTests.neighborsMatchTheGuideTables` |
-| Neighbors: diagonals | API | `Hex.diagonalNeighbors` | 3 | planned |
+| Neighbors: diagonals | API | `HexDiagonal`, `Hex.diagonalNeighbor(_:)`, `Hex.diagonalNeighbors` | 3 | `HexDiagonalTests.diagonalNeighborMatchesTheReference`, `HexDiagonalTests.vectorMatchesTheTable`, `HexDiagonalTests.diagonalIsTheSumOfTwoDirections` |
 | Distances: cube and axial | API | `Hex.distance(to:)`, `Hex.length` | 2 | `HexTests.distanceMatchesTheReference`, `HexTests.lengthAgreesWithTheReferenceFormula`, `HexTests.distanceIsAMetric` |
 | Distances: offset and doubled | composition | recipe: convert to `Hex`, then `Hex.distance(to:)`; written down in `Snippets/CoordinateRecipes.swift`, slice `distance` | 2 | `DoubledCoordinateTests.distanceRecipeMatchesTheGuideFormulas`, `OffsetCoordinateTests.distanceRecipeMatchesTheStepCount` |
-| Line drawing | API | `Hex.line(to:)` | 3 | planned |
-| Movement range | API | `Hex.range(_:)` | 3 | planned |
-| Intersecting ranges | API | `Hex.intersection(ofRanges:)` | 3 | planned |
-| Obstacles | API | `Hex.reachable(steps:isPassable:)` | 3 | planned |
+| Line drawing | API | `Hex.line(to:)` | 3 | `LineTests.lineMatchesTheReference`, `LineTests.lineMatchesTheModel`, `LineTests.linesMatchTheFixture`, `LineTests.samplesMatchTheFixture` |
+| Movement range | API | `Hex.range(radius:)` | 3 | `RangeTests.rangeOfRadiusOneIsListedRowByRow`, `RangeTests.rangeHoldsExactlyTheHexesWithinTheRadius` |
+| Intersecting ranges | API | `Hex.intersection(ofRanges:)` | 3 | `RangeTests.intersectionOfTheDiagramExample`, `RangeTests.intersectionsMatchAScan` |
+| Obstacles | API | `Hex.reachable(steps:isPassable:)` | 3 | `ReachableTests.fourStepsThroughTheScene`, `ReachableTests.withoutObstaclesTheKeysAreTheRange` |
 | Rotation | API | `Hex.rotated(by:around:)` | 2 | `HexTests.clockwiseRotationMatchesTheReference`, `HexTests.counterclockwiseRotationMatchesTheReference`, `HexTests.rotationIsPeriodic` |
-| Reflection | API | `Hex.reflected(across:)` | 3 | planned |
+| Reflection | API and composition | `HexAxis`, `Hex.reflected(across:around:)`; the three negated reflections: recipe `(hex - center).reflected(across: axis) * -1 + center` | 3 | `HexAxisTests.reflectionsOfTheDiagramHexMatchTheGuide`, `HexAxisTests.negatedReflectionsFollowTheRecipe`, `HexAxisTests.fixedHexesLieOnTheLineOfTwoDiagonals` |
 | Rings | API | `Hex.ring(radius:)` | 2 | `HexTests.ringOfRadiusOneMatchesTheGuide`, `HexTests.ringOfRadiusTwoMatchesTheGuide`, `HexTests.ringHasSixTimesRadiusCells` |
-| Spiral rings | API | `Hex.spiral(radius:)` | 3 | planned |
-| Spiral coordinates | API | `Hex.spiralIndex`, `Hex.init(spiralIndex:)` | 3 | planned |
+| Spiral rings | API | `Hex.spiral(radius:)` | 3 | `SpiralTests.spiralsMatchTheGuide`, `SpiralTests.spiralIncludesItsOuterRing` |
+| Spiral coordinates | API | `Hex.spiralIndex(around:)`, `Hex.init(spiralIndex:around:)` | 3 | `SpiralTests.spiralCoordinatesMatchTheGuide`, `SpiralTests.spiralAndCoordinatesAgree` |
 | Conversions: offset to doubled | composition | recipe: convert through `Hex`; written down in `Snippets/CoordinateRecipes.swift`, slice `bridge` | 2 | `DoubledCoordinateTests.bridgeRecipeMatchesTheReferenceFormulas` |
-| Field of view | API | `Hex.fieldOfView(radius:isOpaque:)` | 3 | planned |
+| Field of view | API | `Hex.fieldOfView(radius:isOpaque:)` | 3 | `FieldOfViewTests.sceneOfTheGuide`, `FieldOfViewTests.wallHidesAHexOnlyWhenTheLinePassesThroughIt` |
 | Hex to pixel | API | `Layout.center(of:)` | 2 | `LayoutTests.centersMatchTheReferenceNumbers`, `LayoutTests.centersMatchTheFixture` |
 | Hex to pixel: offset and doubled | composition | recipe: convert to `Hex`, then `Layout.center(of:)`; written down in `Snippets/CoordinateRecipes.swift`, slice `pixel` | 2 | `LayoutTests.offsetToPixelRecipe`, `LayoutTests.doubledToPixelRecipe`, `LayoutTests.offsetGridIsSpacedAsDrawn` |
 | Pixel to hex | API | `Layout.hex(at:)` | 2 | `LayoutTests.roundTripMatchesTheReference`, `LayoutTests.pixelInsideACellRoundsToThatCell` |
 | Rounding | API | `FractionalHex.rounded()` | 2 | `FractionalHexTests.midpointCaseOfTheReference`, `FractionalHexTests.exactHalvesRoundAwayFromZero`, `FractionalHexTests.roundingMatchesTheFixtureOnBoundaryPoints` |
 | Map storage: shapes | API | `HexShape.hexagon`, `.triangleDown`, `.triangleUp`, `.rectangle` | 2 | `HexShapeTests.membershipMatchesTheDefiningInequalities`, `HexShapeTests.cellAndIndexAreMutuallyInverse` |
-| Map storage: parallelogram | API | `HexShape.parallelogram` | 3 | planned |
-| Map storage: arrays | API | `DenseHexMap` | 3 | planned |
-| Wraparound maps | API | `WrappedHexagon.wrap(_:)` | 3 | planned |
-| Pathfinding | API | `Hex.path(to:minimumStepCost:searchLimit:cost:)` | 3 | planned |
+| Map storage: parallelogram | API | `HexShape.parallelogram(origin:columns:rows:)` | 3 | `HexShapeParallelogramTests.parallelogramIsListedRowByRow`, `HexShapeTests.cellAndIndexAreMutuallyInverse` |
+| Map storage: arrays | API | `DenseHexMap` | 3 | `DenseHexMapTests.valuesFollowTheIndexOrder`, `DenseHexMapTests.optionalChainingAndNilOffTheShapeDoNothing` |
+| Wraparound maps: hexagon | API | `WrappedHexagon`, `WrappedHexagon.wrap(_:)` | 3 | `WrappedHexagonTests.hexesWrapAsInTheGuide`, `WrappedHexagonTests.formulaAgreesWithTheGuideRule` |
+| Wraparound maps: rectangle | explanation | the guide gives no formula; wrap the offset column and row | 3 | – |
+| Pathfinding | API | `Hex.path(to:minimumStepCost:searchLimit:cost:)` | 3 | `PathTests.pathCostsThroughTheScene`, `PathTests.aStarFindsACheapestPath` |
 | Bridges to CoreGraphics, SwiftUI and UIKit | API | `HexagonKitUI` | 4 | planned |
 
 ## Reference tests of the guide
 
-`lib.py` ships nineteen test functions. Stage 2 covers all of them except the
-two that belong to stage 3.
+`lib.py` ships nineteen test functions. All nineteen are covered.
 
 | Reference test | Covered by |
 |---|---|
 | `test_hex_arithmetic` | `HexTests.additionMatchesTheReference`, `HexTests.subtractionMatchesTheReference` |
 | `test_hex_direction` | `HexDirectionTests.directionTwoMatchesTheReference` |
 | `test_hex_neighbor` | `HexTests.neighborMatchesTheReference` |
-| `test_hex_diagonal` | stage 3 |
+| `test_hex_diagonal` | `HexDiagonalTests.diagonalNeighborMatchesTheReference` |
 | `test_hex_distance` | `HexTests.distanceMatchesTheReference` |
 | `test_hex_rotate_right` | `HexTests.clockwiseRotationMatchesTheReference` |
 | `test_hex_rotate_left` | `HexTests.counterclockwiseRotationMatchesTheReference` |
 | `test_hex_round` | `FractionalHexTests.midpointCaseOfTheReference`, `FractionalHexTests.nearHalfwayCasesOfTheReference`, `FractionalHexTests.weightedCasesOfTheReference` |
-| `test_hex_linedraw` | stage 3 |
+| `test_hex_linedraw` | `LineTests.lineMatchesTheReference` |
 | `test_layout` | `LayoutTests.centersMatchTheReferenceNumbers`, `LayoutTests.roundTripMatchesTheReference` |
 | `test_offset_roundtrip` | `OffsetCoordinateTests.roundTripsMatchTheReference` |
 | `test_offset_from_cube` | `OffsetCoordinateTests.cubeToOffsetMatchesTheReference` |
@@ -115,12 +115,57 @@ disagree with each other. Every choice HexagonKit made is listed here.
 6. **No trigonometry.** Corner offsets are the constants `0`, `+-0.5`, `+-1` and
    `+-sqrt(3)/2`, where `sqrt(3)` is `3.0.squareRoot()`. They are identical on
    every platform, while `cos` and `sin` may differ in the last bit.
-7. **Cell order in shape generators.** The guide lists the cells of a map shape
-   with the outer loop over `q`. HexagonKit lists them row by row, which is the
-   order the dense array storage of stage 3 needs. The sets are the same.
+7. **Cell order in shape generators and ranges.** The guide lists the cells of
+   a map shape, a movement range and an intersection of ranges with the outer
+   loop over `q`. HexagonKit lists them row by row, which is the order the dense
+   array storage needs. The sets are the same.
 8. **A ring of radius zero.** The `cube_ring` of the guide does not work at a
    radius of zero, as its author notes. `Hex.ring(radius: 0)` returns the center
    itself.
+9. **Nudge of the line ends.** `lib.py` and the implementation page nudge both
+   ends of a line by `(1e-6, 1e-6, -2e-6)`; the text of the guide recommends
+   `(1e-6, 2e-6, -3e-6)`, and HexagonKit follows the text. The nudge of `lib.py`
+   moves `q` and `r` alike, so it does not break ties between them: on the
+   hexagon of radius 6, 1734 of the 16129 ordered pairs of cells depend on the
+   last bit of floating point there, and 104 lines differ from their reverses;
+   the nudge of the text leaves neither on that hexagon. The two nudges draw
+   different lines for 1447 of those pairs; `test_hex_linedraw` passes with
+   both. The large line fixtures are generated with the nudge of the text. With
+   either nudge, rounding in floating point can leave two consecutive cells of a
+   very long line with large coordinates two steps apart, so HexagonKit does
+   not promise that consecutive cells of a line are adjacent.
+10. **A line from a cell to itself.** The text of the guide divides by the
+    distance, which is zero there; HexagonKit uses `max(N, 1)` as the
+    implementation page does, so the line is the cell alone.
+11. **Movement with obstacles counts the moves.** The guide returns the set of
+    cells it visited; HexagonKit returns each reached cell with the fewest moves
+    that reach it, which is the index of its fringe in the guide's code.
+12. **Spiral coordinates.** The guide's formulas break at index 0, find the
+    index of a cell by searching its ring, and compute the radius of an index as
+    `floor((sqrt(12 * index - 3) + 3) / 6)`, which is exact in `Double` only up
+    to radius 44739242 and overflows 64-bit integers inside the supported
+    coordinate range. HexagonKit gives the center index 0, converts in both
+    directions in constant time with exact integer arithmetic, and takes any
+    center.
+13. **Field of view.** The guide calls a cell visible when the line to it
+    "doesn't hit any walls"; its interactive diagram uses a more permissive test
+    and never shows walls as visible. HexagonKit takes the plain reading: a cell
+    is visible when no cell strictly between the two ends of the line is opaque,
+    so walls are visible and hide what is behind them.
+14. **Pathfinding.** The guide points to its A* tutorial and suggests scaling
+    the distance by the cost of a step; its diagram runs a breadth-first search.
+    HexagonKit runs A* with the heuristic `distance * minimumStepCost` and an
+    optional limit on the cells it expands. Among equally cheap paths, which one
+    is returned is not specified.
+15. **Wraparound in constant time.** The guide precomputes a table of the cells
+    just off the map; HexagonKit computes the cell of the map for any cell with
+    an integer formula (the hexmod representation by Sander Evers, which the
+    guide links to). It agrees with the guide's rule of subtracting the nearest
+    mirror center.
+16. **Parallelograms on the axes `q` and `r`.** The guide's loop may run over any
+    two of the three axes; HexagonKit offers the pair `q` and `r`, the one the
+    guide's array storage uses, with rows along `r`. The other two pairs give the
+    same shape rotated by 120 and 240 degrees.
 
 ## Bugs of ObjectiveHexagon that the API makes impossible
 
@@ -131,7 +176,7 @@ mechanism that caused it, there is no artificial test for it; the table says so.
 | Bug of the Objective-C library | How it is closed |
 |---|---|
 | `hexConvertAxialToCube` produced a negative zero, so a lookup for the central cell missed | `Hex` is integral and is its own dictionary key. Test: `HexTests.centralCellIsReachableThroughAHexKey` |
-| `hexesBySpirals()` dropped the outer ring | The spiral belongs to stage 3, but `ring(radius:)` already pins the cell count and the first cell. Test: `HexTests.ringHasSixTimesRadiusCells` |
+| `hexesBySpirals()` dropped the outer ring | `Hex.spiral(radius:)` ends with the outer ring and has `1 + 3 * radius * (radius + 1)` cells. Test: `SpiralTests.spiralIncludesItsOuterRing` |
 | `valid` compared a sum of `CGFloat` with zero using `==` | There is no validity check at all: `Hex` holds the invariant by construction and `FractionalHex` is a separate type. Fixed by design |
 | `fabsf`, `roundf`, `cosf`, `sinf` applied to `double` values | The core uses `Double` only, rounds with `rounded(.toNearestOrAwayFromZero)` and has no trigonometry. Test: `FractionalHexTests.roundingKeepsDoublePrecision` |
 | A category on `NSValue` duplicated UIKit and read past its buffer | Foundation and Objective-C are banned in the core. Fixed by design |

@@ -9,13 +9,15 @@ the same algorithms, and the reference tests of the guide ported one to one.
 
 ## Status
 
-**Alpha.** The core is in place: coordinates in six systems, directions,
-neighbors, distance, rotation, rings, rounding, the hex-to-pixel layout and
-three map shapes. Algorithms such as lines, ranges, field of view and
-pathfinding, the `HexagonKitUI` module and the documentation articles are still
-to come. This is a pre-release: the API may still change before 1.0, and there
-is no tagged version yet. The first one will be tagged once the repository has
-been renamed to HexagonKit, so that the package name in your manifest stays put.
+**Alpha.** The core and the algorithms of the guide are in place: coordinates
+in six systems, directions and diagonals, distance, rotation and reflection,
+rings and spirals, rounding, the hex-to-pixel layout, map shapes, lines,
+movement ranges with and without obstacles, field of view, pathfinding, dense
+storage and wraparound maps. The `HexagonKitUI` module and the documentation
+articles are still to come. This is a pre-release: the API may still change
+before 1.0, and there is no tagged version yet. The first one will be tagged
+once the repository has been renamed to HexagonKit, so that the package name in
+your manifest stays put.
 
 ## Requirements
 
@@ -69,6 +71,11 @@ print(DoubledCoordinate(b, in: .doubleWidth))
 // A map shape numbers its cells, so they can be stored in an array.
 let map = HexShape.hexagon(radius: 3)
 print(map.count, map.index(of: b) as Any)
+
+// The algorithms of the guide are methods of a cell.
+print(a.line(to: b).count)        // 3
+let walls: Set<Hex> = [Hex(q: 1, r: 0)]
+print(a.path(to: b) { _, next in walls.contains(next) ? nil : 1 }?.count ?? 0)   // 3
 ```
 
 `Documentation/Conformance.md` lists every section of the guide, how HexagonKit
