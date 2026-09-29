@@ -302,12 +302,7 @@ extension HexShape {
   private static func rejectionReason(of storage: Storage) -> String? {
     switch storage {
     case .hexagon(let center, let radius):
-      guard radius >= 0 else { return "the radius of a hexagon cannot be negative" }
-      guard checkedHexagonCellCount(radius: radius) != nil else { return unrepresentableCount }
-      guard hexagonStaysInRange(center: center, radius: radius) else {
-        return unrepresentableCoordinates
-      }
-      return nil
+      return hexagonRejectionReason(center: center, radius: radius)
     case .triangleDown(let origin, let size):
       guard size >= 0 else { return "the size of a triangle cannot be negative" }
       guard checkedTriangleCellCount(size: size) != nil else { return unrepresentableCount }
@@ -357,6 +352,17 @@ extension HexShape {
       else { return unrepresentableCoordinates }
       return nil
     }
+  }
+
+  /// Returns why a center and a radius do not describe a hexagon, or `nil`
+  /// when they do; ``WrappedHexagon`` runs the same check.
+  static func hexagonRejectionReason(center: Hex, radius: Int) -> String? {
+    guard radius >= 0 else { return "the radius of a hexagon cannot be negative" }
+    guard checkedHexagonCellCount(radius: radius) != nil else { return unrepresentableCount }
+    guard hexagonStaysInRange(center: center, radius: radius) else {
+      return unrepresentableCoordinates
+    }
+    return nil
   }
 
   /// The names of the encoded fields: the kind of the shape and the parameters
