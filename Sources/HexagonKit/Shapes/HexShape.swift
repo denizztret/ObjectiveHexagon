@@ -261,15 +261,9 @@ extension HexShape {
     case .hexagon(let center, let radius):
       guard radius >= 0 else { return "the radius of a hexagon cannot be negative" }
       guard checkedHexagonCellCount(radius: radius) != nil else { return unrepresentableCount }
-      // The hexagon reaches `center ± radius` along each of the three axes.
-      guard isRepresentable(center),
-        isRepresentable(center.q, offsetBy: radius),
-        isRepresentable(center.q, offsetBy: -radius),
-        isRepresentable(center.r, offsetBy: radius),
-        isRepresentable(center.r, offsetBy: -radius),
-        isRepresentable(center.s, offsetBy: radius),
-        isRepresentable(center.s, offsetBy: -radius)
-      else { return unrepresentableCoordinates }
+      guard hexagonStaysInRange(center: center, radius: radius) else {
+        return unrepresentableCoordinates
+      }
       return nil
     case .triangleDown(let origin, let size):
       guard size >= 0 else { return "the size of a triangle cannot be negative" }

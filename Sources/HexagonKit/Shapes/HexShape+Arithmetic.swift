@@ -38,6 +38,23 @@ extension HexShape {
     return isRepresentable(sum)
   }
 
+  /// Returns whether every cell of the hexagon of `radius >= 0` cells around
+  /// `center` stays inside the supported coordinate range.
+  ///
+  /// The hexagon reaches `center ± radius` along each of the three axes. The
+  /// center is checked first, so its derived `s` is known to fit, and every sum
+  /// with the radius is checked for overflow, so no radius makes the check
+  /// itself overflow.
+  static func hexagonStaysInRange(center: Hex, radius: Int) -> Bool {
+    isRepresentable(center)
+      && isRepresentable(center.q, offsetBy: radius)
+      && isRepresentable(center.q, offsetBy: -radius)
+      && isRepresentable(center.r, offsetBy: radius)
+      && isRepresentable(center.r, offsetBy: -radius)
+      && isRepresentable(center.s, offsetBy: radius)
+      && isRepresentable(center.s, offsetBy: -radius)
+  }
+
   /// Returns whether every cell of a rectangle of at least one cell stays inside
   /// the supported coordinate range.
   ///
