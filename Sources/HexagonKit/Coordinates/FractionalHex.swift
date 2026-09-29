@@ -37,6 +37,13 @@ public struct FractionalHex: Hashable, Sendable, Codable {
   }
 
   /// Returns the nearest hex, resolving ties the way the guide does.
+  ///
+  /// One of the three rounded components is recomputed from the other two, so
+  /// when `q + r + s` is far from zero the result may leave the supported
+  /// coordinate range.
+  ///
+  /// - Precondition: `q`, `r` and `s` are finite, and none of them exceeds
+  ///   `Hex.coordinateBound` in magnitude.
   public func rounded() -> Hex {
     precondition(
       q.isFinite && r.isFinite && s.isFinite,

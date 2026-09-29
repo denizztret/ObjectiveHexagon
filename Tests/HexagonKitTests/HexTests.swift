@@ -286,3 +286,18 @@ struct HexTests {
     #expect(hex.s == 2)
   }
 }
+
+#if compiler(>=6.2) && (os(macOS) || os(Linux) || os(Windows))
+  /// Exit tests run the closure in a child process and expect it to stop; they
+  /// exist from Swift 6.2 on, so older compilers skip this suite.
+  @Suite("Hex preconditions")
+  struct HexPreconditionTests {
+
+    @Test("A negative radius stops the ring")
+    func negativeRadiusStopsTheRing() async {
+      await #expect(processExitsWith: .failure) {
+        _ = Hex.zero.ring(radius: -1)
+      }
+    }
+  }
+#endif

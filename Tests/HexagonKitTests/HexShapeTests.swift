@@ -332,6 +332,122 @@ struct HexShapeTests {
   }
 }
 
+#if compiler(>=6.2) && (os(macOS) || os(Linux) || os(Windows))
+  /// Exit tests run the closure in a child process and expect it to stop; they
+  /// exist from Swift 6.2 on, so older compilers skip this suite. The largest
+  /// sizes break the cell count; the others break a sign or the coordinates.
+  @Suite("HexShape preconditions")
+  struct HexShapePreconditionTests {
+
+    @Test("A negative radius stops the hexagon")
+    func negativeRadiusStopsTheHexagon() async {
+      await #expect(processExitsWith: .failure) {
+        _ = HexShape.hexagon(radius: -1)
+      }
+    }
+
+    @Test("A hexagon whose cell count does not fit Int stops")
+    func hexagonCountBeyondIntStops() async {
+      await #expect(processExitsWith: .failure) {
+        _ = HexShape.hexagon(radius: Int.max)
+      }
+    }
+
+    @Test("A hexagon whose cells leave the supported range stops")
+    func hexagonBeyondTheRangeStops() async {
+      await #expect(processExitsWith: .failure) {
+        _ = HexShape.hexagon(center: Hex(q: 1_073_741_823, r: 0), radius: 1)
+      }
+    }
+
+    @Test("A negative size stops the triangle with a corner at the bottom")
+    func negativeSizeStopsTriangleDown() async {
+      await #expect(processExitsWith: .failure) {
+        _ = HexShape.triangleDown(size: -1)
+      }
+    }
+
+    @Test("A triangle with a corner at the bottom whose cell count does not fit Int stops")
+    func triangleDownCountBeyondIntStops() async {
+      await #expect(processExitsWith: .failure) {
+        _ = HexShape.triangleDown(size: Int.max)
+      }
+    }
+
+    @Test("A triangle with a corner at the bottom beyond the supported range stops")
+    func triangleDownBeyondTheRangeStops() async {
+      await #expect(processExitsWith: .failure) {
+        _ = HexShape.triangleDown(origin: Hex(q: 1_073_741_823, r: 0), size: 1)
+      }
+    }
+
+    @Test("A negative size stops the triangle with a corner at the top")
+    func negativeSizeStopsTriangleUp() async {
+      await #expect(processExitsWith: .failure) {
+        _ = HexShape.triangleUp(size: -1)
+      }
+    }
+
+    @Test("A triangle with a corner at the top whose cell count does not fit Int stops")
+    func triangleUpCountBeyondIntStops() async {
+      await #expect(processExitsWith: .failure) {
+        _ = HexShape.triangleUp(size: Int.max)
+      }
+    }
+
+    /// Its far corner has `s = -2 * size`, beyond the range, while `q` and `r`
+    /// stay inside it.
+    @Test("A triangle with a corner at the top beyond the supported range stops")
+    func triangleUpBeyondTheRangeStops() async {
+      await #expect(processExitsWith: .failure) {
+        _ = HexShape.triangleUp(size: 600_000_000)
+      }
+    }
+
+    @Test("A negative number of columns stops the rectangle")
+    func negativeColumnsStopTheRectangle() async {
+      await #expect(processExitsWith: .failure) {
+        _ = HexShape.rectangle(columns: -1, rows: 2, in: .oddR)
+      }
+    }
+
+    @Test("A negative number of rows stops the rectangle")
+    func negativeRowsStopTheRectangle() async {
+      await #expect(processExitsWith: .failure) {
+        _ = HexShape.rectangle(columns: 2, rows: -1, in: .evenQ)
+      }
+    }
+
+    @Test("A rectangle whose cell count does not fit Int stops")
+    func rectangleCountBeyondIntStops() async {
+      await #expect(processExitsWith: .failure) {
+        _ = HexShape.rectangle(columns: Int.max, rows: 2, in: .oddR)
+      }
+    }
+
+    @Test("A rectangle whose cells leave the supported range stops")
+    func rectangleBeyondTheRangeStops() async {
+      await #expect(processExitsWith: .failure) {
+        _ = HexShape.rectangle(columns: 2_000_000_000, rows: 1, in: .evenR)
+      }
+    }
+
+    @Test("A negative cell index stops")
+    func negativeCellIndexStops() async {
+      await #expect(processExitsWith: .failure) {
+        _ = HexShape.hexagon(radius: 2).hex(at: -1)
+      }
+    }
+
+    @Test("A cell index equal to the count stops")
+    func cellIndexEqualToTheCountStops() async {
+      await #expect(processExitsWith: .failure) {
+        _ = HexShape.hexagon(radius: 2).hex(at: 19)
+      }
+    }
+  }
+#endif
+
 /// `n * (n + 1) / 2`, with the even factor halved before the multiplication, so
 /// that no intermediate value overflows `Int` on a 32-bit platform.
 func triangularNumber(_ n: Int) -> Int {

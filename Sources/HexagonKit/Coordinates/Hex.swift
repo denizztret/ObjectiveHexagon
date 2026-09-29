@@ -86,6 +86,8 @@ public struct Hex: Hashable, Sendable, Codable {
   /// The ring starts at `self + HexDirection.plusRMinusQ.vector * radius` and takes
   /// `radius` steps along each of the directions 0...5 in turn, which is
   /// counterclockwise on screen; a radius of zero yields `[self]`.
+  ///
+  /// - Precondition: `radius >= 0`.
   public func ring(radius: Int) -> [Hex] {
     precondition(radius >= 0, "The radius of a ring cannot be negative.")
     guard radius > 0 else { return [self] }

@@ -141,6 +141,10 @@ public struct HexShape: Hashable, Sendable, Codable {
   }
 
   /// Returns all cells of the shape, in index order.
+  ///
+  /// The array holds all `count` cells at once, and a valid shape may have far
+  /// more cells than fit in memory. To visit the cells of a large shape, walk
+  /// the indices `0..<count` with ``hex(at:)`` instead.
   public func cells() -> [Hex] {
     // An empty rectangle may still have an enormous number of rows or columns,
     // and walking them would take forever to produce nothing.

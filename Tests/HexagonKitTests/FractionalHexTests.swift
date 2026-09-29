@@ -146,6 +146,15 @@ struct FractionalHexTests {
     #expect(nudgedA.lerp(to: nudgedB, t: t).rounded() == Hex(q: 173_927, r: -203_026))
   }
 
+  /// The bound of the precondition is inclusive: a component of exactly
+  /// `2^30` still rounds, to a hex just outside the supported range.
+  @Test("Rounding accepts a component equal to the coordinate bound")
+  func roundingAcceptsTheBoundItself() {
+    let bound = Double(Hex.coordinateBound)
+    let hex = FractionalHex(q: bound, r: -bound, s: 0).rounded()
+    #expect(hex == Hex(q: Hex.coordinateBound, r: -Hex.coordinateBound))
+  }
+
   @Test("Interpolation is componentwise and keeps the third component")
   func interpolationIsComponentwise() {
     let a = FractionalHex(q: 1, r: 2, s: 3)
@@ -259,3 +268,32 @@ struct FractionalHexTests {
     #expect(back == value)
   }
 }
+
+#if compiler(>=6.2) && (os(macOS) || os(Linux) || os(Windows))
+  /// Exit tests run the closure in a child process and expect it to stop; they
+  /// exist from Swift 6.2 on, so older compilers skip this suite.
+  @Suite("FractionalHex preconditions")
+  struct FractionalHexPreconditionTests {
+
+    @Test("Rounding a component that is not a number stops")
+    func roundingNaNStops() async {
+      await #expect(processExitsWith: .failure) {
+        _ = FractionalHex(q: .nan, r: 0, s: 0).rounded()
+      }
+    }
+
+    @Test("Rounding an infinite component stops")
+    func roundingInfinityStops() async {
+      await #expect(processExitsWith: .failure) {
+        _ = FractionalHex(q: 0, r: -.infinity, s: .infinity).rounded()
+      }
+    }
+
+    @Test("Rounding a component beyond the coordinate bound stops")
+    func roundingBeyondTheBoundStops() async {
+      await #expect(processExitsWith: .failure) {
+        _ = FractionalHex(q: 1_073_741_825, r: -1_073_741_825, s: 0).rounded()
+      }
+    }
+  }
+#endif

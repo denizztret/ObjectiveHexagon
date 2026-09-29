@@ -380,3 +380,68 @@ struct LayoutTests {
     }
   }
 }
+
+#if compiler(>=6.2) && (os(macOS) || os(Linux) || os(Windows))
+  /// Exit tests run the closure in a child process and expect it to stop; they
+  /// exist from Swift 6.2 on, so older compilers skip this suite.
+  @Suite("Layout preconditions")
+  struct LayoutPreconditionTests {
+
+    @Test("A cell width of zero stops the initializer")
+    func zeroWidthStops() async {
+      await #expect(processExitsWith: .failure) {
+        _ = Layout(orientation: .pointy, size: Point(x: 0, y: 10))
+      }
+    }
+
+    @Test("A negative cell height stops the initializer")
+    func negativeHeightStops() async {
+      await #expect(processExitsWith: .failure) {
+        _ = Layout(orientation: .flat, size: Point(x: 10, y: -1))
+      }
+    }
+
+    @Test("A cell size that is not a number stops the initializer")
+    func sizeNaNStops() async {
+      await #expect(processExitsWith: .failure) {
+        _ = Layout(orientation: .pointy, size: Point(x: .nan, y: 10))
+      }
+    }
+
+    @Test("An infinite cell size stops the initializer")
+    func infiniteSizeStops() async {
+      await #expect(processExitsWith: .failure) {
+        _ = Layout(orientation: .pointy, size: Point(x: 10, y: .infinity))
+      }
+    }
+
+    @Test("An origin that is not a number stops the initializer")
+    func originNaNStops() async {
+      await #expect(processExitsWith: .failure) {
+        _ = Layout(orientation: .pointy, size: Point(x: 10, y: 10), origin: Point(x: .nan, y: 0))
+      }
+    }
+
+    @Test("An infinite origin stops the initializer")
+    func infiniteOriginStops() async {
+      await #expect(processExitsWith: .failure) {
+        _ = Layout(
+          orientation: .flat, size: Point(x: 10, y: 10), origin: Point(x: 0, y: -.infinity))
+      }
+    }
+
+    @Test("A corner index of six stops")
+    func cornerIndexSixStops() async {
+      await #expect(processExitsWith: .failure) {
+        _ = Layout(orientation: .pointy, size: Point(x: 10, y: 10)).corner(of: .zero, at: 6)
+      }
+    }
+
+    @Test("A negative corner index stops")
+    func negativeCornerIndexStops() async {
+      await #expect(processExitsWith: .failure) {
+        _ = Layout(orientation: .flat, size: Point(x: 10, y: 10)).corner(of: .zero, at: -1)
+      }
+    }
+  }
+#endif
