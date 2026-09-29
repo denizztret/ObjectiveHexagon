@@ -17,10 +17,8 @@ extension Hex {
     var hexes: [Hex] = []
     hexes.reserveCapacity(count)
     hexes.append(self)
-    var ringRadius = 1
-    while ringRadius <= radius {
+    for ringRadius in stride(from: 1, through: radius, by: 1) {
       hexes.append(contentsOf: ring(radius: ringRadius))
-      ringRadius += 1
     }
     return hexes
   }

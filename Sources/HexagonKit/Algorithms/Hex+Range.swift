@@ -34,8 +34,8 @@ extension Hex {
         HexShape.hexagonStaysInRange(center: center, radius: radius),
         "The cells of a range must stay inside the supported coordinate range.")
     }
-    let centers = ranges.map { (q: $0.center.q, r: $0.center.r, radius: $0.radius) }
-    guard let bounds = RangeIntersection(ranges: centers) else { return [] }
+    let axialRanges = ranges.map { (q: $0.center.q, r: $0.center.r, radius: $0.radius) }
+    guard let bounds = RangeIntersection(ranges: axialRanges) else { return [] }
     var hexes: [Hex] = []
     for r in bounds.rows {
       for q in bounds.columns(inRow: r) {

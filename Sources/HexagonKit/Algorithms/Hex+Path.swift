@@ -78,7 +78,7 @@ extension Hex {
     while let hex = queue.pop() {
       guard !taken.contains(hex) else { continue }
       if let searchLimit, taken.count == searchLimit { return nil }
-      if hex == goal { return Self.path(to: goal, cameFrom: cameFrom) }
+      if hex == goal { return Self.reconstructedPath(to: goal, cameFrom: cameFrom) }
       taken.insert(hex)
       // Every hex that went on the queue has a known cost; the start has 0.
       let hexCost = pathCosts[hex, default: 0]
@@ -104,7 +104,7 @@ extension Hex {
   }
 
   /// Returns the path that ends at `goal`, walking the steps back to the start.
-  private static func path(to goal: Hex, cameFrom: [Hex: Hex]) -> [Hex] {
+  private static func reconstructedPath(to goal: Hex, cameFrom: [Hex: Hex]) -> [Hex] {
     var path = [goal]
     while let previous = cameFrom[path[path.count - 1]] {
       path.append(previous)
