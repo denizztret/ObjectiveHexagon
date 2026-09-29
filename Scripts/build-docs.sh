@@ -54,16 +54,17 @@ if [ ! -f "$ARTICLE" ]; then
   echo "the landing page $ARTICLE was not produced" >&2
   exit 1
 fi
-if ! grep -q "distance(to: target)" "$ARTICLE"; then
-  echo "the text of Snippets/HexBasics.swift did not reach $ARTICLE" >&2
-  exit 1
-fi
-
-if ! grep -q "distance(to: target)" "$WORK/snippets.md"; then
-  echo "the text of Snippets/HexBasics.swift did not reach $WORK/snippets.md" >&2
-  exit 1
-fi
+# One line of each snippet file has to reach both the landing page and the text
+# artifact: a slice that DocC cannot find is dropped without an error.
+for marker in "distance(to: target)" "WrappedHexagon(radius: 2)"; do
+  for file in "$ARTICLE" "$WORK/snippets.md"; do
+    if ! grep -qF "$marker" "$file"; then
+      echo "the snippet line '$marker' did not reach $file" >&2
+      exit 1
+    fi
+  done
+done
 
 echo "documentation: $OUTPUT"
 echo "snippets as text: $WORK/snippets.md"
-echo "the snippet reached both the landing page and the text artifact"
+echo "the snippets reached both the landing page and the text artifact"

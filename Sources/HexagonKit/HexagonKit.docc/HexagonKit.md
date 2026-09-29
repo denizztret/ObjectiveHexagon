@@ -23,6 +23,27 @@ pixel position of an offset or a doubled cell all follow this shape.
 
 @Snippet(path: "HexagonKit/Snippets/CoordinateRecipes", slice: "pixel")
 
+## Algorithms
+
+The algorithms of the guide are methods of ``Hex``. Each returns a finished
+value: an array in a fixed order where the order means something, a set or a
+dictionary where it does not. Walls, opacity and step costs come in as closures,
+which may be asked about the same cell several times and in any order, so they
+should only answer.
+
+@Snippet(path: "HexagonKit/Snippets/Algorithms", slice: "neighborhood")
+
+@Snippet(path: "HexagonKit/Snippets/Algorithms", slice: "lines")
+
+@Snippet(path: "HexagonKit/Snippets/Algorithms", slice: "obstacles")
+
+A map shape numbers its cells, so ``DenseHexMap`` keeps one value per cell in a
+flat array, and ``WrappedHexagon`` joins the opposite edges of a hexagonal map.
+
+@Snippet(path: "HexagonKit/Snippets/Algorithms", slice: "storage")
+
+@Snippet(path: "HexagonKit/Snippets/Algorithms", slice: "wraparound")
+
 ## Topics
 
 ### Coordinates
@@ -30,6 +51,8 @@ pixel position of an offset or a doubled cell all follow this shape.
 - ``Hex``
 - ``FractionalHex``
 - ``HexDirection``
+- ``HexDiagonal``
+- ``HexAxis``
 - ``OffsetSystem``
 - ``OffsetCoordinate``
 - ``DoubledSystem``
@@ -44,3 +67,5 @@ pixel position of an offset or a doubled cell all follow this shape.
 ### Maps
 
 - ``HexShape``
+- ``DenseHexMap``
+- ``WrappedHexagon``
