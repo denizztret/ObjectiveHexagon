@@ -145,6 +145,46 @@ struct LineTests {
     #expect(mismatches.isEmpty, "\(mismatches.prefix(5))")
   }
 
+  // MARK: Fixture
+
+  /// Every line of the hexagon of radius 6 that the nudge of `lib.py` would
+  /// draw differently; the generator draws them in the order of operations of
+  /// the reference with the nudge of the guide's text.
+  @Test("Lines where the two nudges disagree match the fixture")
+  func linesMatchTheFixture() throws {
+    let fixture = try Fixture.lines()
+    var mismatches: [String] = []
+    for row in fixture.lines {
+      let from = Hex(q: row[0], r: row[1])
+      let to = Hex(q: row[2], r: row[3])
+      let expected = stride(from: 4, to: row.count, by: 2).map { Hex(q: row[$0], r: row[$0 + 1]) }
+      if from.line(to: to) != expected {
+        mismatches.append("\(from) -> \(to)")
+      }
+    }
+    #expect(fixture.lines.count == 1447)
+    #expect(mismatches.isEmpty, "\(mismatches.prefix(5))")
+  }
+
+  /// Samples of lines millions of steps long, anywhere in the supported range.
+  /// Most of them sit where the last bits of the arithmetic decide the hex: an
+  /// implementation that computes `t` as `i / N`, interpolates as
+  /// `a + (b - a) * t`, derives `s`, or nudges after the interpolation fails here.
+  @Test("Samples of long lines match the fixture bit for bit")
+  func samplesMatchTheFixture() throws {
+    let fixture = try Fixture.lines()
+    var mismatches: [String] = []
+    for row in fixture.samples {
+      let samples = LineSamples(from: Hex(q: row[0], r: row[1]), to: Hex(q: row[2], r: row[3]))
+      let hex = samples.hex(at: row[4])
+      if hex != Hex(q: row[5], r: row[6]) {
+        mismatches.append("\(row) -> \(hex)")
+      }
+    }
+    #expect(fixture.samples.count == 500)
+    #expect(mismatches.isEmpty, "\(mismatches.prefix(5))")
+  }
+
   // MARK: Regressions, not promises
 
   /// Adjacency and symmetry are not part of the contract (doc-016, section 3.3),

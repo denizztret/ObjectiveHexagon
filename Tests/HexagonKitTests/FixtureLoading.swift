@@ -48,6 +48,24 @@ enum Fixture {
     let sourceSHA256: String
   }
 
+  /// Lines with the nudge of the guide's text. `lines` holds every line of the
+  /// hexagon of radius `range` that the nudge of `lib.py` draws differently: a
+  /// row is `[from.q, from.r, to.q, to.r]` followed by `q` and `r` of every hex
+  /// of the line. `samples` holds single samples of long lines, as
+  /// `sampleColumns` names them; the first `sensitiveSamples` of them round to
+  /// another hex under a rewrite of the line that is equal in exact arithmetic.
+  struct Lines: Decodable {
+    let lineColumns: [String]
+    let lines: [[Int]]
+    let nudge: [Double]
+    let range: Int
+    let sampleColumns: [String]
+    let samples: [[Int]]
+    let sensitiveSamples: Int
+    let source: String
+    let sourceSHA256: String
+  }
+
   enum LoadingError: Error {
     case fileNotFound(String)
   }
@@ -72,6 +90,10 @@ enum Fixture {
 
   static func layouts() throws -> Layouts {
     try load(Layouts.self, named: "layout")
+  }
+
+  static func lines() throws -> Lines {
+    try load(Lines.self, named: "lines")
   }
 }
 
@@ -125,15 +147,31 @@ struct FixtureLoadingTests {
     #expect(fixture.cases.allSatisfy { $0.centers.count == $0.hexes.count })
   }
 
+  @Test("The line fixture loads and uses the nudge of the guide's text")
+  func lineFixtureLoads() throws {
+    let fixture = try Fixture.lines()
+    #expect(fixture.nudge == [1e-6, 2e-6, -3e-6])
+    #expect(fixture.range == 6)
+    #expect(fixture.lines.count == 1447)
+    #expect(fixture.lines.allSatisfy { $0.count >= 8 && $0.count % 2 == 0 })
+    #expect(fixture.sampleColumns.count == 7)
+    #expect(fixture.samples.count == 500)
+    #expect(fixture.sensitiveSamples == 400)
+    #expect(fixture.samples.allSatisfy { $0.count == 7 })
+  }
+
   @Test("Every fixture names the same pinned reference file")
   func fixturesShareTheSameSource() throws {
     let conversions = try Fixture.conversions()
     let rounding = try Fixture.rounding()
     let layouts = try Fixture.layouts()
+    let lines = try Fixture.lines()
     #expect(conversions.source == "Scripts/reference/lib.py")
     #expect(rounding.source == conversions.source)
     #expect(layouts.source == conversions.source)
+    #expect(lines.source == conversions.source)
     #expect(rounding.sourceSHA256 == conversions.sourceSHA256)
     #expect(layouts.sourceSHA256 == conversions.sourceSHA256)
+    #expect(lines.sourceSHA256 == conversions.sourceSHA256)
   }
 }
