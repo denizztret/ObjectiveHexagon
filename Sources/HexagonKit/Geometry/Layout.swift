@@ -59,14 +59,14 @@ public struct Layout: Hashable, Sendable, Codable {
   /// - Precondition: `index` is in `0...5`.
   public func corner(of hex: Hex, at index: Int) -> Point {
     precondition(0 <= index && index <= 5, "A hex has six corners, numbered 0 through 5.")
-    let center = center(of: hex)
-    let unit = Self.cornerOffsets(of: orientation)[index]
-    return Point(x: center.x + unit.x * size.x, y: center.y + unit.y * size.y)
+    return corner(Self.cornerOffsets(of: orientation)[index], around: center(of: hex))
   }
 
   /// Returns the six corners of a hex, in corner order.
   public func corners(of hex: Hex) -> [Point] {
-    (0...5).map { corner(of: hex, at: $0) }
+    // The center is computed once for all six corners.
+    let center = center(of: hex)
+    return Self.cornerOffsets(of: orientation).map { corner($0, around: center) }
   }
 
   /// Returns the fractional hex that contains a pixel position.
@@ -113,6 +113,11 @@ public struct Layout: Hashable, Sendable, Codable {
 }
 
 extension Layout {
+
+  /// Returns the corner at a unit offset from a center, scaled by the cell size.
+  private func corner(_ unit: Point, around center: Point) -> Point {
+    Point(x: center.x + unit.x * size.x, y: center.y + unit.y * size.y)
+  }
 
   /// Returns why the given size and origin do not describe a layout, or `nil`
   /// when they do.

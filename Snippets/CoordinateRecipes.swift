@@ -13,11 +13,15 @@ let toOffset = OffsetCoordinate(column: 4, row: 3)
 let offsetDistance = Hex(fromOffset, in: .oddR).distance(to: Hex(toOffset, in: .oddR))
 print(offsetDistance)
 
-let fromDoubled = DoubledCoordinate(column: 2, row: 0)!
-let toDoubled = DoubledCoordinate(column: 7, row: 3)!
-let doubledDistance = Hex(fromDoubled, in: .doubleWidth)
-  .distance(to: Hex(toDoubled, in: .doubleWidth))
-print(doubledDistance)
+// A doubled coordinate exists only when its column and row add up to an even
+// number, so creating one from two numbers may fail.
+if let fromDoubled = DoubledCoordinate(column: 2, row: 0),
+  let toDoubled = DoubledCoordinate(column: 7, row: 3)
+{
+  let doubledDistance = Hex(fromDoubled, in: .doubleWidth)
+    .distance(to: Hex(toDoubled, in: .doubleWidth))
+  print(doubledDistance)
+}
 // snippet.end
 
 // snippet.bridge
