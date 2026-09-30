@@ -15,9 +15,6 @@ which test proves it. A section counts as covered in one of three ways:
   landing page, and a test checks it against the formulas of the guide;
 - **explanation** – the section needs no code; the documentation links to the guide.
 
-Rows marked `planned` belong to later stages; the names in their "Type or
-method" column are provisional until the API of that stage is settled.
-
 A pinned copy of the reference implementation of the guide lives in
 `Scripts/reference/lib.py` (CC0) with its checksum. Tests refer to the guide's
 test functions by name, never by line number. `Scripts/generate-fixtures.py`
@@ -30,6 +27,7 @@ runs that copy and writes the large reference fixtures into
 |---|---|---|---|---|
 | Geometry: size and spacing | API | `HexLayout.cellWidth`, `.cellHeight`, `.horizontalSpacing`, `.verticalSpacing` | 2 | `HexLayoutTests.sizesAndSpacingsMatchTheGuide`, `HexLayoutTests.spacingsAgreeWithCenterDistances` |
 | Geometry: corner angles | API | `HexLayout.corner(of:at:)`, `HexLayout.corners(of:)` | 2 | `HexLayoutTests.cornersMatchTheGuideTable`, `HexLayoutTests.sixCornersComeBackInOrder` |
+| Drawing a hex | API | `HexLayout.path(of:)`, `Hexagon` (HexagonKitUI) | 4 | `HexLayoutPathTests.pathOfAHexFollowsTheCorners`, `HexLayoutPathTests.pathStartsAtCornerZeroAndRunsClockwise`, `HexagonTests.hexagonInTheFrameOfACellMatchesTheCell` |
 | Coordinates: cube and axial | API | `Hex` | 2 | `HexTests.additionMatchesTheReference`, `HexTests.subtractionMatchesTheReference`, `HexTests.thirdComponentIsDerived`, `HexTests.cubeInitializerChecksTheSum` |
 | Coordinates: offset | API | `OffsetCoordinate`, `OffsetSystem` | 2 | `OffsetCoordinateTests.cubeToOffsetMatchesTheReference`, `OffsetCoordinateTests.conversionsMatchTheFixture` |
 | Coordinates: doubled | API | `DoubledCoordinate`, `DoubledSystem` | 2 | `DoubledCoordinateTests.cubeToDoubledMatchesTheReference`, `DoubledCoordinateTests.conversionsMatchTheFixture` |
@@ -52,7 +50,8 @@ runs that copy and writes the large reference fixtures into
 | Field of view | API | `Hex.fieldOfView(radius:isOpaque:)` | 3 | `FieldOfViewTests.sceneOfTheGuide`, `FieldOfViewTests.wallHidesAHexOnlyWhenTheLinePassesThroughIt` |
 | Hex to pixel | API | `HexLayout.center(of:)` | 2 | `HexLayoutTests.centersMatchTheReferenceNumbers`, `HexLayoutTests.centersMatchTheFixture` |
 | Hex to pixel: offset and doubled | composition | recipe: convert to `Hex`, then `HexLayout.center(of:)`; written down in `Snippets/CoordinateRecipes.swift`, slice `pixel` | 2 | `HexLayoutTests.offsetToPixelRecipe`, `HexLayoutTests.doubledToPixelRecipe`, `HexLayoutTests.offsetGridIsSpacedAsDrawn` |
-| Pixel to hex | API | `HexLayout.hex(at:)` | 2 | `HexLayoutTests.roundTripMatchesTheReference`, `HexLayoutTests.pixelInsideACellRoundsToThatCell` |
+| Pixel to hex | API | `HexLayout.hex(at:)`; a point of a view: `HexLayout.hex(at:)` with a `CGPoint` (HexagonKitUI) | 2, 4 | `HexLayoutTests.roundTripMatchesTheReference`, `HexLayoutTests.pixelInsideACellRoundsToThatCell`, `HexLayoutRectTests.pointOfAViewGivesTheFractionalHexOfTheCore` |
+| Layout examples (implementation page) | API | `HexLayout`, `HexLayout.frame(of:)` (HexagonKitUI); the example with the y axis up: deviation 17 | 2, 4 | `HexLayoutRectTests.layoutExamplesFrameIsOneCell`, `HexLayoutRectTests.layoutExamplesTwiceTheSize`, `HexLayoutRectTests.layoutExamplesSprite`, `HexLayoutRectTests.layoutExamplesTopLeftOrigin` |
 | Rounding | API | `FractionalHex.rounded()` | 2 | `FractionalHexTests.midpointCaseOfTheReference`, `FractionalHexTests.exactHalvesRoundAwayFromZero`, `FractionalHexTests.roundingMatchesTheFixtureOnBoundaryPoints` |
 | Map storage: shapes | API | `HexShape.hexagon`, `.triangleDown`, `.triangleUp`, `.rectangle` | 2 | `HexShapeTests.membershipMatchesTheDefiningInequalities`, `HexShapeTests.cellAndIndexAreMutuallyInverse` |
 | Map storage: parallelogram | API | `HexShape.parallelogram(origin:columns:rows:)` | 3 | `HexShapeParallelogramTests.parallelogramIsListedRowByRow`, `HexShapeTests.cellAndIndexAreMutuallyInverse` |
@@ -60,7 +59,24 @@ runs that copy and writes the large reference fixtures into
 | Wraparound maps: hexagon | API | `WrappedHexagon`, `WrappedHexagon.wrap(_:)` | 3 | `WrappedHexagonTests.hexesWrapAsInTheGuide`, `WrappedHexagonTests.formulaAgreesWithTheGuideRule` |
 | Wraparound maps: rectangle | explanation | the guide gives no formula; wrap the offset column and row | 3 | – |
 | Pathfinding | API | `Hex.path(to:minimumStepCost:searchLimit:cost:)` | 3 | `PathTests.pathCostsThroughTheScene`, `PathTests.aStarFindsACheapestPath` |
-| Bridges to CoreGraphics, SwiftUI and UIKit | API | `HexagonKitUI` | 4 | planned |
+
+## HexagonKitUI
+
+`HexagonKitUI` is an agreed addition beyond the guide. It implements two things
+of the guide directly, "Drawing a hex" and the "Layout examples" of the
+implementation page, which the table above lists; the rest bridges the core to
+Core Graphics, SwiftUI and UIKit without geometry of its own. The demo
+application `Examples/HexagonKitDemo` draws the diagrams of the guide with it.
+
+| Addition | Type or method | Test |
+|---|---|---|
+| Points and sizes of Core Graphics | `CGPoint(_:)`, `Point(_:)` | `PointBridgeTests.pointGoesToACGPointAndBack`, `PointBridgeTests.sizeBecomesAPoint` |
+| The rectangle of a hex | `HexLayout.frame(of:)` | `HexLayoutRectTests.frameBoundsTheCorners` |
+| The rectangle of some hexes or of a shape | `HexLayout.bounds(of:)` | `HexLayoutRectTests.boundsContainTheFrames`, `HexLayoutRectTests.boundsOfAShapeAreTheBoundsOfItsCells`, `HexLayoutRectTests.noHexesHaveNoBounds` |
+| The outline of some hexes | `HexLayout.path(of:)` for a sequence | `HexLayoutPathTests.pathOfSomeHexesChainsTheirPaths`, `HexLayoutPathTests.fillingThePathFillsTheHexes` |
+| Views on hexes | `HexGridLayout`, `View.hexCell(_:)` | `HexGridLayoutTests.eachViewSitsOnItsHex`, `HexGridLayoutTests.boardTakesTheSizeOfThePlacement` |
+| Items of a collection view on hexes | `HexCollectionViewLayout` | `HexCollectionViewLayoutTests.eachItemGetsTheFrameOfItsHex`, `HexCollectionViewLayoutTests.attributesInARectangle` |
+| A placement both containers share, finite as `CGFloat` values | internal | `PlacementTests.placementStartsAtZeroAndFitsItsSize`, `PlacementPreconditionTests.extentThatOverflowsStops` |
 
 ## Reference tests of the guide
 
@@ -172,6 +188,14 @@ disagree with each other. Every choice HexagonKit made is listed here.
     two of the three axes; HexagonKit offers the pair `q` and `r`, the one the
     guide's array storage uses, with rows along `r`. The other two pairs give the
     same shape rotated by 120 and 240 degrees.
+17. **The y axis points down.** The guide flips the y axis with a negative size,
+    `Point(25, -25)`, for spaces whose y axis grows upwards. `HexLayout` requires
+    a positive size, and HexagonKitUI works in the coordinate space of SwiftUI
+    and UIKit, where the y axis points down. To draw in a space whose y axis
+    grows upwards, flip that space; the corners then run counterclockwise on
+    screen, and the compass names of `HexDirection.Pointy` and
+    `HexDirection.Flat` swap north and south. Test:
+    `HexLayoutPreconditionTests.negativeHeightStops`.
 
 ## Bugs of ObjectiveHexagon that the API makes impossible
 
@@ -187,7 +211,7 @@ mechanism that caused it, there is no artificial test for it; the table says so.
 | `fabsf`, `roundf`, `cosf`, `sinf` applied to `double` values | The core uses `Double` only, rounds with `rounded(.toNearestOrAwayFromZero)` and has no trigonometry. Test: `FractionalHexTests.roundingKeepsDoublePrecision` |
 | A category on `NSValue` duplicated UIKit and read past its buffer | Foundation and Objective-C are banned in the core. Fixed by design |
 | `hex3DMultiply` and `hex3DScale` were two names for one operation | One operator `*`. Test: `HexTests.scalingByOneIsTheIdentity` |
-| `boundsOfShapes:` returned garbage for an empty array | The core has no such operation; `HexagonKitUI` will return an optional. Fixed by design |
+| `boundsOfShapes:` returned garbage for an empty array | `HexLayout.bounds(of:)` of HexagonKitUI returns `nil` for no hexes. Test: `HexLayoutRectTests.noHexesHaveNoBounds` |
 | Corner numbering for pointy cells started at -30 degrees, one corner off from HexagonKit, as in the pseudocode of the guide's section on angles (deviation 1) | The corner order is pinned by a table. Tests: `HexLayoutTests.cornersMatchTheGuideTable`, `HexLayoutTests.cornerOneOfAPointyCellIsTheLowestPoint` |
 | Ties in rounding were resolved on `x` and then `y` instead of `q` and then `r` | `FractionalHex.rounded()` follows the guide. Tests: `FractionalHexTests.tiesAreResolvedTowardsSThenR`, `FractionalHexTests.tieOrderFollowsTheGuide` |
 | A `switch` over an enumeration had neither a `default` nor a final `return` | All enumerations are closed, so every `switch` is exhaustive. Fixed by design |
@@ -196,3 +220,21 @@ mechanism that caused it, there is no artificial test for it; the table says so.
 | Constants were truncated literals, off by about 1e-14 | `sqrt(3)` is computed as `3.0.squareRoot()`. Fixed by design |
 | A weak reference to the grid made the geometry silently zero | `HexLayout` is a value. Fixed by design |
 | `[HKHexagon alloc]` instead of `[self alloc]` | Value types, no inheritance. Fixed by design |
+
+## The collection view layout of the old demo
+
+The Objective-C library kept its collection view layout in the demo
+application. `HexCollectionViewLayout` replaces it, and its tests run on the iOS
+simulator.
+
+| Flaw of the old layout | How it is closed |
+|---|---|
+| An empty grid gave a content size of garbage | The content size of no cells is zero. Test: `HexCollectionViewLayoutTests.layoutWithoutCellsHasNoSize` |
+| The layout cast its data source to the view controller of the demo | The layout reads only `layout` and `cells`. Test: `HexCollectionViewLayoutTests.collectionViewShowsTheCells` |
+| `layoutAttributesForItem(at:)` built new attributes on every call instead of reading its cache | Tests: `HexCollectionViewLayoutTests.eachItemGetsTheFrameOfItsHex`, `HexCollectionViewLayoutTests.preparingAgainGivesEqualAttributes` |
+| `layoutAttributesForElements(in:)` scanned every item and returned them in no stable order | A binary search over the items sorted by their top edges. Test: `HexCollectionViewLayoutTests.attributesInARectangle` |
+| `shouldInvalidateLayout(forBoundsChange:)` always returned `true`, so every frame of scrolling invalidated the layout | The geometry does not depend on the bounds. Test: `HexCollectionViewLayoutTests.changeOfTheBoundsNeverInvalidates` |
+| The cache was rebuilt only after batch updates, and `prepare()` wrote into the model | Setting `cells` or `layout` invalidates the layout. Tests: `HexCollectionViewLayoutTests.updatesGiveNewAttributes`, `HexCollectionViewLayoutTests.newLayoutMovesTheCells` |
+| Hexes that repeated collapsed under one string key | Items on the same hex share a frame. Tests: `HexCollectionViewLayoutTests.updatesGiveNewAttributes`, `PlacementTests.hexesThatRepeatShareAFrame` |
+| The content size was that of the whole grid, not of the items shown | Test: `HexCollectionViewLayoutTests.contentSizeIsTheBoundsOfTheCells` |
+| A tap near the corner of a frame could hit either of two overlapping items | The documentation gives the recipe through `hex(at:)`. Test: `HexCollectionViewLayoutTests.hitRecipeFindsTheHexUnderAPoint` |

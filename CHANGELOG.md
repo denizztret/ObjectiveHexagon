@@ -54,8 +54,27 @@ finished and stays available under the 0.3.0 tag.
 - `Snippets/`: compiled examples, shown on the documentation landing page.
   `Scripts/build-docs.sh` builds the DocC archive from them, and
   `Scripts/snippets-to-markdown.py` writes the same examples as plain Markdown.
+- `HexagonKitUI`, the module that bridges the core to Core Graphics, SwiftUI
+  and UIKit without geometry of its own; on Linux it is empty.
+- Core Graphics bridges: `CGPoint(_:)` from a point of HexagonKit, `Point(_:)`
+  from a `CGPoint` or a `CGSize`, `HexLayout.frame(of:)`, `HexLayout.bounds(of:)`
+  for a sequence of hexes and for a shape, and `HexLayout.hex(at:)` for a point
+  of a view.
+- SwiftUI: `HexLayout.path(of:)` for a hex and for a sequence of hexes, the
+  `Hexagon` shape, and the `HexGridLayout` container with the `hexCell(_:)`
+  modifier.
+- UIKit: `HexCollectionViewLayout`, a collection view layout that puts items on
+  hexes.
+- A DocC catalog of `HexagonKitUI` with the article on representable geometry,
+  the example `Snippets/Drawing.swift`, and `Scripts/compile-platform.sh`, which
+  compiles both modules for one Apple platform with `swiftc`.
+- `Examples/HexagonKitDemo`, a SwiftUI application for iOS 17 and macOS 14 that
+  draws the diagrams of the guide with HexagonKitUI.
 - Continuous integration on Linux with Swift 6.0, 6.1 and 6.2, and on macOS with
-  the minimum and the current Xcode.
+  the minimum and the current Xcode. `HexagonKitUI` is built with Xcode 16.4 for
+  all five Apple platforms and compiled with Swift 6.0 for each of them, its
+  tests run on the iOS simulator, and the demo is built for the iOS simulator
+  and for macOS.
 
 ### Changed
 
