@@ -1,13 +1,14 @@
 import HexagonKitUI
 import Testing
 
-@Suite("HexagonKitUI placeholder")
+@Suite("HexagonKitUI on every platform")
 struct HexagonKitUISmokeTests {
 
-  /// `HexagonKitUI` is an empty placeholder until stage 4; this test only proves
-  /// that the module and its test target build and run on every platform.
-  @Test("The placeholder module builds and its test target runs")
-  func placeholderModuleBuilds() {
+  /// Every other suite of this target needs Core Graphics, SwiftUI or UIKit.
+  /// On Linux the module is empty, and this test only proves that the module
+  /// and its test target build and run there too.
+  @Test("The module and its test target build and run on every platform")
+  func moduleBuildsEverywhere() {
     #expect(Int.bitWidth >= 32)
   }
 }
