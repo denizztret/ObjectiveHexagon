@@ -54,3 +54,90 @@ jobs:
         run: swift --version
       - name: Test
         run: swift test
+
+  ui-platforms:
+    name: HexagonKitUI, ${{ matrix.platform }}, Xcode 16.4
+    runs-on: macos-15
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macOS, iOS, tvOS, watchOS, visionOS]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select Xcode 16.4
+        run: sudo xcode-select --switch /Applications/Xcode_16.4.app
+      - name: Show the destinations
+        run: xcodebuild -showdestinations -scheme HexagonKitUI
+      - name: Build
+        shell: bash
+        run: |
+          set -o pipefail
+          xcodebuild build -scheme HexagonKitUI \
+            -destination "generic/platform=${{ matrix.platform }}" | tee build.log
+      - name: The watch build covers 32-bit watches
+        if: matrix.platform == 'watchOS'
+        run: grep -q -- '-target arm64_32-apple-watchos' build.log
+
+  ui-swift-6-0:
+    name: HexagonKitUI compiles with Swift 6.0 for every platform
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select Xcode 16.0
+        run: sudo xcode-select --switch /Applications/Xcode_16.0.app
+      - name: Show the Swift version
+        run: swift --version
+      - name: Compile for each platform
+        run: |
+          for spec in arm64-apple-macos12.0:macosx arm64-apple-ios15.0:iphoneos \
+            arm64-apple-tvos15.0:appletvos arm64_32-apple-watchos8.0:watchos \
+            arm64-apple-xros1.0:xros; do
+            bash Scripts/compile-platform.sh . "$RUNNER_TEMP/${spec%%:*}" "${spec%%:*}" "${spec##*:}"
+          done
+
+  ui-tests-ios:
+    name: HexagonKitUI tests, iOS simulator, Xcode 16.4
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select Xcode 16.4
+        run: sudo xcode-select --switch /Applications/Xcode_16.4.app
+      - name: Pick an iPhone of the newest iOS 18 runtime
+        id: simulator
+        run: |
+          xcrun simctl list devices available -j | python3 -c '
+          import json, sys
+          devices = json.load(sys.stdin)["devices"]
+          runtimes = sorted(r for r in devices if ".iOS-18-" in r)
+          iphone = next(d for d in devices[runtimes[-1]] if d["name"].startswith("iPhone"))
+          print(runtimes[-1], iphone["name"], file=sys.stderr)
+          print("id=" + iphone["udid"])
+          ' >>"$GITHUB_OUTPUT"
+      - name: Test
+        shell: bash
+        run: |
+          set -o pipefail
+          xcodebuild test -scheme HexagonKit-Package \
+            -destination "id=${{ steps.simulator.outputs.id }}" \
+            -only-testing:HexagonKitUITests -collect-test-diagnostics never | tee test.log
+      - name: The suites of both containers ran
+        run: |
+          grep -F 'Suite "HexGridLayout" passed' test.log
+          grep -F 'Suite "HexCollectionViewLayout" passed' test.log
+
+  demo:
+    name: Demo, ${{ matrix.destination }}, Xcode 16.4
+    runs-on: macos-15
+    strategy:
+      fail-fast: false
+      matrix:
+        destination: ["generic/platform=iOS Simulator", "platform=macOS"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select Xcode 16.4
+        run: sudo xcode-select --switch /Applications/Xcode_16.4.app
+      - name: Build
+        working-directory: Examples/HexagonKitDemo
+        run: |
+          xcodebuild build -project HexagonKitDemo.xcodeproj -scheme HexagonKitDemo \
+            -destination "${{ matrix.destination }}" CODE_SIGNING_ALLOWED=NO
