@@ -14,7 +14,13 @@ enum Page: String, CaseIterable, Identifiable {
   case rings
   case fieldOfView = "field-of-view"
   case pixel
+  case shapes
+  case wraparound
   case pathfinding
+  case views
+  #if os(iOS)
+    case collection
+  #endif
 
   var id: Self { self }
 
@@ -33,7 +39,13 @@ enum Page: String, CaseIterable, Identifiable {
     case .rings: ("Rings", "#rings")
     case .fieldOfView: ("Field of view", "#field-of-view")
     case .pixel: ("Hex to pixel and back", "#hex-to-pixel")
+    case .shapes: ("Map shapes", "implementation.html#shape-parallelogram")
+    case .wraparound: ("Wraparound maps", "#wraparound")
     case .pathfinding: ("Pathfinding", "#pathfinding")
+    case .views: ("Views on a grid", nil)
+    #if os(iOS)
+      case .collection: ("Collection view", nil)
+    #endif
     }
   }
 
@@ -57,7 +69,13 @@ enum Page: String, CaseIterable, Identifiable {
     case .rings: RingsScreen(opening)
     case .fieldOfView: FieldOfViewScreen(opening)
     case .pixel: PixelScreen(opening)
+    case .shapes: ShapesScreen(opening)
+    case .wraparound: WraparoundScreen(opening)
     case .pathfinding: PathfindingScreen(opening)
+    case .views: ViewsScreen()
+    #if os(iOS)
+      case .collection: CollectionScreen()
+    #endif
     }
   }
 }
