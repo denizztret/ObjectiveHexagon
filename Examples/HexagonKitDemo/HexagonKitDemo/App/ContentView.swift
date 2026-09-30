@@ -15,8 +15,10 @@ struct ContentView: View {
 
   var body: some View {
     NavigationSplitView(preferredCompactColumn: $column) {
+      // A link, not a bare row: its value becomes the selection, and on a
+      // phone it also opens the screen of the row.
       List(Page.allCases, selection: $page) { page in
-        Text(page.entry.title)
+        NavigationLink(page.entry.title, value: page)
       }
       .navigationTitle("HexagonKit")
     } detail: {
