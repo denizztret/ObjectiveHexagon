@@ -10,8 +10,7 @@ struct ScreenFrame<Boards: View, Controls: View>: View {
   @Environment(DemoSettings.self) private var settings
 
   init(
-    caption: String = "", @ViewBuilder boards: () -> Boards,
-    @ViewBuilder controls: () -> Controls
+    caption: String, @ViewBuilder boards: () -> Boards, @ViewBuilder controls: () -> Controls
   ) {
     self.caption = caption
     self.boards = boards()
@@ -24,11 +23,9 @@ struct ScreenFrame<Boards: View, Controls: View>: View {
       boards
         .frame(maxWidth: .infinity, maxHeight: .infinity)
       VStack(alignment: .leading, spacing: 10) {
-        if !caption.isEmpty {
-          Text(LocalizedStringKey(caption))
-            .font(.callout)
-            .fixedSize(horizontal: false, vertical: true)
-        }
+        Text(LocalizedStringKey(caption))
+          .font(.callout)
+          .fixedSize(horizontal: false, vertical: true)
         controls
         HStack {
           Text("Cell size")
@@ -77,6 +74,24 @@ where Part.RawValue == String {
       let words = part.rawValue.replacingOccurrences(of: "-", with: " ")
       return words.prefix(1).uppercased() + words.dropFirst()
     }
+  }
+}
+
+/// A choice between the offset or the doubled coordinate systems, by the names
+/// of the guide.
+struct SystemPicker<System: CaseIterable & Hashable & RawRepresentable & Sendable>: View
+where System.RawValue == String {
+  @Binding var selection: System
+
+  var body: some View {
+    Choice(title: "System", values: Array(System.allCases), selection: $selection) {
+      Self.name($0)
+    }
+  }
+
+  /// `oddR` reads `odd-r`, `doubleWidth` reads `double-width`.
+  static func name(_ system: System) -> String {
+    system.rawValue.map { $0.isUppercase ? "-" + $0.lowercased() : String($0) }.joined()
   }
 }
 

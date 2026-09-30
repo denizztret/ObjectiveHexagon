@@ -15,7 +15,7 @@ struct PixelScreen: View {
   @Environment(DemoSettings.self) private var settings
 
   init(_ opening: Opening) {
-    _part = State(initialValue: opening.part.flatMap(Part.init(rawValue:)) ?? .hexToPixel)
+    _part = State(initialValue: opening.part(or: .hexToPixel))
     _pointer = State(initialValue: opening.pointer ?? FractionalHex(q: 2.2, r: 1.2))
   }
 

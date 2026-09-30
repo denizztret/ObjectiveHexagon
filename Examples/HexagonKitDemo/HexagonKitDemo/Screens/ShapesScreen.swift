@@ -20,7 +20,7 @@ struct ShapesScreen: View {
   @Environment(DemoSettings.self) private var settings
 
   init(_ opening: Opening) {
-    _part = State(initialValue: opening.part.flatMap(Part.init(rawValue:)) ?? .parallelogram)
+    _part = State(initialValue: opening.part(or: .parallelogram))
     _pointer = State(initialValue: opening.hex)
   }
 

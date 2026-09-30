@@ -19,7 +19,7 @@ struct RangeScreen: View {
   @Environment(DemoSettings.self) private var settings
 
   init(_ opening: Opening) {
-    _part = State(initialValue: opening.part.flatMap(Part.init(rawValue:)) ?? .range)
+    _part = State(initialValue: opening.part(or: .range))
     _rangePointer = State(initialValue: opening.hex ?? Hex(q: 3, r: 0))
     _intersectionPointer = State(initialValue: opening.hex ?? Hex(q: 1, r: 0))
   }

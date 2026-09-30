@@ -17,7 +17,7 @@ struct RotationScreen: View {
   @Environment(DemoSettings.self) private var settings
 
   init(_ opening: Opening) {
-    _part = State(initialValue: opening.part.flatMap(Part.init(rawValue:)) ?? .rotation)
+    _part = State(initialValue: opening.part(or: .rotation))
     _pointer = State(initialValue: opening.hex ?? Hex(q: 2, r: -3))
   }
 

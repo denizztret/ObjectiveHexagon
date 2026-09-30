@@ -22,7 +22,7 @@ struct CoordinatesScreen: View {
   @Environment(DemoSettings.self) private var settings
 
   init(_ opening: Opening) {
-    _part = State(initialValue: opening.part.flatMap(Part.init(rawValue:)) ?? .offset)
+    _part = State(initialValue: opening.part(or: .offset))
     let hex = opening.hex
     _offsetPointer = State(
       initialValue: hex.map { OffsetCoordinate($0, in: .oddR) }
@@ -54,15 +54,11 @@ struct CoordinatesScreen: View {
       PartPicker(selection: $part)
       switch part {
       case .offset:
-        Choice(title: "System", values: OffsetSystem.allCases, selection: $offsetSystem) {
-          Self.name($0.rawValue)
-        }
+        SystemPicker(selection: $offsetSystem)
       case .cube, .axial:
         OrientationPicker()
       case .doubled:
-        Choice(title: "System", values: DoubledSystem.allCases, selection: $doubledSystem) {
-          Self.name($0.rawValue)
-        }
+        SystemPicker(selection: $doubledSystem)
       }
     }
   }
@@ -70,7 +66,7 @@ struct CoordinatesScreen: View {
   private var caption: String {
     switch part {
     case .offset:
-      "`OffsetCoordinate` numbers columns and rows; \(Self.name(offsetSystem.rawValue)) shifts "
+      "`OffsetCoordinate` numbers columns and rows; \(SystemPicker.name(offsetSystem)) shifts "
         + "every other one. The column of the hex under the pointer is green, its row blue."
     case .cube:
       "Cube coordinates q, r and s add up to zero. The hexes that share a coordinate with the "
@@ -81,11 +77,6 @@ struct CoordinatesScreen: View {
       "`DoubledCoordinate` counts \(doubledSystem == .doubleWidth ? "columns" : "rows") twice "
         + "as densely; column plus row is always even."
     }
-  }
-
-  /// `oddR` reads `odd-r`, `doubleWidth` reads `double-width`.
-  static func name(_ raw: String) -> String {
-    raw.map { $0.isUppercase ? "-" + $0.lowercased() : String($0) }.joined()
   }
 
   /// A rectangle in an offset system: columns and rows 0...6 of a pointy grid,
@@ -115,7 +106,8 @@ struct CoordinatesScreen: View {
   static func cube(_ orientation: Orientation, pointer: Hex, axial: Bool) -> Diagram {
     var diagram = Diagram(orientation: orientation, cells: Hex.zero.range(radius: 3))
     for hex in diagram.cells {
-      diagram.labels[hex] = hex == .zero ? .axes : axial ? .axial(hex) : .cube(hex)
+      diagram.labels[hex] =
+        if hex == .zero { .axes } else if axial { .axial(hex) } else { .cube(hex) }
       if hex == pointer {
         diagram.fills[hex] = Palette.pointed
       } else if hex.q == pointer.q {

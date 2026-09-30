@@ -58,7 +58,7 @@ struct FieldOfViewScreen: View {
     var blocked = false
     for (index, hex) in line.enumerated() {
       let wall = index > 0 && walls.contains(hex)
-      let color: Color = blocked ? Palette.pale : wall ? .red : Palette.start
+      let color: Color = if blocked { Palette.pale } else if wall { .red } else { Palette.start }
       diagram.marks.append(
         .dot(.between(.zero, pointer, Double(index) / Double(steps)), color, radius: 0.18))
       blocked = blocked || wall

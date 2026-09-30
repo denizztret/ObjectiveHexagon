@@ -20,7 +20,7 @@ struct NeighborsScreen: View {
   @Environment(DemoSettings.self) private var settings
 
   init(_ opening: Opening) {
-    _part = State(initialValue: opening.part.flatMap(Part.init(rawValue:)) ?? .axial)
+    _part = State(initialValue: opening.part(or: .axial))
     _pointer = State(initialValue: opening.hex ?? Hex(q: 1, r: 0))
   }
 
@@ -46,13 +46,9 @@ struct NeighborsScreen: View {
       case .axial, .diagonals:
         OrientationPicker()
       case .offset:
-        Choice(title: "System", values: OffsetSystem.allCases, selection: $offsetSystem) {
-          CoordinatesScreen.name($0.rawValue)
-        }
+        SystemPicker(selection: $offsetSystem)
       case .doubled:
-        Choice(title: "System", values: DoubledSystem.allCases, selection: $doubledSystem) {
-          CoordinatesScreen.name($0.rawValue)
-        }
+        SystemPicker(selection: $doubledSystem)
       }
     }
   }
@@ -72,11 +68,11 @@ struct NeighborsScreen: View {
       }
       return "`diagonalNeighbors` lists the six diagonals in the order 0...5."
     case .offset:
-      return "In \(CoordinatesScreen.name(offsetSystem.rawValue)) the steps to the neighbors "
+      return "In \(SystemPicker.name(offsetSystem)) the steps to the neighbors "
         + "depend on whether the \(offsetSystem.orientation == .pointy ? "row" : "column") is "
         + "even or odd: `neighbor(_:in:)` knows both."
     case .doubled:
-      return "In \(CoordinatesScreen.name(doubledSystem.rawValue)) the steps to the neighbors "
+      return "In \(SystemPicker.name(doubledSystem)) the steps to the neighbors "
         + "are the same everywhere: `neighbor(_:in:)`."
     }
   }

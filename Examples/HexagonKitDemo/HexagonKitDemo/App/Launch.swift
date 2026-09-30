@@ -54,6 +54,12 @@ struct Opening {
   /// Whether a drag paints walls.
   var paintsWalls = false
 
+  /// The diagram the launch argument names, or `fallback` when it names none
+  /// of the diagrams of the screen.
+  func part<Part: RawRepresentable>(or fallback: Part) -> Part where Part.RawValue == String {
+    part.flatMap(Part.init(rawValue:)) ?? fallback
+  }
+
   /// The hex under the pointer, when the launch argument names a whole hex.
   var hex: Hex? {
     guard let pointer, pointer.q.rounded() == pointer.q, pointer.r.rounded() == pointer.r,

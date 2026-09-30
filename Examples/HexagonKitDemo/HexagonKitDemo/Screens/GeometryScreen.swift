@@ -15,7 +15,7 @@ struct GeometryScreen: View {
   @Environment(DemoSettings.self) private var settings
 
   init(_ opening: Opening) {
-    _part = State(initialValue: opening.part.flatMap(Part.init(rawValue:)) ?? .sizes)
+    _part = State(initialValue: opening.part(or: .sizes))
   }
 
   var body: some View {
