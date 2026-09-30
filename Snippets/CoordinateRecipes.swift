@@ -34,7 +34,7 @@ print(doubled.column, doubled.row, backAgain == offset)
 
 // snippet.pixel
 // From an offset or a doubled coordinate to a pixel position.
-let layout = Layout(orientation: .pointy, size: Point(x: 20, y: 20))
+let layout = HexLayout(orientation: .pointy, size: Point(x: 20, y: 20))
 let offsetCenter = layout.center(of: Hex(offset, in: .oddR))
 let doubledCenter = layout.center(of: Hex(doubled, in: .doubleWidth))
 print(offsetCenter.x, offsetCenter.y)

@@ -20,8 +20,8 @@ func isClose(_ actual: Double, _ expected: Double, tolerance: Double = 1e-9) -> 
   abs(actual - expected) <= tolerance * max(1.0, abs(actual), abs(expected))
 }
 
-@Suite("Layout")
-struct LayoutTests {
+@Suite("HexLayout")
+struct HexLayoutTests {
 
   static let sqrt3 = 3.0.squareRoot()
 
@@ -36,12 +36,12 @@ struct LayoutTests {
     let size = Point(x: 10, y: 15)
     let origin = Point(x: 35, y: 71)
 
-    let flat = Layout(orientation: .flat, size: size, origin: origin)
+    let flat = HexLayout(orientation: .flat, size: size, origin: origin)
     let flatCenter = flat.center(of: hex)
     #expect(flatCenter.x == 80.0)
     #expect(isClose(flatCenter.y, 213.894_191_624_432_38))
 
-    let pointy = Layout(orientation: .pointy, size: size, origin: origin)
+    let pointy = HexLayout(orientation: .pointy, size: size, origin: origin)
     let pointyCenter = pointy.center(of: hex)
     #expect(isClose(pointyCenter.x, 121.602_540_378_443_85))
     #expect(pointyCenter.y == 161.0)
@@ -54,7 +54,7 @@ struct LayoutTests {
     let size = Point(x: 10, y: 15)
     let origin = Point(x: 35, y: 71)
     for orientation in Orientation.allCases {
-      let layout = Layout(orientation: orientation, size: size, origin: origin)
+      let layout = HexLayout(orientation: orientation, size: size, origin: origin)
       #expect(layout.hex(at: layout.center(of: hex)).rounded() == hex)
     }
   }
@@ -67,7 +67,7 @@ struct LayoutTests {
     var mismatches: [String] = []
     for testCase in fixture.cases {
       let orientation: Orientation = testCase.orientation == "pointy" ? .pointy : .flat
-      let layout = Layout(
+      let layout = HexLayout(
         orientation: orientation,
         size: Point(x: testCase.sizeX, y: testCase.sizeY),
         origin: Point(x: testCase.originX, y: testCase.originY))
@@ -109,14 +109,14 @@ struct LayoutTests {
 
   @Test("Corners match the table of the guide's text", arguments: corners)
   func cornersMatchTheGuideTable(_ row: CornerRow) {
-    let layout = Layout(orientation: row.orientation, size: Point(x: 1, y: 1))
+    let layout = HexLayout(orientation: row.orientation, size: Point(x: 1, y: 1))
     let corner = layout.corner(of: .zero, at: row.index)
     #expect(corner == Point(x: row.x, y: row.y))
   }
 
   @Test("Corners scale with the size and move with the center")
   func cornersScaleAndMove() {
-    let layout = Layout(
+    let layout = HexLayout(
       orientation: .pointy, size: Point(x: 10, y: 20), origin: Point(x: 5, y: -7))
     let hex = Hex(q: 2, r: -1)
     let center = layout.center(of: hex)
@@ -129,7 +129,7 @@ struct LayoutTests {
   func sixCornersComeBackInOrder() {
     var mismatches: [String] = []
     for orientation in Orientation.allCases {
-      let layout = Layout(
+      let layout = HexLayout(
         orientation: orientation, size: Point(x: 3, y: 4), origin: Point(x: -1, y: 2))
       let hex = Hex(q: -2, r: 5)
       let corners = layout.corners(of: hex)
@@ -149,7 +149,7 @@ struct LayoutTests {
   /// of the polygon: corner 1 of a pointy cell is the lowest point on screen.
   @Test("Corner one of a pointy cell is its lowest point")
   func cornerOneOfAPointyCellIsTheLowestPoint() {
-    let layout = Layout(orientation: .pointy, size: Point(x: 10, y: 10))
+    let layout = HexLayout(orientation: .pointy, size: Point(x: 10, y: 10))
     let corners = layout.corners(of: .zero)
     let lowest = corners.max { $0.y < $1.y }
     #expect(lowest == corners[1])
@@ -160,22 +160,22 @@ struct LayoutTests {
 
   @Test("Sizes and spacings match the table of the guide")
   func sizesAndSpacingsMatchTheGuide() {
-    let pointy = Layout(orientation: .pointy, size: Point(x: 2, y: 3))
-    #expect(pointy.cellWidth == LayoutTests.sqrt3 * 2)
+    let pointy = HexLayout(orientation: .pointy, size: Point(x: 2, y: 3))
+    #expect(pointy.cellWidth == HexLayoutTests.sqrt3 * 2)
     #expect(pointy.cellHeight == 2 * 3.0)
-    #expect(pointy.horizontalSpacing == LayoutTests.sqrt3 * 2)
+    #expect(pointy.horizontalSpacing == HexLayoutTests.sqrt3 * 2)
     #expect(pointy.verticalSpacing == 3.0 / 2.0 * 3)
 
-    let flat = Layout(orientation: .flat, size: Point(x: 2, y: 3))
+    let flat = HexLayout(orientation: .flat, size: Point(x: 2, y: 3))
     #expect(flat.cellWidth == 2 * 2.0)
-    #expect(flat.cellHeight == LayoutTests.sqrt3 * 3)
+    #expect(flat.cellHeight == HexLayoutTests.sqrt3 * 3)
     #expect(flat.horizontalSpacing == 3.0 / 2.0 * 2)
-    #expect(flat.verticalSpacing == LayoutTests.sqrt3 * 3)
+    #expect(flat.verticalSpacing == HexLayoutTests.sqrt3 * 3)
   }
 
   @Test("Spacings agree with the distance between the centers of neighbours")
   func spacingsAgreeWithCenterDistances() {
-    let pointy = Layout(orientation: .pointy, size: Point(x: 12, y: 9))
+    let pointy = HexLayout(orientation: .pointy, size: Point(x: 12, y: 9))
     #expect(
       isClose(
         pointy.center(of: Hex(q: 1, r: 0)).x - pointy.center(of: .zero).x,
@@ -185,7 +185,7 @@ struct LayoutTests {
         pointy.center(of: Hex(q: 0, r: 1)).y - pointy.center(of: .zero).y,
         pointy.verticalSpacing))
 
-    let flat = Layout(orientation: .flat, size: Point(x: 12, y: 9))
+    let flat = HexLayout(orientation: .flat, size: Point(x: 12, y: 9))
     #expect(
       isClose(
         flat.center(of: Hex(q: 1, r: 0)).x - flat.center(of: .zero).x, flat.horizontalSpacing))
@@ -198,7 +198,7 @@ struct LayoutTests {
 
   @Test("The round trip survives unequal sizes and a non-zero origin")
   func roundTripSurvivesUnequalSizesAndOrigin() {
-    let layout = Layout(
+    let layout = HexLayout(
       orientation: .pointy, size: Point(x: 7.5, y: 4.25), origin: Point(x: -1_000.5, y: 2_000.25))
     var mismatches: [String] = []
     for q in -40...40 {
@@ -218,7 +218,7 @@ struct LayoutTests {
   /// the result is whatever the arithmetic of `Double` produces.
   @Test("Precision is lost when the origin is huge")
   func precisionIsLostWhenTheOriginIsHuge() {
-    let layout = Layout(
+    let layout = HexLayout(
       orientation: .pointy, size: Point(x: 1, y: 1), origin: Point(x: 0x1p60, y: 0))
     let center = layout.center(of: Hex(q: 1, r: 0))
     #expect(center == layout.center(of: .zero))
@@ -228,7 +228,7 @@ struct LayoutTests {
 
   @Test("A pixel inside a cell rounds to that cell")
   func pixelInsideACellRoundsToThatCell() {
-    let layout = Layout(orientation: .flat, size: Point(x: 20, y: 20), origin: Point(x: 3, y: 5))
+    let layout = HexLayout(orientation: .flat, size: Point(x: 20, y: 20), origin: Point(x: 3, y: 5))
     var mismatches: [String] = []
     for q in -6...6 {
       for r in -6...6 {
@@ -259,8 +259,8 @@ struct LayoutTests {
     arguments: OffsetSystem.allCases)
   func offsetToPixelRecipe(_ system: OffsetSystem) {
     let size = 17.0
-    let sqrt3 = LayoutTests.sqrt3
-    let layout = Layout(orientation: system.orientation, size: Point(x: size, y: size))
+    let sqrt3 = HexLayoutTests.sqrt3
+    let layout = HexLayout(orientation: system.orientation, size: Point(x: size, y: size))
     var mismatches: [String] = []
     for column in -7...7 {
       for row in -7...7 {
@@ -301,8 +301,8 @@ struct LayoutTests {
     arguments: DoubledSystem.allCases)
   func doubledToPixelRecipe(_ system: DoubledSystem) throws {
     let size = 17.0
-    let sqrt3 = LayoutTests.sqrt3
-    let layout = Layout(orientation: system.orientation, size: Point(x: size, y: size))
+    let sqrt3 = HexLayoutTests.sqrt3
+    let layout = HexLayout(orientation: system.orientation, size: Point(x: size, y: size))
     var mismatches: [String] = []
     for column in -8...8 {
       for row in -8...8 where (column + row) % 2 == 0 {
@@ -328,7 +328,7 @@ struct LayoutTests {
   /// and the odd rows are shifted right by half of it.
   @Test("Recipe: the odd-r grid is spaced the way the guide draws it")
   func offsetGridIsSpacedAsDrawn() {
-    let layout = Layout(orientation: .pointy, size: Point(x: 10, y: 10))
+    let layout = HexLayout(orientation: .pointy, size: Point(x: 10, y: 10))
     func center(column: Int, row: Int) -> Point {
       layout.center(of: Hex(OffsetCoordinate(column: column, row: row), in: .oddR))
     }
@@ -349,10 +349,10 @@ struct LayoutTests {
   func layoutRoundTripsThroughJSON() throws {
     let encoder = JSONEncoder()
     encoder.outputFormatting = .sortedKeys
-    let layout = Layout(
+    let layout = HexLayout(
       orientation: .flat, size: Point(x: 10, y: 15), origin: Point(x: 35, y: 71))
     let json = String(decoding: try encoder.encode(layout), as: UTF8.self)
-    #expect(try JSONDecoder().decode(Layout.self, from: Data(json.utf8)) == layout)
+    #expect(try JSONDecoder().decode(HexLayout.self, from: Data(json.utf8)) == layout)
   }
 
   /// ObjectiveHexagon silently returned `{0, 0, 0}` when the cell size was zero
@@ -362,10 +362,10 @@ struct LayoutTests {
     let zeroSize = #"{"orientation":"pointy","origin":{"x":0,"y":0},"size":{"x":0,"y":10}}"#
     let negativeSize = #"{"orientation":"pointy","origin":{"x":0,"y":0},"size":{"x":10,"y":-1}}"#
     #expect(throws: DecodingError.self) {
-      try JSONDecoder().decode(Layout.self, from: Data(zeroSize.utf8))
+      try JSONDecoder().decode(HexLayout.self, from: Data(zeroSize.utf8))
     }
     #expect(throws: DecodingError.self) {
-      try JSONDecoder().decode(Layout.self, from: Data(negativeSize.utf8))
+      try JSONDecoder().decode(HexLayout.self, from: Data(negativeSize.utf8))
     }
   }
 
@@ -376,7 +376,7 @@ struct LayoutTests {
     decoder.nonConformingFloatDecodingStrategy = .convertFromString(
       positiveInfinity: "inf", negativeInfinity: "-inf", nan: "nan")
     #expect(throws: DecodingError.self) {
-      try decoder.decode(Layout.self, from: Data(json.utf8))
+      try decoder.decode(HexLayout.self, from: Data(json.utf8))
     }
   }
 }
@@ -384,48 +384,48 @@ struct LayoutTests {
 #if compiler(>=6.2) && (os(macOS) || os(Linux) || os(Windows))
   /// Exit tests run the closure in a child process and expect it to stop; they
   /// exist from Swift 6.2 on, so older compilers skip this suite.
-  @Suite("Layout preconditions")
-  struct LayoutPreconditionTests {
+  @Suite("HexLayout preconditions")
+  struct HexLayoutPreconditionTests {
 
     @Test("A cell width of zero stops the initializer")
     func zeroWidthStops() async {
       await #expect(processExitsWith: .failure) {
-        _ = Layout(orientation: .pointy, size: Point(x: 0, y: 10))
+        _ = HexLayout(orientation: .pointy, size: Point(x: 0, y: 10))
       }
     }
 
     @Test("A negative cell height stops the initializer")
     func negativeHeightStops() async {
       await #expect(processExitsWith: .failure) {
-        _ = Layout(orientation: .flat, size: Point(x: 10, y: -1))
+        _ = HexLayout(orientation: .flat, size: Point(x: 10, y: -1))
       }
     }
 
     @Test("A cell size that is not a number stops the initializer")
     func sizeNaNStops() async {
       await #expect(processExitsWith: .failure) {
-        _ = Layout(orientation: .pointy, size: Point(x: .nan, y: 10))
+        _ = HexLayout(orientation: .pointy, size: Point(x: .nan, y: 10))
       }
     }
 
     @Test("An infinite cell size stops the initializer")
     func infiniteSizeStops() async {
       await #expect(processExitsWith: .failure) {
-        _ = Layout(orientation: .pointy, size: Point(x: 10, y: .infinity))
+        _ = HexLayout(orientation: .pointy, size: Point(x: 10, y: .infinity))
       }
     }
 
     @Test("An origin that is not a number stops the initializer")
     func originNaNStops() async {
       await #expect(processExitsWith: .failure) {
-        _ = Layout(orientation: .pointy, size: Point(x: 10, y: 10), origin: Point(x: .nan, y: 0))
+        _ = HexLayout(orientation: .pointy, size: Point(x: 10, y: 10), origin: Point(x: .nan, y: 0))
       }
     }
 
     @Test("An infinite origin stops the initializer")
     func infiniteOriginStops() async {
       await #expect(processExitsWith: .failure) {
-        _ = Layout(
+        _ = HexLayout(
           orientation: .flat, size: Point(x: 10, y: 10), origin: Point(x: 0, y: -.infinity))
       }
     }
@@ -433,14 +433,14 @@ struct LayoutTests {
     @Test("A corner index of six stops")
     func cornerIndexSixStops() async {
       await #expect(processExitsWith: .failure) {
-        _ = Layout(orientation: .pointy, size: Point(x: 10, y: 10)).corner(of: .zero, at: 6)
+        _ = HexLayout(orientation: .pointy, size: Point(x: 10, y: 10)).corner(of: .zero, at: 6)
       }
     }
 
     @Test("A negative corner index stops")
     func negativeCornerIndexStops() async {
       await #expect(processExitsWith: .failure) {
-        _ = Layout(orientation: .flat, size: Point(x: 10, y: 10)).corner(of: .zero, at: -1)
+        _ = HexLayout(orientation: .flat, size: Point(x: 10, y: 10)).corner(of: .zero, at: -1)
       }
     }
   }

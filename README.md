@@ -60,7 +60,7 @@ print(a.neighbor(.plusQMinusS))   // the cell to the east on a pointy-top grid
 print(a.ring(radius: 2).count)    // 12
 
 // From a cell to a pixel and back.
-let layout = Layout(orientation: .pointy, size: Point(x: 20, y: 20))
+let layout = HexLayout(orientation: .pointy, size: Point(x: 20, y: 20))
 let center = layout.center(of: b)
 print(layout.hex(at: center).rounded() == b)   // true
 
@@ -91,7 +91,7 @@ available through CocoaPods from that tag, and it receives no further changes.
 The Objective-C sources were removed from the main branch after the tag was
 made. HexagonKit is not source compatible with it: the axes are named `q`, `r`
 and `s` as the guide names them now, coordinates are integral, and the grid
-object was replaced by the value type `Layout`.
+object was replaced by the value type `HexLayout`.
 
 ## Acknowledgements
 

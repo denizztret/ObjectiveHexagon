@@ -62,7 +62,7 @@ flat array, and ``WrappedHexagon`` joins the opposite edges of a hexagonal map.
 
 - ``Point``
 - ``Orientation``
-- ``Layout``
+- ``HexLayout``
 
 ### Maps
 

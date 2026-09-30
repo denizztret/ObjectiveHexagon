@@ -1,6 +1,6 @@
 /// The mapping between hexes and pixels: orientation, cell size along both axes
 /// and the pixel position of the origin hex.
-public struct Layout: Hashable, Sendable, Codable {
+public struct HexLayout: Hashable, Sendable, Codable {
 
   /// The orientation of the grid.
   public let orientation: Orientation
@@ -112,7 +112,7 @@ public struct Layout: Hashable, Sendable, Codable {
   }
 }
 
-extension Layout {
+extension HexLayout {
 
   /// Returns the corner at a unit offset from a center, scaled by the cell size.
   private func corner(_ unit: Point, around center: Point) -> Point {

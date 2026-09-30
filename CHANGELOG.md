@@ -26,7 +26,7 @@ finished and stays available under the 0.3.0 tag.
   with conversions and direct neighbors.
 - `DoubledSystem` and `DoubledCoordinate`: the two doubled systems, with the
   even-sum invariant enforced at creation and at decoding.
-- `Point`, `Orientation` and `Layout`: hex to pixel, pixel to hex, corners, cell
+- `Point`, `Orientation` and `HexLayout`: hex to pixel, pixel to hex, corners, cell
   sizes and grid spacings, with a size along each axis and a free origin.
 - `HexShape`: the hexagon, both triangles, the rectangle in any offset system
   and the parallelogram, each with a stable cell order and constant-time
@@ -56,6 +56,12 @@ finished and stays available under the 0.3.0 tag.
   `Scripts/snippets-to-markdown.py` writes the same examples as plain Markdown.
 - Continuous integration on Linux with Swift 6.0, 6.1 and 6.2, and on macOS with
   the minimum and the current Xcode.
+
+### Changed
+
+- `Layout` is renamed `HexLayout`: in a file that also imports SwiftUI, the
+  bare name `Layout` was ambiguous with the `Layout` protocol of SwiftUI. No
+  version was tagged with the old name.
 
 ### Removed
 

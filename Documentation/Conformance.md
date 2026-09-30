@@ -28,8 +28,8 @@ runs that copy and writes the large reference fixtures into
 
 | Guide section | How | Type or method | Stage | Test |
 |---|---|---|---|---|
-| Geometry: size and spacing | API | `Layout.cellWidth`, `.cellHeight`, `.horizontalSpacing`, `.verticalSpacing` | 2 | `LayoutTests.sizesAndSpacingsMatchTheGuide`, `LayoutTests.spacingsAgreeWithCenterDistances` |
-| Geometry: corner angles | API | `Layout.corner(of:at:)`, `Layout.corners(of:)` | 2 | `LayoutTests.cornersMatchTheGuideTable`, `LayoutTests.sixCornersComeBackInOrder` |
+| Geometry: size and spacing | API | `HexLayout.cellWidth`, `.cellHeight`, `.horizontalSpacing`, `.verticalSpacing` | 2 | `HexLayoutTests.sizesAndSpacingsMatchTheGuide`, `HexLayoutTests.spacingsAgreeWithCenterDistances` |
+| Geometry: corner angles | API | `HexLayout.corner(of:at:)`, `HexLayout.corners(of:)` | 2 | `HexLayoutTests.cornersMatchTheGuideTable`, `HexLayoutTests.sixCornersComeBackInOrder` |
 | Coordinates: cube and axial | API | `Hex` | 2 | `HexTests.additionMatchesTheReference`, `HexTests.subtractionMatchesTheReference`, `HexTests.thirdComponentIsDerived`, `HexTests.cubeInitializerChecksTheSum` |
 | Coordinates: offset | API | `OffsetCoordinate`, `OffsetSystem` | 2 | `OffsetCoordinateTests.cubeToOffsetMatchesTheReference`, `OffsetCoordinateTests.conversionsMatchTheFixture` |
 | Coordinates: doubled | API | `DoubledCoordinate`, `DoubledSystem` | 2 | `DoubledCoordinateTests.cubeToDoubledMatchesTheReference`, `DoubledCoordinateTests.conversionsMatchTheFixture` |
@@ -50,9 +50,9 @@ runs that copy and writes the large reference fixtures into
 | Spiral coordinates | API | `Hex.spiralIndex(around:)`, `Hex.init(spiralIndex:around:)` | 3 | `SpiralTests.spiralCoordinatesMatchTheGuide`, `SpiralTests.spiralAndCoordinatesAgree` |
 | Conversions: offset to doubled | composition | recipe: convert through `Hex`; written down in `Snippets/CoordinateRecipes.swift`, slice `bridge` | 2 | `DoubledCoordinateTests.bridgeRecipeMatchesTheReferenceFormulas` |
 | Field of view | API | `Hex.fieldOfView(radius:isOpaque:)` | 3 | `FieldOfViewTests.sceneOfTheGuide`, `FieldOfViewTests.wallHidesAHexOnlyWhenTheLinePassesThroughIt` |
-| Hex to pixel | API | `Layout.center(of:)` | 2 | `LayoutTests.centersMatchTheReferenceNumbers`, `LayoutTests.centersMatchTheFixture` |
-| Hex to pixel: offset and doubled | composition | recipe: convert to `Hex`, then `Layout.center(of:)`; written down in `Snippets/CoordinateRecipes.swift`, slice `pixel` | 2 | `LayoutTests.offsetToPixelRecipe`, `LayoutTests.doubledToPixelRecipe`, `LayoutTests.offsetGridIsSpacedAsDrawn` |
-| Pixel to hex | API | `Layout.hex(at:)` | 2 | `LayoutTests.roundTripMatchesTheReference`, `LayoutTests.pixelInsideACellRoundsToThatCell` |
+| Hex to pixel | API | `HexLayout.center(of:)` | 2 | `HexLayoutTests.centersMatchTheReferenceNumbers`, `HexLayoutTests.centersMatchTheFixture` |
+| Hex to pixel: offset and doubled | composition | recipe: convert to `Hex`, then `HexLayout.center(of:)`; written down in `Snippets/CoordinateRecipes.swift`, slice `pixel` | 2 | `HexLayoutTests.offsetToPixelRecipe`, `HexLayoutTests.doubledToPixelRecipe`, `HexLayoutTests.offsetGridIsSpacedAsDrawn` |
+| Pixel to hex | API | `HexLayout.hex(at:)` | 2 | `HexLayoutTests.roundTripMatchesTheReference`, `HexLayoutTests.pixelInsideACellRoundsToThatCell` |
 | Rounding | API | `FractionalHex.rounded()` | 2 | `FractionalHexTests.midpointCaseOfTheReference`, `FractionalHexTests.exactHalvesRoundAwayFromZero`, `FractionalHexTests.roundingMatchesTheFixtureOnBoundaryPoints` |
 | Map storage: shapes | API | `HexShape.hexagon`, `.triangleDown`, `.triangleUp`, `.rectangle` | 2 | `HexShapeTests.membershipMatchesTheDefiningInequalities`, `HexShapeTests.cellAndIndexAreMutuallyInverse` |
 | Map storage: parallelogram | API | `HexShape.parallelogram(origin:columns:rows:)` | 3 | `HexShapeParallelogramTests.parallelogramIsListedRowByRow`, `HexShapeTests.cellAndIndexAreMutuallyInverse` |
@@ -77,7 +77,7 @@ runs that copy and writes the large reference fixtures into
 | `test_hex_rotate_left` | `HexTests.counterclockwiseRotationMatchesTheReference` |
 | `test_hex_round` | `FractionalHexTests.midpointCaseOfTheReference`, `FractionalHexTests.nearHalfwayCasesOfTheReference`, `FractionalHexTests.weightedCasesOfTheReference` |
 | `test_hex_linedraw` | `LineTests.lineMatchesTheReference` |
-| `test_layout` | `LayoutTests.centersMatchTheReferenceNumbers`, `LayoutTests.roundTripMatchesTheReference` |
+| `test_layout` | `HexLayoutTests.centersMatchTheReferenceNumbers`, `HexLayoutTests.roundTripMatchesTheReference` |
 | `test_offset_roundtrip` | `OffsetCoordinateTests.roundTripsMatchTheReference` |
 | `test_offset_from_cube` | `OffsetCoordinateTests.cubeToOffsetMatchesTheReference` |
 | `test_offset_to_cube` | `OffsetCoordinateTests.offsetToCubeMatchesTheReference` |
@@ -97,6 +97,12 @@ disagree with each other. Every choice HexagonKit made is listed here.
    on screen; the text of the guide walks them clockwise, corner `i` at
    `60 * i` degrees plus 30 for pointy. HexagonKit follows the text. The set of
    corners is the same in both; only the numbering differs.
+
+   The guide has a third numbering too. The pseudocode of its section on
+   angles computes `angle_deg = 60 * i - 30` for pointy cells, so its corner 0
+   sits at -30 degrees, which is 330 degrees on screen, and its corner `i` is
+   corner `(i + 5) % 6` of HexagonKit; both walk clockwise. For flat cells it
+   agrees with HexagonKit. ObjectiveHexagon numbered pointy corners this way.
 2. **Halves in rounding.** The ports of the guide round exact halves in three
    incompatible ways: to even (Python, C#), up (JavaScript, TypeScript, Lua) and
    away from zero (C++, Rust). HexagonKit rounds away from zero, so it agrees
@@ -182,11 +188,11 @@ mechanism that caused it, there is no artificial test for it; the table says so.
 | A category on `NSValue` duplicated UIKit and read past its buffer | Foundation and Objective-C are banned in the core. Fixed by design |
 | `hex3DMultiply` and `hex3DScale` were two names for one operation | One operator `*`. Test: `HexTests.scalingByOneIsTheIdentity` |
 | `boundsOfShapes:` returned garbage for an empty array | The core has no such operation; `HexagonKitUI` will return an optional. Fixed by design |
-| Corner numbering for pointy cells was shifted by one and walked backwards | The corner order is pinned by a table. Tests: `LayoutTests.cornersMatchTheGuideTable`, `LayoutTests.cornerOneOfAPointyCellIsTheLowestPoint` |
+| Corner numbering for pointy cells started at -30 degrees, one corner off from HexagonKit, as in the pseudocode of the guide's section on angles (deviation 1) | The corner order is pinned by a table. Tests: `HexLayoutTests.cornersMatchTheGuideTable`, `HexLayoutTests.cornerOneOfAPointyCellIsTheLowestPoint` |
 | Ties in rounding were resolved on `x` and then `y` instead of `q` and then `r` | `FractionalHex.rounded()` follows the guide. Tests: `FractionalHexTests.tiesAreResolvedTowardsSThenR`, `FractionalHexTests.tieOrderFollowsTheGuide` |
 | A `switch` over an enumeration had neither a `default` nor a final `return` | All enumerations are closed, so every `switch` is exhaustive. Fixed by design |
-| A cell size of zero silently produced `{0, 0, 0}` | `Layout` requires a finite positive size on both axes. Test: `LayoutTests.decodingRejectsASizeOutOfRange` |
+| A cell size of zero silently produced `{0, 0, 0}` | `HexLayout` requires a finite positive size on both axes. Test: `HexLayoutTests.decodingRejectsASizeOutOfRange` |
 | A cell key was the coordinate formatted with `%.0f` | The key is a `Hex`, by `Hashable`. Fixed by design |
 | Constants were truncated literals, off by about 1e-14 | `sqrt(3)` is computed as `3.0.squareRoot()`. Fixed by design |
-| A weak reference to the grid made the geometry silently zero | `Layout` is a value. Fixed by design |
+| A weak reference to the grid made the geometry silently zero | `HexLayout` is a value. Fixed by design |
 | `[HKHexagon alloc]` instead of `[self alloc]` | Value types, no inheritance. Fixed by design |
