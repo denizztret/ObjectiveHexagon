@@ -7,9 +7,14 @@ enum Page: String, CaseIterable, Identifiable {
   case coordinates
   case neighbors
   case distances
+  case line
+  case range
+  case obstacles
   case rotation
   case rings
+  case fieldOfView = "field-of-view"
   case pixel
+  case pathfinding
 
   var id: Self { self }
 
@@ -21,9 +26,14 @@ enum Page: String, CaseIterable, Identifiable {
     case .coordinates: ("Coordinate systems", "#coordinates")
     case .neighbors: ("Neighbors", "#neighbors")
     case .distances: ("Distances", "#distances")
+    case .line: ("Line drawing", "#line-drawing")
+    case .range: ("Movement range", "#range")
+    case .obstacles: ("Obstacles", "#range-obstacles")
     case .rotation: ("Rotation and reflection", "#rotation")
     case .rings: ("Rings", "#rings")
+    case .fieldOfView: ("Field of view", "#field-of-view")
     case .pixel: ("Hex to pixel and back", "#hex-to-pixel")
+    case .pathfinding: ("Pathfinding", "#pathfinding")
     }
   }
 
@@ -40,9 +50,14 @@ enum Page: String, CaseIterable, Identifiable {
     case .coordinates: CoordinatesScreen(opening)
     case .neighbors: NeighborsScreen(opening)
     case .distances: DistancesScreen(opening)
+    case .line: LineScreen(opening)
+    case .range: RangeScreen(opening)
+    case .obstacles: ObstaclesScreen(opening)
     case .rotation: RotationScreen(opening)
     case .rings: RingsScreen(opening)
+    case .fieldOfView: FieldOfViewScreen(opening)
     case .pixel: PixelScreen(opening)
+    case .pathfinding: PathfindingScreen(opening)
     }
   }
 }
