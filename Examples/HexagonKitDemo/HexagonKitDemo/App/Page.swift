@@ -4,6 +4,11 @@ import SwiftUI
 /// The raw value names the screen in the launch argument `-screen`.
 enum Page: String, CaseIterable, Identifiable {
   case geometry
+  case coordinates
+  case neighbors
+  case distances
+  case rotation
+  case rings
   case pixel
 
   var id: Self { self }
@@ -13,6 +18,11 @@ enum Page: String, CaseIterable, Identifiable {
   var entry: (title: String, link: String?) {
     switch self {
     case .geometry: ("Geometry", "#basics")
+    case .coordinates: ("Coordinate systems", "#coordinates")
+    case .neighbors: ("Neighbors", "#neighbors")
+    case .distances: ("Distances", "#distances")
+    case .rotation: ("Rotation and reflection", "#rotation")
+    case .rings: ("Rings", "#rings")
     case .pixel: ("Hex to pixel and back", "#hex-to-pixel")
     }
   }
@@ -27,6 +37,11 @@ enum Page: String, CaseIterable, Identifiable {
   func screen(_ opening: Opening) -> some View {
     switch self {
     case .geometry: GeometryScreen(opening)
+    case .coordinates: CoordinatesScreen(opening)
+    case .neighbors: NeighborsScreen(opening)
+    case .distances: DistancesScreen(opening)
+    case .rotation: RotationScreen(opening)
+    case .rings: RingsScreen(opening)
     case .pixel: PixelScreen(opening)
     }
   }
